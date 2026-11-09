@@ -65,7 +65,7 @@ export default function Hero() {
 
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 1.05, ease }} className="mt-9 flex flex-wrap gap-3">
             <Link href="/contact" className="btn-accent">Plan een gesprek <ArrowRight size={17} /></Link>
-            <Link href="/projecten" className="btn-ghost">Bekijk projecten</Link>
+            <Link href="/prijscheck" className="btn-ghost">Wat kost mijn website?</Link>
           </motion.div>
 
           <motion.ul initial="h" animate="s" variants={{ s: { transition: { staggerChildren: 0.08, delayChildren: 1.2 } } }} className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-[14px] text-muted">

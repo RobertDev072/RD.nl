@@ -10,6 +10,7 @@ import { ServiceIcon } from './icons';
 import { LogoCompact } from './Logo';
 
 const links = [
+  { href: '/prijscheck', label: 'Prijscheck' },
   { href: '/projecten', label: 'Projecten' },
   { href: '/automatisering', label: 'Automatisering' },
   { href: '/kennisbank', label: 'Kennisbank' },
@@ -88,7 +89,7 @@ export default function Header() {
           </nav>
 
           <div className="ml-auto flex items-center gap-3">
-            <a href={site.phoneHref} className="hidden items-center gap-2 text-[14px] font-medium text-ink/75 hover:text-ink xl:flex">
+            <a href={site.phoneHref} className="hidden items-center gap-2 whitespace-nowrap text-[14px] font-medium text-ink/75 hover:text-ink 2xl:flex">
               <Phone size={15} /> {site.phone}
             </a>
             <Link href="/contact" className="btn-primary hidden min-h-[44px] px-5 text-[14px] sm:inline-flex">
