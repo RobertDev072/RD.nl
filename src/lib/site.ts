@@ -1,7 +1,7 @@
 export const site = {
   name: 'R DEV',
   owner: 'Robert Rocha',
-  url: (process.env.NEXT_PUBLIC_SITE_URL || 'https://rd-main-project-2026-site.vercel.app').replace(/\/$/, ''),
+  url: (process.env.NEXT_PUBLIC_SITE_URL || 'https://lorvex.nl').replace(/\/$/, ''),
   phone: '+31 6 28669488',
   phoneHref: 'tel:+31628669488',
   whatsapp: 'https://wa.me/31628669488',
