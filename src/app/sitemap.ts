@@ -9,7 +9,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes: [string, number, MetadataRoute.Sitemap[number]['changeFrequency']][] = [
     ['', 1, 'weekly'],
     ['/diensten', 0.9, 'monthly'],
-    ['/prijscheck', 0.9, 'monthly'],
     ['/kennisbank', 0.8, 'weekly'],
     ['/projecten', 0.8, 'monthly'],
     ['/automatisering', 0.8, 'monthly'],

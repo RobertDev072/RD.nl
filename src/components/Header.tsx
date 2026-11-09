@@ -10,7 +10,6 @@ import { ServiceIcon } from './icons';
 import { LogoCompact } from './Logo';
 
 const links = [
-  { href: '/prijscheck', label: 'Prijscheck' },
   { href: '/projecten', label: 'Projecten' },
   { href: '/automatisering', label: 'Automatisering' },
   { href: '/kennisbank', label: 'Kennisbank' },

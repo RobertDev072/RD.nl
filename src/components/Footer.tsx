@@ -33,7 +33,6 @@ export default function Footer() {
           <FooterCol
             title="Lorvex"
             items={[
-              { href: '/prijscheck', label: 'Gratis AI-prijscheck' },
               { href: '/automatisering', label: 'AI-automatisering demo' },
               { href: '/over', label: 'Over Lorvex' },
               { href: '/kennisbank', label: 'Kennisbank' },
