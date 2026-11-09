@@ -119,7 +119,7 @@ function AutoFlow() {
         <div style={{ width: 'min(300px, 78vw)', aspectRatio: '320 / 660' }}>
           <PhoneShell className="h-full w-full"><PhoneScenes step={step} /></PhoneShell>
         </div>
-        <div className="w-full max-w-md"><CardStack step={step} /></div>
+        <div className="w-full max-w-md pt-16"><CardStack step={step} /></div>
       </div>
     </div>
   );

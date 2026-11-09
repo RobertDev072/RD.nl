@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { projects } from '@/lib/content';
 import { BrowserFrame, ScreenCard } from '../Frames';
 
@@ -42,14 +43,8 @@ export default function ProjectsRail() {
         </div>
       </div>
 
-      {/* mobile: stacked */}
-      <div className="wrap py-24 lg:hidden">
-        <p className="eyebrow">Werk</p>
-        <h2 className="h2 mt-4">Gebouwd en <span className="script text-[1.15em]">live</span>.</h2>
-        <div className="mt-10 grid gap-12">
-          {projects.map((p, i) => <RailCard key={p.slug} p={p} i={i} mobile />)}
-        </div>
-      </div>
+      {/* mobile + tablet: swipe carousel */}
+      <MobileRail />
     </section>
   );
 }
@@ -86,5 +81,59 @@ function RailCard({ p, i, mobile = false }: { p: (typeof projects)[number]; i: n
         </div>
       </Link>
     </motion.article>
+  );
+}
+
+function MobileRail() {
+  const scroller = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+  const onScroll = () => {
+    const el = scroller.current;
+    if (!el) return;
+    const card = el.firstElementChild as HTMLElement | null;
+    const w = card ? card.offsetWidth + 16 : el.clientWidth;
+    setActive(Math.min(projects.length - 1, Math.round(el.scrollLeft / w)));
+  };
+  const go = (i: number) => {
+    const el = scroller.current;
+    const card = el?.children[i] as HTMLElement | undefined;
+    if (el && card) el.scrollTo({ left: card.offsetLeft - el.offsetLeft - parseFloat(getComputedStyle(el).paddingLeft), behavior: 'smooth' });
+  };
+  return (
+    <div className="py-24 lg:hidden">
+      <div className="wrap flex items-end justify-between gap-6">
+        <div>
+          <p className="eyebrow">Werk</p>
+          <h2 className="h2 mt-4">Gebouwd en <span className="script text-[1.15em]">live</span>.</h2>
+        </div>
+        <div className="flex gap-2">
+          <button type="button" aria-label="Vorig project" onClick={() => go(Math.max(0, active - 1))} className="grid h-11 w-11 place-items-center rounded-full border border-line bg-white disabled:opacity-40" disabled={active === 0}><ChevronLeft size={18} /></button>
+          <button type="button" aria-label="Volgend project" onClick={() => go(Math.min(projects.length - 1, active + 1))} className="grid h-11 w-11 place-items-center rounded-full border border-line bg-white disabled:opacity-40" disabled={active === projects.length - 1}><ChevronRight size={18} /></button>
+        </div>
+      </div>
+      <div
+        ref={scroller}
+        onScroll={onScroll}
+        className="mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        style={{ paddingLeft: 'max(var(--pad), env(safe-area-inset-left, 0px))', paddingRight: 'max(var(--pad), env(safe-area-inset-right, 0px))', scrollPaddingLeft: 'max(var(--pad), env(safe-area-inset-left, 0px))' }}
+      >
+        {projects.map((p, i) => (
+          <motion.div
+            key={p.slug}
+            className="w-[84vw] max-w-[560px] shrink-0 snap-start"
+            animate={{ scale: i === active ? 1 : 0.94, opacity: i === active ? 1 : 0.6 }}
+            transition={{ type: 'spring', stiffness: 200, damping: 24 }}
+          >
+            <RailCard p={p} i={i} mobile />
+          </motion.div>
+        ))}
+      </div>
+      <div className="wrap mt-4 flex items-center gap-2" aria-hidden>
+        {projects.map((p, i) => (
+          <span key={p.slug} className={'h-1.5 rounded-full transition-all duration-500 ' + (i === active ? 'w-8 bg-blue' : 'w-1.5 bg-line')} />
+        ))}
+        <span className="ml-3 font-mono text-[11px] uppercase tracking-[.12em] text-soft">Swipe</span>
+      </div>
+    </div>
   );
 }

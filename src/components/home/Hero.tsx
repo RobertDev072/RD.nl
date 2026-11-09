@@ -90,10 +90,10 @@ export default function Hero() {
               <ScreenCard src="/img/gt-mobile.webp" alt="Goaltje web app op mobiel" priority />
             </motion.div>
 
-            <motion.div style={l3} initial={{ opacity: 0, scale: 0.8, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ delay: 1.4, type: 'spring', stiffness: 160, damping: 16 }} className="absolute left-[-2%] top-[10%] hidden sm:block">
+            <motion.div style={l3} initial={{ opacity: 0, scale: 0.8, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ delay: 1.4, type: 'spring', stiffness: 160, damping: 16 }} className="absolute left-[-2%] top-[8%] origin-top-left scale-[.82] sm:scale-100">
               <Float><div className="card flex items-center gap-3 rounded-2xl px-4 py-3"><span className="grid h-9 w-9 place-items-center rounded-xl bg-[#16a34a] text-white"><MessageCircle size={17} /></span><span className="leading-tight"><b className="block text-[13px]">Nieuwe aanvraag</b><span className="text-[12px] text-muted">via WhatsApp · nu</span></span></div></Float>
             </motion.div>
-            <motion.div style={l2} initial={{ opacity: 0, scale: 0.8, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ delay: 1.6, type: 'spring', stiffness: 160, damping: 16 }} className="absolute bottom-[14%] left-[6%] hidden sm:block">
+            <motion.div style={l2} initial={{ opacity: 0, scale: 0.8, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ delay: 1.6, type: 'spring', stiffness: 160, damping: 16 }} className="absolute bottom-[12%] left-[2%] origin-bottom-left scale-[.82] sm:left-[6%] sm:scale-100">
               <Float delay={1.2}><div className="card flex items-center gap-3 rounded-2xl px-4 py-3"><span className="grid h-9 w-9 place-items-center rounded-xl bg-blue text-white"><CalendarCheck size={17} /></span><span className="leading-tight"><b className="block text-[13px]">Afspraak ingepland</b><span className="text-[12px] text-muted">do 12 nov · 11:00</span></span></div></Float>
             </motion.div>
             <motion.div style={l1} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 1.8, type: 'spring', stiffness: 160, damping: 16 }} className="absolute right-[0%] top-[-2%] hidden md:block">
