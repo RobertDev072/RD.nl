@@ -1,30 +1,33 @@
-# R DEV — rd.nl
+# R DEV — website
 
 Website van **R DEV** (Robert Rocha), webdesign en development uit Alkmaar: websites, web apps, SaaS, apps en AI-automatisering.
 
-## Structuur
+Gebouwd met **Next.js 15 (App Router)**, **React 19**, **Tailwind CSS**, **Framer Motion** en **Lenis** (smooth scroll).
 
-| Pad | Inhoud |
+## Pagina's
+
+| Route | Inhoud |
 |---|---|
-| `index.html` | De gebouwde homepage (statisch, geen build nodig) |
-| `assets/img/` | Screenshots van projecten en het logo |
-| `assets/js/` | Runtime voor de animatie (klant → website → WhatsApp → AI-agent → agenda) |
-| `sitemap.xml`, `robots.txt` | SEO |
-| `design/` | Bronbestanden uit Claude Design (`.dc.html`) en het SEO-plan |
-| `tools/build.cjs` | Bouwt `index.html` en de rest opnieuw uit `design/` |
+| `/` | Homepage: hero, diensten, scroll-animatie (zoeken → website → WhatsApp → AI-agent → agenda), projecten, over, werkwijze, FAQ |
+| `/diensten` en `/diensten/[slug]` | 7 dienstpagina's, elk met eigen SEO-titel en FAQ |
+| `/projecten` en `/projecten/[slug]` | SG Onderneming, BN Elektra, VeriPasso, Goaltje |
+| `/automatisering` | AI-automatisering met de interactieve flow |
+| `/over`, `/contact` | Over Robert, contact (formulier opent WhatsApp) |
+| `/sitemap.xml`, `/robots.txt` | Automatisch gegenereerd |
 
-## Deployen op Vercel
+Content (diensten, projecten) staat in `src/lib/content.ts`, contactgegevens in `src/lib/site.ts`.
 
-1. Importeer deze repository in Vercel.
-2. Framework preset: **Other**. Build command: leeg laten. Output directory: leeg laten (root).
-3. Koppel je domein onder *Settings → Domains*.
-
-## Domein invullen en opnieuw bouwen
-
-Na een wijziging in `design/` of zodra het domein bekend is:
+## Lokaal draaien
 
 ```bash
-DOMAIN=https://www.jouwdomein.nl node tools/build.cjs
+npm install
+npm run dev
 ```
 
-Dit vult het domein in de canonical-URL, Open Graph-tags, structured data, `sitemap.xml` en `robots.txt`.
+## Domein
+
+Zet in Vercel de environment variable `NEXT_PUBLIC_SITE_URL` op je domein (bijv. `https://www.jouwdomein.nl`). Die wordt gebruikt voor canonical-URL's, Open Graph, structured data en de sitemap.
+
+## Bronnen
+
+`design/` bevat de oorspronkelijke Claude Design-bestanden.
