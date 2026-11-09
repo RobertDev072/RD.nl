@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { CATEGORIES } from '@/lib/menu';
 import { useShop } from './ShopProvider';
 import ProductCard from './ProductCard';
@@ -7,6 +7,7 @@ import ProductCard from './ProductCard';
 export default function Menu() {
   const { query, setQuery } = useShop();
   const [active, setActive] = useState(CATEGORIES[0].slug);
+  const chipsRef = useRef(null);
   const q = query.trim().toLowerCase();
   const cats = useMemo(() => CATEGORIES.map(c => ({ ...c, items: c.items.filter(p => !q || `${p.n} ${p.d || ''} ${(p.v || []).map(o => o[0]).join(' ')} ${c.name}`.toLowerCase().includes(q)) })).filter(c => c.items.length), [q]);
   const total = cats.reduce((a, c) => a + c.items.length, 0);
@@ -18,6 +19,11 @@ export default function Menu() {
     return () => io.disconnect();
   }, [cats]);
 
+  useEffect(() => {
+    const box = chipsRef.current; const el = box?.querySelector(`[data-s="${active}"]`);
+    if (box && el) box.scrollTo({ left: el.offsetLeft - 16, behavior: 'smooth' });
+  }, [active]);
+
   const go = s => document.getElementById(`c-${s}`)?.scrollIntoView({ behavior: 'smooth' });
 
   return (
@@ -25,9 +31,15 @@ export default function Menu() {
       <div className="wrap">
         <div className="shead"><h2>Menu</h2><span className="muted" style={{ fontSize: 14 }}>{q ? `${total} resultaten voor “${query}”` : `${total} gerechten & drankjes`}</span></div>
         <div className="menubar">
-          <div className="chips" role="tablist" aria-label="Categorieën">
+          <label className="msearch">
+            <span className="sr">Zoek in het menu</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6c655c" strokeWidth="2.2" strokeLinecap="round"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
+            <input id="msearch" className="input" type="search" enterKeyHint="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Zoek roti, bara, dawet…" autoComplete="off" />
+            {query && <button type="button" className="clr" onClick={() => setQuery('')} aria-label="Wissen">×</button>}
+          </label>
+          <div className="chips" ref={chipsRef} role="tablist" aria-label="Categorieën">
             {cats.map(c => (
-              <button key={c.slug} role="tab" aria-selected={active === c.slug} className={`chip ${active === c.slug ? 'on' : ''}`} onClick={() => go(c.slug)}>
+              <button key={c.slug} data-s={c.slug} role="tab" aria-selected={active === c.slug} className={`chip ${active === c.slug ? 'on' : ''}`} onClick={() => go(c.slug)}>
                 {c.name} <span style={{ opacity: .6, fontWeight: 400 }}>{c.items.length}</span>
               </button>
             ))}

@@ -30,7 +30,7 @@ export default function Header() {
             <label className="search">
               <span className="sr">Zoek in het menu</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6c655c" strokeWidth="2.2" strokeLinecap="round"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
-              <input className="input" type="search" value={query} onChange={e => onSearch(e.target.value)} placeholder="Zoek roti, bara, dawet…" autoComplete="off" />
+              <input id="hsearch" className="input" type="search" enterKeyHint="search" value={query} onChange={e => onSearch(e.target.value)} placeholder="Zoek roti, bara, dawet…" autoComplete="off" />
             </label>
           )}
           <nav className="hnav" aria-label="Hoofdmenu">

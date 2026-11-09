@@ -1,4 +1,5 @@
 'use client';
+import { lock, unlock } from '@/lib/lock';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { eur, MIN_ORDER } from '@/lib/menu';
@@ -11,14 +12,15 @@ export default function CartDrawer({ onClose }) {
   useEffect(() => {
     const k = e => e.key === 'Escape' && onClose();
     addEventListener('keydown', k);
-    document.body.style.overflow = 'hidden';
-    return () => { removeEventListener('keydown', k); document.body.style.overflow = ''; };
+    lock();
+    return () => { removeEventListener('keydown', k); unlock(); };
   }, [onClose]);
   const left = Math.max(0, MIN_ORDER - subtotal);
   return (
     <>
       <div className="scrim" onClick={onClose} />
-      <aside className="drawer" role="dialog" aria-modal="true" aria-label="Winkelmand">
+      <aside className="drawer sheet" role="dialog" aria-modal="true" aria-label="Winkelmand">
+        <div className="handle" aria-hidden="true" />
         <div className="dhead"><h2>Winkelmand {count > 0 && <span className="muted" style={{ fontSize: 15, fontWeight: 400 }}>({count})</span>}</h2><button className="x" onClick={onClose} aria-label="Sluiten">×</button></div>
         <div className="dbody">
           {lines.length === 0 ? (

@@ -3,7 +3,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import { bySlug, unitPrice } from '@/lib/menu';
 import ProductModal from './ProductModal';
 import CartDrawer from './CartDrawer';
-import MobileBar from './MobileBar';
+import BottomNav from './BottomNav';
 
 const Ctx = createContext(null);
 export const useShop = () => useContext(Ctx);
@@ -57,20 +57,23 @@ export default function ShopProvider({ children }) {
   }, [remove]);
 
   const clear = useCallback(() => setCart([]), []);
+  const closeModal = useCallback(() => setOpen(null), []);
+  const closeDrawer = useCallback(() => setDrawer(false), []);
 
   const lines = useMemo(() => cart.map(l => { const p = bySlug(l.s); const u = unitPrice(p, l.o); return { ...l, p, u, t: u * l.q }; }), [cart]);
   const count = lines.reduce((a, l) => a + l.q, 0);
   const subtotal = lines.reduce((a, l) => a + l.t, 0);
   const qtyOf = s => cart.filter(l => l.s === s).reduce((a, l) => a + l.q, 0);
 
-  const value = { cart, lines, count, subtotal, ready, add, remove, setQty, clear, qtyOf, query, setQuery, openProduct: setOpen, openCart: () => { setToast(null); setDrawer(true); }, notify };
+  const focusSearch = () => { const el = ['msearch', 'hsearch'].map(i => document.getElementById(i)).find(e => e && e.offsetParent); if (!el) return; el.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(() => el.focus({ preventScroll: true }), 350); };
+  const value = { focusSearch, cart, lines, count, subtotal, ready, add, remove, setQty, clear, qtyOf, query, setQuery, openProduct: s => { setToast(null); setOpen(s); }, openCart: () => { setToast(null); setDrawer(true); }, notify };
 
   return (
     <Ctx.Provider value={value}>
-      <div className={count ? 'hasbar' : ''}>{children}</div>
-      {open && <ProductModal slug={open} onClose={() => setOpen(null)} />}
-      {drawer && <CartDrawer onClose={() => setDrawer(false)} />}
-      <MobileBar />
+      {children}
+      {open && <ProductModal slug={open} onClose={closeModal} />}
+      {drawer && <CartDrawer onClose={closeDrawer} />}
+      <BottomNav />
       {toast && (
         <div className="toast" role="status">
           <span>{toast.msg}</span>

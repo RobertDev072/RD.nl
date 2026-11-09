@@ -1,7 +1,9 @@
 'use client';
 import { bySlug, CATEGORIES, img } from '@/lib/menu';
 import ProductCard from './ProductCard';
-import { SafeImg } from './ui';
+import { SafeImg, ProductImg } from './ui';
+import { eur, minPrice, hasRange } from '@/lib/menu';
+import { useShop } from './ShopProvider';
 import Menu from './Menu';
 
 const CAT_IMG = { maaltijden: 'roti-kip-high.png', 'bbq-kip': 'bbq-kippenbout-high.png', 'broodjes-bara': 'bara-met-beleg-high.png', 'bijgerechten-sauzen': 'kousenband-high.png', 'snacks-zoet': 'file_00000000448882439589f402d44cb3f7-high.png', 'extra-s-mee-naar-huis': 'potje-peper-high.png', dranken: 'dawet-roze-high.png' };
@@ -9,12 +11,41 @@ const POPULAR = ['surinaamse-roti', 'surinaamse-bami', 'bara-met-beleg', 'broodj
 const SPECIALS = ['moksi-alesi', 'ban-ban-corvina', 'heri-heri', 'teloh-bakkeljauw'];
 const Ic = ({ d }) => <i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">{d}</svg></i>;
 
+function MobileHero({ go }) {
+  const { openProduct } = useShop();
+  return (
+    <div className="mhero">
+      <div className="mtop">
+        <img src="/logo.webp" alt="" width="64" height="62" className="mlogo" />
+        <div>
+          <h1>Surinaams eten, vers bereid</h1>
+          <p>Roti, bami, bara & meer · Oterleek e.o.</p>
+        </div>
+      </div>
+      <div className="mstatus"><span className="dot" />Bezorging vr–zo 11:00–22:00 · vanaf €5</div>
+      <div className="mpop">
+        <div className="mpop-h"><b>Populair</b><button onClick={() => go('maaltijden')}>Alles bekijken</button></div>
+        <div className="mrail">
+          {POPULAR.map(s => { const p = bySlug(s); return (
+            <button key={s} className="mitem" onClick={() => openProduct(s)}>
+              <span className="mi"><ProductImg p={p} w={300} /></span>
+              <b>{p.n}</b>
+              <span>{hasRange(p) ? 'vanaf ' : ''}{eur(minPrice(p))}</span>
+            </button>
+          ); })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const go = s => document.getElementById(`c-${s}`)?.scrollIntoView({ behavior: 'smooth' });
   return (
     <>
+      <MobileHero go={go} />
       <div className="hero"><img className="banner" src="/banner.webp" alt="Hewitt & Hewitt – Authentic Surinamese Food" width="1200" height="408" fetchPriority="high" /></div>
-      <div className="usp"><div className="wrap">
+      <div className="usp d-only"><div className="wrap">
         <div><Ic d={<><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7" /><circle cx="7" cy="17.5" r="1.5" /><circle cx="17" cy="17.5" r="1.5" /></>} /><span><b>Bezorging vr–zo</b><span>11:00–22:00, vanaf €5</span></span></div>
         <div><Ic d={<path d="M12 3c3 3 5 6 5 9a5 5 0 0 1-10 0c0-3 2-6 5-9z" />} /><span><b>Vers bereid</b><span>Hete peper apart verpakt</span></span></div>
         <div><Ic d={<><rect x="3" y="6" width="18" height="12" rx="2" /><path d="M3 10h18" /></>} /><span><b>Veilig betalen</b><span>iDEAL of bij ontvangst</span></span></div>
@@ -35,7 +66,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section style={{ paddingTop: 0 }}>
+      <section className="d-only" style={{ paddingTop: 0 }}>
         <div className="wrap">
           <div className="shead"><h2>Populair bij onze klanten</h2><button onClick={() => go('maaltijden')}>Hele menu</button></div>
           <div className="grid">{POPULAR.map(s => <ProductCard key={s} p={bySlug(s)} />)}</div>

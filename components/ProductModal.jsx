@@ -1,4 +1,5 @@
 'use client';
+import { lock, unlock } from '@/lib/lock';
 import { useEffect, useState } from 'react';
 import { bySlug, eur, unitPrice, WA } from '@/lib/menu';
 import { useShop } from './ShopProvider';
@@ -12,14 +13,15 @@ export default function ProductModal({ slug, onClose }) {
   useEffect(() => {
     const k = e => e.key === 'Escape' && onClose();
     addEventListener('keydown', k);
-    document.body.style.overflow = 'hidden';
-    return () => { removeEventListener('keydown', k); document.body.style.overflow = ''; };
+    lock();
+    return () => { removeEventListener('keydown', k); unlock(); };
   }, [onClose]);
   const price = unitPrice(p, opt);
   return (
     <>
       <div className="scrim" onClick={onClose} />
-      <div className="modal" role="dialog" aria-modal="true" aria-label={p.n}>
+      <div className="modal sheet" role="dialog" aria-modal="true" aria-label={p.n}>
+        <div className="handle" aria-hidden="true" />
         <div className="pd">
           <div className="pimg"><ProductImg p={p} w={900} /></div>
           <div className="info2">

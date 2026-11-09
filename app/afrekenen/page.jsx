@@ -15,6 +15,7 @@ export default function Checkout() {
   const days = useMemo(() => { const out = []; const d = new Date(); for (let k = 0; out.length < 3 && k < 10; k++) { const t = new Date(d); t.setDate(d.getDate() + k); if ([5, 6, 0].includes(t.getDay())) out.push(dayLabel(t)); } return out; }, []);
   const [f, setF] = useState({ mode: 'bezorgen', zone: 'paars', day: '', time: TIMES[0], name: '', phone: '', email: '', street: '', zip: '', city: '', note: '', pay: 'ideal' });
   const [errs, setErrs] = useState({});
+  const [showSum, setShowSum] = useState(false);
   useEffect(() => { setF(x => ({ ...x, day: x.day || days[0] })); }, [days]);
   const set = (k, v) => { setF(x => ({ ...x, [k]: v })); setErrs(e => ({ ...e, [k]: undefined })); };
 
@@ -102,14 +103,21 @@ export default function Checkout() {
             <label className={`choice ${f.pay === 'ontvangst' ? 'on' : ''}`}><input type="radio" name="pay" checked={f.pay === 'ontvangst'} onChange={() => set('pay', 'ontvangst')} /><span><b>Betalen bij ontvangst</b><span>Je rekent af bij bezorging of afhalen.</span></span></label>
           </div>
 
-          <button className="btn btn-red btn-block" style={{ minHeight: 52, fontSize: 16 }} disabled={tooLow}>
-            {f.pay === 'ideal' ? `Doorgaan naar betalen · ${eur(total)}` : `Bestelling plaatsen · ${eur(total)}`}
-          </button>
+          <div className="paybar">
+            {tooLow && <p className="paywarn">Nog {eur(MIN_ORDER - subtotal)} tot €30 voor bezorging, of kies afhalen.</p>}
+            <button className="btn btn-red btn-block" style={{ minHeight: 52, fontSize: 16 }} disabled={tooLow}>
+              {f.pay === 'ideal' ? `Doorgaan naar betalen · ${eur(total)}` : `Bestelling plaatsen · ${eur(total)}`}
+            </button>
+          </div>
           <p className="secure">🔒 Je gegevens worden alleen gebruikt voor je bestelling.</p>
         </div>
 
-        <aside className="panel sum">
-          <h2 style={{ marginBottom: 6 }}>Je bestelling</h2>
+        <aside className={`panel sum ${showSum ? 'open' : ''}`}>
+          <button type="button" className="sumtoggle" onClick={() => setShowSum(v => !v)} aria-expanded={showSum}>
+            <span><b>Je bestelling</b> <span className="muted">({lines.reduce((a, l) => a + l.q, 0)})</span></span>
+            <span><b>{eur(total)}</b> <span className="chev">▾</span></span>
+          </button>
+          <h2 className="sumh" style={{ marginBottom: 6 }}>Je bestelling</h2>
           <div className="items">
             {lines.map(l => (
               <div className="it" key={l.k}>
@@ -119,9 +127,9 @@ export default function Checkout() {
               </div>
             ))}
           </div>
-          <div className="row"><span>Subtotaal</span><span>{eur(subtotal)}</span></div>
+          <div className="sumrows"><div className="row"><span>Subtotaal</span><span>{eur(subtotal)}</span></div>
           <div className="row"><span>{f.mode === 'bezorgen' ? `Bezorgen (${zone.name.toLowerCase()})` : 'Afhalen'}</span><span>{f.mode === 'bezorgen' ? eur(delivery) : 'Gratis'}</span></div>
-          <div className="row tot"><span>Totaal</span><span>{eur(total)}</span></div>
+          <div className="row tot"><span>Totaal</span><span>{eur(total)}</span></div></div>
         </aside>
       </form>
     </div>
