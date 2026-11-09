@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description: 'R DEV bouwt websites, web apps, SaaS en apps in Alkmaar. Strak, snel en goed vindbaar in Google, met slimme automatisering. Werk vanaf €100, geen contracten.',
   keywords: ['website laten maken alkmaar', 'webdesign alkmaar', 'websites maken alkmaar', 'web app laten maken', 'saas ontwikkeling', 'ai automatisering', 'seo alkmaar'],
   authors: [{ name: site.owner }],
-  openGraph: { type: 'website', locale: 'nl_NL', siteName: 'R DEV', images: [{ url: '/img/sg-desktop.webp', width: 800, height: 500 }] },
+  openGraph: { type: 'website', locale: 'nl_NL', siteName: 'R DEV', images: [{ url: '/img/sg-desktop.webp', width: 2880, height: 1800 }] },
   twitter: { card: 'summary_large_image' },
   alternates: { canonical: '/' },
   robots: { index: true, follow: true }
