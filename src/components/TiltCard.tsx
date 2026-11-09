@@ -25,7 +25,7 @@ export default function TiltCard({ children, className = '', max = 9 }: { childr
   const rotateX = useTransform(sy, [0, 1], [max, -max]);
   const gx = useTransform(sx, (v) => `${v * 100}%`);
   const gy = useTransform(sy, (v) => `${v * 100}%`);
-  const glare = useMotionTemplate`radial-gradient(420px circle at ${gx} ${gy}, rgba(31,92,255,.16), transparent 60%)`;
+  const glare = useMotionTemplate`radial-gradient(420px circle at ${gx} ${gy}, rgba(10,10,10,.07), transparent 60%)`;
 
   if (touch) {
     return (

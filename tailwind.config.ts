@@ -5,14 +5,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: '#0A0C12',
+        ink: '#0A0A0A',
         paper: '#FFFFFF',
-        canvas: '#F4F6FA',
-        line: '#E3E7EE',
-        muted: '#5B6271',
-        soft: '#8A92A2',
-        blue: { DEFAULT: '#1F5CFF', 600: '#1747D6', 50: '#EEF3FF', 100: '#DCE6FF' },
-        navy: { DEFAULT: '#0B1630', 900: '#070E20' }
+        canvas: '#F5F5F4',
+        line: '#E4E4E2',
+        muted: '#5C5C5A',
+        soft: '#8B8B88',
+        // Lorvex: zwart-wit. 'accent' is het merkzwart, 'night' de donkere vlakken, 'haze' het zilveren licht.
+        accent: { DEFAULT: '#0A0A0A', 600: '#262626', 50: '#F0F0EE', 100: '#E6E6E3' },
+        night: { DEFAULT: '#0B0B0B', 900: '#050505' },
+        haze: '#C9C9C6'
       },
       fontFamily: {
         sans: ['"Mona Sans Variable"', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
@@ -22,11 +24,11 @@ export default {
       maxWidth: { site: '1600px' },
       boxShadow: {
         card: '0 1px 2px rgba(10,12,18,.04), 0 18px 40px -24px rgba(10,12,18,.25)',
-        glow: '0 30px 80px -30px rgba(31,92,255,.55)'
+        glow: '0 30px 80px -34px rgba(10,10,10,.45)'
       },
       keyframes: {
         marquee: { to: { transform: 'translateX(-50%)' } },
-        pulseRing: { '0%': { boxShadow: '0 0 0 0 rgba(31,92,255,.45)' }, '100%': { boxShadow: '0 0 0 12px rgba(31,92,255,0)' } }
+        pulseRing: { '0%': { boxShadow: '0 0 0 0 rgba(10,10,10,.35)' }, '100%': { boxShadow: '0 0 0 12px rgba(10,10,10,0)' } }
       },
       animation: {
         marquee: 'marquee 40s linear infinite',

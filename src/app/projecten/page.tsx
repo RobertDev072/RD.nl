@@ -7,7 +7,7 @@ import { projects } from '@/lib/content';
 
 export const metadata: Metadata = {
   title: 'Projecten: websites, web apps en SaaS',
-  description: 'Een selectie uit 100+ projecten van R DEV: websites, web apps en SaaS-platformen voor ondernemers in Alkmaar en daarbuiten.',
+  description: 'Een selectie uit 100+ projecten van Lorvex: websites, web apps en SaaS-platformen voor ondernemers in Alkmaar en daarbuiten.',
   alternates: { canonical: '/projecten' }
 };
 

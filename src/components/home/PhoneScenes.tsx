@@ -19,13 +19,13 @@ export function useTyping(text: string, active: boolean, speed = 55, startDelay 
   return text.slice(0, n);
 }
 
-function Caret({ color = '#1F5CFF' }: { color?: string }) {
+function Caret({ color = '#0A0A0A' }: { color?: string }) {
   return <motion.span className="ml-px inline-block h-[1em] w-[1.5px] align-[-2px]" style={{ background: color }} animate={{ opacity: [1, 1, 0, 0] }} transition={{ duration: 1, repeat: Infinity, times: [0, 0.5, 0.5, 1] }} />;
 }
 
 export function PhoneShell({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={'relative rounded-[52px] bg-[#0b0d12] p-[11px] shadow-[0_0_0_1.5px_#3a3f48_inset,0_60px_120px_-40px_rgba(10,12,18,.6),0_40px_120px_-50px_rgba(31,92,255,.7)] ' + className}>
+    <div className={'relative rounded-[52px] bg-[#0b0d12] p-[11px] shadow-[0_0_0_1.5px_#3a3f48_inset,0_60px_120px_-40px_rgba(10,10,10,.6),0_40px_120px_-60px_rgba(10,10,10,.45)] ' + className}>
       <div className="absolute left-1/2 top-[20px] z-20 h-[26px] w-[92px] -translate-x-1/2 rounded-full bg-black" />
       <div className="relative h-full w-full overflow-hidden rounded-[42px] bg-white">
         <div className="absolute inset-x-0 top-0 z-10 flex h-12 items-center justify-between px-7 text-[12px] font-semibold">
@@ -71,9 +71,9 @@ function SceneSearch() {
               { t: 'Kappers in Alkmaar · Kaart', u: 'maps', hl: false },
               { t: 'Beste kapsalons Alkmaar 2026', u: 'gids.nl', hl: false }
             ].map((r) => (
-              <motion.li key={r.t} variants={{ h: { opacity: 0, y: 10 }, s: { opacity: 1, y: 0 } }} className={'rounded-2xl p-3 ' + (r.hl ? 'bg-blue-50 ring-1 ring-blue/30' : 'bg-canvas')}>
+              <motion.li key={r.t} variants={{ h: { opacity: 0, y: 10 }, s: { opacity: 1, y: 0 } }} className={'rounded-2xl p-3 ' + (r.hl ? 'bg-accent-50 ring-1 ring-accent/30' : 'bg-canvas')}>
                 <span className="block text-[11px] text-soft">{r.u}</span>
-                <span className={'block text-[13.5px] font-semibold ' + (r.hl ? 'text-blue' : '')}>{r.t}</span>
+                <span className={'block text-[13.5px] font-semibold ' + (r.hl ? 'text-accent' : '')}>{r.t}</span>
                 {r.hl && <span className="mt-1 block text-[11.5px] text-muted">★ 4,9 · Vandaag open tot 18:00 · Afspraak via WhatsApp</span>}
               </motion.li>
             ))}
@@ -151,7 +151,7 @@ function SceneChat({ step }: { step: number }) {
       <AnimatePresence>
         {step >= 4 && (
           <motion.div initial={{ y: -90, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5, type: 'spring', stiffness: 220, damping: 22 }} className="absolute inset-x-2.5 top-11 z-20 flex items-center gap-3 rounded-[18px] bg-white/90 p-3 shadow-[0_18px_40px_-14px_rgba(0,0,0,.4)] backdrop-blur">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-blue text-white"><CalendarCheck size={17} /></span>
+            <span className="grid h-9 w-9 place-items-center rounded-xl bg-accent text-white"><CalendarCheck size={17} /></span>
             <span className="leading-tight"><b className="block text-[12.5px]">Agenda · nu</b><span className="text-[12px] text-muted">Knippen · do 12 nov, 11:00</span></span>
             <Check size={16} className="ml-auto text-[#16a34a]" />
           </motion.div>

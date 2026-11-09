@@ -20,9 +20,9 @@ export default function Process() {
       <SplitHeading text="Eerst zien, dan *beslissen*." className="h2 mt-4" />
       <div ref={ref} className="relative mt-16 grid gap-10 md:grid-cols-4 md:gap-6">
         <span aria-hidden className="absolute left-0 right-0 top-[27px] hidden h-[2px] bg-line md:block" />
-        <motion.span aria-hidden className="absolute left-0 right-0 top-[27px] hidden h-[2px] origin-left bg-blue md:block" style={{ scaleX: line }} />
+        <motion.span aria-hidden className="absolute left-0 right-0 top-[27px] hidden h-[2px] origin-left bg-accent md:block" style={{ scaleX: line }} />
         <span aria-hidden className="absolute bottom-6 left-[27px] top-6 w-[2px] bg-line md:hidden" />
-        <motion.span aria-hidden className="absolute bottom-6 left-[27px] top-6 w-[2px] origin-top bg-blue md:hidden" style={{ scaleY: line }} />
+        <motion.span aria-hidden className="absolute bottom-6 left-[27px] top-6 w-[2px] origin-top bg-accent md:hidden" style={{ scaleY: line }} />
         {steps.map((s, i) => (
           <motion.div key={s.t} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-15% 0px' }} transition={{ duration: 0.7, delay: i * 0.12, ease: [0.2, 0.7, 0.2, 1] }} className="relative flex gap-5 md:block">
             <span className="relative z-10 grid h-14 w-14 shrink-0 place-items-center rounded-full border border-line bg-white font-mono text-[14px] font-medium shadow-card">0{i + 1}</span>

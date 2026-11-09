@@ -5,7 +5,7 @@ import CtaBand from '@/components/CtaBand';
 
 export const metadata: Metadata = {
   title: 'Diensten: websites, web apps, SaaS, apps en automatisering',
-  description: 'Alle diensten van R DEV uit Alkmaar: website laten maken, web apps, SaaS, apps, AI-automatisering, SEO en domein, mail en hosting.',
+  description: 'Alle diensten van Lorvex uit Alkmaar: website laten maken, web apps, SaaS, apps, AI-automatisering, SEO en domein, mail en hosting.',
   alternates: { canonical: '/diensten' }
 };
 

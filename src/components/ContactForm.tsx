@@ -36,7 +36,7 @@ export default function ContactForm() {
         <legend className="mb-3 text-[14px] font-medium">Waar kan ik mee helpen?</legend>
         <div className="flex flex-wrap gap-2">
           {services.map((s) => (
-            <button key={s.slug} type="button" onClick={() => toggle(s.title)} aria-pressed={picked.includes(s.title)} className={'rounded-full border px-4 py-2 text-[14px] transition-all ' + (picked.includes(s.title) ? 'border-blue bg-blue text-white' : 'border-line bg-white hover:border-ink/40')}>
+            <button key={s.slug} type="button" onClick={() => toggle(s.title)} aria-pressed={picked.includes(s.title)} className={'rounded-full border px-4 py-2 text-[14px] transition-all ' + (picked.includes(s.title) ? 'border-accent bg-accent text-white' : 'border-line bg-white hover:border-ink/40')}>
               {s.title}
             </button>
           ))}
@@ -49,10 +49,10 @@ export default function ContactForm() {
       <Field id="site" label="Huidige website (optioneel)" placeholder="www.jouwzaak.nl" />
       <label htmlFor="message" className="grid gap-2 text-[14px] font-medium">
         Je vraag
-        <textarea id="message" name="message" rows={5} placeholder="Bijvoorbeeld: ik wil een nieuwe website met online afspraken." className="rounded-2xl border border-line bg-canvas px-4 py-3.5 text-[16px] font-normal outline-none transition focus:border-blue focus:bg-white" />
+        <textarea id="message" name="message" rows={5} placeholder="Bijvoorbeeld: ik wil een nieuwe website met online afspraken." className="rounded-2xl border border-line bg-canvas px-4 py-3.5 text-[16px] font-normal outline-none transition focus:border-accent focus:bg-white" />
       </label>
       {error && <p role="alert" className="text-[14px] text-[#c2410c]">{error}</p>}
-      <button type="submit" className="btn-blue w-full sm:w-auto sm:justify-self-start">Verstuur via WhatsApp <ArrowRight size={17} /></button>
+      <button type="submit" className="btn-accent w-full sm:w-auto sm:justify-self-start">Verstuur via WhatsApp <ArrowRight size={17} /></button>
     </form>
   );
 }
@@ -61,7 +61,7 @@ function Field({ id, label, ...rest }: { id: string; label: string } & React.Inp
   return (
     <label htmlFor={id} className="grid gap-2 text-[14px] font-medium">
       {label}
-      <input id={id} name={id} className="h-[52px] rounded-2xl border border-line bg-canvas px-4 text-[16px] font-normal outline-none transition focus:border-blue focus:bg-white" {...rest} />
+      <input id={id} name={id} className="h-[52px] rounded-2xl border border-line bg-canvas px-4 text-[16px] font-normal outline-none transition focus:border-accent focus:bg-white" {...rest} />
     </label>
   );
 }

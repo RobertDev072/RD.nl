@@ -6,8 +6,8 @@ import { Reveal } from '@/components/Reveal';
 import { site } from '@/lib/site';
 
 export const metadata: Metadata = {
-  title: 'Contact: bel of app R DEV in Alkmaar',
-  description: `Directe lijn met Robert van R DEV. Bel of app ${site.phone}. Geen contracten, geen vaste kosten, werk vanaf €100.`,
+  title: 'Contact: bel of app Lorvex in Alkmaar',
+  description: `Directe lijn met Robert van Lorvex. Bel of app ${site.phone}. Geen contracten, geen vaste kosten, werk vanaf €100.`,
   alternates: { canonical: '/contact' }
 };
 
@@ -24,8 +24,8 @@ export default function Contact() {
             </a>
           </Reveal>
           <Reveal delay={0.08}>
-            <a href={site.phoneHref} className="card group flex items-center gap-5 p-6 transition-all hover:-translate-y-1 hover:border-blue/40">
-              <span className="grid h-14 w-14 place-items-center rounded-2xl bg-blue text-white"><Phone size={22} /></span>
+            <a href={site.phoneHref} className="card group flex items-center gap-5 p-6 transition-all hover:-translate-y-1 hover:border-accent/40">
+              <span className="grid h-14 w-14 place-items-center rounded-2xl bg-accent text-white"><Phone size={22} /></span>
               <span><b className="block text-[19px] tabular-nums">{site.phone}</b><span className="text-muted">Bel gerust, ook voor een korte vraag</span></span>
             </a>
           </Reveal>

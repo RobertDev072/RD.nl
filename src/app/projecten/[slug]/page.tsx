@@ -58,14 +58,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             {p.built.map((b, i) => (
               <Reveal key={b} delay={i * 0.06}>
                 <li className="card flex items-center gap-4 rounded-2xl px-5 py-4 text-[16.5px] font-medium">
-                  <span className="grid h-8 w-8 place-items-center rounded-full text-white" style={{ background: '#1F5CFF' }}><Check size={16} strokeWidth={3} /></span>{b}
+                  <span className="grid h-8 w-8 place-items-center rounded-full text-white" style={{ background: '#0A0A0A' }}><Check size={16} strokeWidth={3} /></span>{b}
                 </li>
               </Reveal>
             ))}
           </ul>
           <div className="mt-10 flex flex-wrap gap-2">
             {p.services.map(getService).filter(Boolean).map((s) => (
-              <Link key={s!.slug} href={`/diensten/${s!.slug}`} className="chip hover:border-ink"><ServiceIcon name={s!.icon} size={15} className="text-blue" />{s!.menu}</Link>
+              <Link key={s!.slug} href={`/diensten/${s!.slug}`} className="chip hover:border-ink"><ServiceIcon name={s!.icon} size={15} className="text-accent" />{s!.menu}</Link>
             ))}
           </div>
         </div>
@@ -75,7 +75,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         <Link href={`/projecten/${next.slug}`} className="wrap group flex flex-wrap items-center justify-between gap-6 py-16">
           <span>
             <span className="eyebrow">Volgend project</span>
-            <span className="h2 mt-3 block transition-colors group-hover:text-blue">{next.name}</span>
+            <span className="h2 mt-3 block transition-colors group-hover:text-accent">{next.name}</span>
           </span>
           <span className="grid h-20 w-20 place-items-center rounded-full border border-line transition-all duration-500 group-hover:translate-x-2 group-hover:border-ink group-hover:bg-ink group-hover:text-white"><ArrowRight size={28} /></span>
         </Link>

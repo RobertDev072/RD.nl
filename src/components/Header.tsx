@@ -1,5 +1,4 @@
 'use client';
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
@@ -8,10 +7,12 @@ import { useEffect, useRef, useState } from 'react';
 import { services } from '@/lib/content';
 import { site } from '@/lib/site';
 import { ServiceIcon } from './icons';
+import { LogoCompact } from './Logo';
 
 const links = [
   { href: '/projecten', label: 'Projecten' },
   { href: '/automatisering', label: 'Automatisering' },
+  { href: '/kennisbank', label: 'Kennisbank' },
   { href: '/over', label: 'Over' },
   { href: '/contact', label: 'Contact' }
 ];
@@ -57,9 +58,8 @@ export default function Header() {
       >
         <div className={'absolute inset-0 -z-10 transition-all duration-500 ' + (solid || mega ? 'border-b border-line/80 bg-white/80 backdrop-blur-xl' : 'bg-transparent')} />
         <div className="wrap flex h-[76px] items-center gap-8">
-          <Link href="/" className="flex shrink-0 items-center gap-3" aria-label="R DEV, naar de homepage">
-            <Image src="/img/logo-black.png" alt="R DEV" width={26} height={33} priority />
-            <span className="text-[15px] font-semibold tracking-tight" style={{ fontStretch: '110%' }}>R DEV</span>
+          <Link href="/" className="flex shrink-0 items-center text-ink" aria-label="Lorvex, naar de homepage">
+            <LogoCompact className="h-[22px] w-auto sm:h-[24px]" />
           </Link>
 
           <nav className="ml-6 hidden items-center gap-1 lg:flex" aria-label="Hoofdmenu">
@@ -82,7 +82,7 @@ export default function Header() {
                 className={'relative rounded-full px-4 py-2 text-[14.5px] font-medium transition-colors ' + (pathname.startsWith(l.href) ? 'text-ink' : 'text-ink/75 hover:text-ink')}
               >
                 {l.label}
-                {pathname.startsWith(l.href) && <motion.span layoutId="navdot" className="absolute bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-blue" />}
+                {pathname.startsWith(l.href) && <motion.span layoutId="navdot" className="absolute bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-accent" />}
               </Link>
             ))}
           </nav>
@@ -109,7 +109,7 @@ export default function Header() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.35, ease }}
-              className="absolute inset-x-0 top-full hidden border-b border-line bg-white/95 shadow-[0_40px_80px_-40px_rgba(10,12,18,.35)] backdrop-blur-xl lg:block"
+              className="absolute inset-x-0 top-full hidden border-b border-line bg-white/95 shadow-[0_40px_80px_-40px_rgba(10,10,10,.35)] backdrop-blur-xl lg:block"
             >
               <div className="wrap grid grid-cols-[1fr_360px] gap-10 py-10">
                 <div>
@@ -118,7 +118,7 @@ export default function Header() {
                     {services.map((s, i) => (
                       <motion.li key={s.slug} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.03 * i, duration: 0.4, ease }}>
                         <Link href={`/diensten/${s.slug}`} className="group flex gap-4 rounded-2xl p-4 transition-colors hover:bg-canvas">
-                          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue transition-colors group-hover:bg-blue group-hover:text-white">
+                          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent-50 text-accent transition-colors group-hover:bg-accent group-hover:text-white">
                             <ServiceIcon name={s.icon} size={20} />
                           </span>
                           <span>
@@ -130,10 +130,10 @@ export default function Header() {
                     ))}
                   </ul>
                 </div>
-                <Link href="/automatisering" className="group relative flex flex-col justify-end overflow-hidden rounded-3xl bg-navy p-7 text-white">
-                  <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-blue/50 blur-3xl transition-transform duration-700 group-hover:scale-125" />
+                <Link href="/automatisering" className="group relative flex flex-col justify-end overflow-hidden rounded-3xl bg-night p-7 text-white">
+                  <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-white/[.12] blur-3xl transition-transform duration-700 group-hover:scale-125" />
                   <span className="eyebrow relative text-white/60">Nieuw</span>
-                  <span className="h3 relative mt-3 text-[30px]">Mis nooit meer een <span className="script text-[1.25em] text-[#8fb0ff]">klant</span></span>
+                  <span className="h3 relative mt-3 text-[30px]">Mis nooit meer een <span className="script text-[1.25em] text-white/70">klant</span></span>
                   <span className="relative mt-3 text-[14px] leading-relaxed text-white/70">Zie hoe een AI-agent je WhatsApp beantwoordt en afspraken in je agenda zet.</span>
                   <span className="relative mt-6 inline-flex items-center gap-2 text-[14px] font-semibold">Bekijk de demo <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></span>
                 </Link>
@@ -154,7 +154,7 @@ export default function Header() {
             style={{ paddingTop: 'env(safe-area-inset-top, 0px)', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
           >
             <div className="wrap flex h-[76px] items-center justify-between">
-              <Link href="/" className="flex items-center gap-3"><Image src="/img/logo-black.png" alt="R DEV" width={26} height={33} /><span className="font-semibold">R DEV</span></Link>
+              <Link href="/" className="text-ink" aria-label="Lorvex, naar de homepage"><LogoCompact className="h-[22px] w-auto" /></Link>
               <button type="button" onClick={() => setMobile(false)} className="grid h-11 w-11 place-items-center rounded-full border border-line" aria-label="Menu sluiten"><X size={20} /></button>
             </div>
             <nav className="wrap flex-1 overflow-y-auto pb-8 pt-4" aria-label="Mobiel menu">
@@ -163,7 +163,7 @@ export default function Header() {
                 {services.map((s, i) => (
                   <motion.li key={s.slug} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 + i * 0.04, ease }}>
                     <Link href={`/diensten/${s.slug}`} className="flex items-center gap-3 rounded-xl py-2.5">
-                      <span className="grid h-9 w-9 place-items-center rounded-lg bg-blue-50 text-blue"><ServiceIcon name={s.icon} size={17} /></span>
+                      <span className="grid h-9 w-9 place-items-center rounded-lg bg-accent-50 text-accent"><ServiceIcon name={s.icon} size={17} /></span>
                       <span className="text-[17px] font-medium">{s.menu}</span>
                     </Link>
                   </motion.li>
@@ -178,7 +178,7 @@ export default function Header() {
               </ul>
             </nav>
             <div className="wrap grid gap-3 border-t border-line py-5">
-              <a href={site.whatsapp} className="btn-blue w-full">App me via WhatsApp</a>
+              <a href={site.whatsapp} className="btn-accent w-full">App me via WhatsApp</a>
               <a href={site.phoneHref} className="btn-ghost w-full"><Phone size={16} /> {site.phone}</a>
             </div>
           </motion.div>

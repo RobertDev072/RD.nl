@@ -1,0 +1,48 @@
+/* Lorvex-logo. Gegenereerd uit de brand-geometrie (zie public/brand). Kleur volgt currentColor. */
+const STEM = 'M28 0V64Q28 72 36 72H28L0 100V33Q0 28 3.5 24.5Z';
+const FOOT = 'M33 72H105L84 93Q77 100 68 100H5Z';
+const WORD = 'M0 0h10v80h62v10h-72zM126.0 45a50.5 46 0 1 0 101 0a50.5 46 0 1 0 -101 0zM136.5 45a40 35.5 0 1 1 80 0a40 35.5 0 1 1 -80 0zM287 0h10v90h-10zM297 0h36a28 28 0 0 1 0 56h-36v-10h36a18 18 0 0 0 0 -36h-36zM322.4 46h12l32.6 44h-12zM421 0h11.3l36.7 78.6l36.7 -78.6h11.3l-42 90h-12zM575 0h70v10h-70zM575 40h70v10h-70zM575 80h70v10h-70zM701 0h12l76 90h-12zM777 0h12l-76 90h-12z';
+const TAG = 'M 0 26 L 13 1.6 L 26 26 M 5.3 17.5 H 20.7 M 68.3623 0 V 26 M 162.551 1.5 H 184.551 M 173.551 1.5 V 26 M 238.413 1.5 H 220.913 V 24.5 H 238.413 M 220.913 13 H 236.413 M 294.975 5.2 A 12 12 0 1 0 294.975 20.8 M 330.138 0 V 26 M 349.138 0 V 26 M 330.138 13 H 349.138 M 455.526 5.2 A 12 12 0 1 0 455.526 20.8 M 500.188 1.5 A 11.5 11.5 0 1 1 500.178 1.5 Z M 543.051 26 V 2 L 555.551 19.5 L 568.051 2 V 26 M 602.413 26 V 1.5 H 613.413 A 6.5 6.5 0 0 1 613.413 14.5 H 602.413 M 653.275 26 L 666.275 1.6 L 679.275 26 M 658.575 17.5 H 673.975 M 712.138 26 V 2 L 731.138 24 V 0 M 765 0 L 777 13 L 789 0 M 777 13 V 26';
+
+type P = { className?: string; title?: string };
+
+export function LogoMark({ className = '', title = 'Lorvex' }: P) {
+  return (
+    <svg viewBox="0 0 105 100" className={className} fill="currentColor" role="img" aria-label={title}>
+      <path d={STEM} />
+      <path d={FOOT} opacity={0.8} />
+    </svg>
+  );
+}
+
+/** Beeldmerk + woordmerk, voor header en kleine plekken. */
+export function LogoCompact({ className = '', title = 'Lorvex' }: P) {
+  return (
+    <svg viewBox="0 0 945.5 90" className={className} fill="currentColor" role="img" aria-label={title}>
+      <g transform="scale(0.9)"><path d={STEM} /><path d={FOOT} opacity={0.8} /></g>
+      <rect x="124.5" y="0" width="2" height="90" opacity={0.35} />
+      <path transform="translate(156.5 0)" d={WORD} />
+    </svg>
+  );
+}
+
+/** Volledig logo met tagline AI TECH COMPANY. */
+export function LogoFull({ className = '', title = 'Lorvex, AI Tech Company' }: P) {
+  return (
+    <svg viewBox="0 0 1125.5 170" className={className} fill="currentColor" role="img" aria-label={title}>
+      <g transform="scale(1.7)"><path d={STEM} /><path d={FOOT} opacity={0.8} /></g>
+      <rect x="256.5" y="0" width="2" height="170" opacity={0.5} />
+      <path transform="translate(336.5 0)" d={WORD} />
+      <path transform="translate(336.5 144)" d={TAG} fill="none" stroke="currentColor" strokeWidth={3} opacity={0.7} />
+    </svg>
+  );
+}
+
+/** Alleen het woordmerk LORVEX. */
+export function Wordmark({ className = '', title = 'Lorvex' }: P) {
+  return (
+    <svg viewBox="0 0 789 90" className={className} fill="currentColor" role="img" aria-label={title}>
+      <path d={WORD} />
+    </svg>
+  );
+}

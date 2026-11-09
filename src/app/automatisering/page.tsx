@@ -21,7 +21,7 @@ export default function Automatisering() {
   return (
     <>
       <PageHero eyebrow="AI en automatisering" title="Mis nooit meer een *klant*." intro={s.intro}>
-        <a href={waLink('Hoi Robert, ik wil meer weten over AI-automatisering voor mijn zaak.')} className="btn-blue"><MessageCircle size={18} /> Vraag een demo aan</a>
+        <a href={waLink('Hoi Robert, ik wil meer weten over AI-automatisering voor mijn zaak.')} className="btn-accent"><MessageCircle size={18} /> Vraag een demo aan</a>
       </PageHero>
       <section className="border-y border-line bg-white"><FlowStory /></section>
       <section className="wrap py-[clamp(96px,12vw,170px)]">
@@ -31,8 +31,8 @@ export default function Automatisering() {
           {s.features.map((f, i) => (
             <Reveal key={f.title} delay={i * 0.08}>
               <TiltCard>
-                <div className={'card flex h-full min-h-[230px] flex-col p-7 ' + (i === 0 ? 'bg-navy text-white' : '')}>
-                  <span className={'font-mono text-[13px] ' + (i === 0 ? 'text-[#8fb0ff]' : 'text-blue')}>0{i + 1}</span>
+                <div className={'card flex h-full min-h-[230px] flex-col p-7 ' + (i === 0 ? 'bg-night text-white' : '')}>
+                  <span className={'font-mono text-[13px] ' + (i === 0 ? 'text-white/50' : 'text-accent')}>0{i + 1}</span>
                   <h3 className="h3 mt-auto pt-8 text-[24px]">{f.title}</h3>
                   <p className={'mt-2 text-[15px] leading-relaxed ' + (i === 0 ? 'text-white/70' : 'text-muted')}>{f.text}</p>
                 </div>

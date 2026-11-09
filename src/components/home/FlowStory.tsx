@@ -49,7 +49,7 @@ function PinnedFlow() {
     <div ref={ref} className="relative" style={{ height: '520vh' }}>
       <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
         <div aria-hidden className="absolute inset-0 bg-grid opacity-70" />
-        <div aria-hidden className="absolute left-1/2 top-1/2 h-[70vh] w-[70vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue/20 blur-[120px]" />
+        <div aria-hidden className="absolute left-1/2 top-1/2 h-[70vh] w-[70vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-haze/50 blur-[120px]" />
         <div className="wrap relative grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-[clamp(24px,4vw,72px)] pt-16">
           {/* left: heading + step rail */}
           <div>
@@ -57,11 +57,11 @@ function PinnedFlow() {
             <h2 className="h2 mt-4 text-[clamp(38px,4.2vw,72px)]">Van zoek&shy;opdracht tot <span className="script text-[1.15em]">afspraak</span>.</h2>
             <ol className="relative mt-10 grid gap-1 pl-7">
               <span aria-hidden className="absolute bottom-3 left-[7px] top-3 w-[2px] rounded bg-line" />
-              <motion.span aria-hidden className="absolute left-[7px] top-3 w-[2px] origin-top rounded bg-blue" style={{ bottom: 12, scaleY: rail }} />
+              <motion.span aria-hidden className="absolute left-[7px] top-3 w-[2px] origin-top rounded bg-accent" style={{ bottom: 12, scaleY: rail }} />
               {STEPS.map((s, i) => (
                 <li key={s.label}>
                   <button type="button" onClick={() => go(i)} className="group relative block w-full rounded-xl py-2 text-left">
-                    <span className={'absolute -left-7 top-[13px] h-4 w-4 rounded-full border-2 transition-all duration-500 ' + (i <= step ? 'border-blue bg-blue shadow-[0_0_0_5px_rgba(31,92,255,.15)]' : 'border-line bg-white')} />
+                    <span className={'absolute -left-7 top-[13px] h-4 w-4 rounded-full border-2 transition-all duration-500 ' + (i <= step ? 'border-accent bg-accent shadow-[0_0_0_5px_rgba(10,10,10,.1)]' : 'border-line bg-white')} />
                     <span className={'block text-[17px] font-semibold transition-colors duration-500 ' + (i === step ? 'text-ink' : i < step ? 'text-ink/60' : 'text-ink/35')}>{s.label}</span>
                     <motion.span initial={false} animate={{ height: i === step ? 'auto' : 0, opacity: i === step ? 1 : 0 }} transition={{ duration: 0.45, ease }} className="block overflow-hidden text-[14.5px] leading-snug text-muted">
                       <span className="block pt-1">{s.text}</span>
@@ -110,7 +110,7 @@ function AutoFlow() {
       <h2 className="h2 mt-4">Van zoekopdracht tot <span className="script text-[1.15em]">afspraak</span>.</h2>
       <div className="mt-8 flex flex-wrap gap-2">
         {STEPS.map((s, i) => (
-          <button key={s.label} type="button" onClick={() => setStep(i)} className={'chip transition-colors ' + (i === step ? 'border-ink bg-ink text-white' : i < step ? 'text-blue' : 'text-muted')}>
+          <button key={s.label} type="button" onClick={() => setStep(i)} className={'chip transition-colors ' + (i === step ? 'border-ink bg-ink text-white' : i < step ? 'text-accent' : 'text-muted')}>
             {i + 1}. {s.label}
           </button>
         ))}
@@ -129,8 +129,8 @@ function Connector({ step }: { step: number }) {
   return (
     <svg aria-hidden width="90" height="160" viewBox="0 0 90 160" className="mr-2 hidden shrink-0 xl:block" fill="none">
       <path d="M2 80 C 40 80, 50 20, 88 20" stroke="#E3E7EE" strokeWidth="2" />
-      <motion.path key={step} d="M2 80 C 40 80, 50 20, 88 20" stroke="#1F5CFF" strokeWidth="2" strokeLinecap="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.8, ease }} />
-      <circle r="4.5" fill="#1F5CFF" key={'d' + step}>
+      <motion.path key={step} d="M2 80 C 40 80, 50 20, 88 20" stroke="#0A0A0A" strokeWidth="2" strokeLinecap="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.8, ease }} />
+      <circle r="4.5" fill="#0A0A0A" key={'d' + step}>
         <animateMotion dur="0.8s" fill="freeze" path="M2 80 C 40 80, 50 20, 88 20" />
       </circle>
     </svg>
@@ -172,7 +172,7 @@ function StepCard({ i, active }: { i: number; active: boolean }) {
           <span className="eyebrow block text-[10.5px]">Stap {i + 1}</span>
           <b className="text-[16px]">{S.label}</b>
         </span>
-        <span className={'ml-auto rounded-full px-2.5 py-1 font-mono text-[10.5px] uppercase tracking-wide ' + (i === 3 && active ? 'bg-blue-50 text-blue' : 'bg-[#e8f8ee] text-[#15803d]')}>{i === 3 && active ? 'Bezig' : 'Klaar'}</span>
+        <span className={'ml-auto rounded-full px-2.5 py-1 font-mono text-[10.5px] uppercase tracking-wide ' + (i === 3 && active ? 'bg-accent-50 text-accent' : 'bg-[#e8f8ee] text-[#15803d]')}>{i === 3 && active ? 'Bezig' : 'Klaar'}</span>
       </div>
       <div className="mt-4">{active && <CardBody i={i} />}{!active && <div className="h-10" />}</div>
     </div>
@@ -184,8 +184,8 @@ function CardBody({ i }: { i: number }) {
     return (
       <div className="rounded-2xl bg-canvas p-3.5">
         <span className="text-[11px] text-soft">kapper.nl</span>
-        <p className="text-[14px] font-semibold text-blue">Studio Noord · Kapper Alkmaar</p>
-        <div className="mt-2 flex items-center gap-2 text-[12px] text-muted"><span className="rounded bg-blue px-1.5 py-0.5 font-mono text-[10px] text-white">#1</span> Lokale SEO en Google Bedrijfsprofiel</div>
+        <p className="text-[14px] font-semibold text-accent">Studio Noord · Kapper Alkmaar</p>
+        <div className="mt-2 flex items-center gap-2 text-[12px] text-muted"><span className="rounded bg-accent px-1.5 py-0.5 font-mono text-[10px] text-white">#1</span> Lokale SEO en Google Bedrijfsprofiel</div>
       </div>
     );
   if (i === 1)
@@ -194,7 +194,7 @@ function CardBody({ i }: { i: number }) {
         {[['Laadtijd op mobiel', 92], ['Duidelijke boekknop', 100], ['Vindbaarheid', 88]].map(([l, v], k) => (
           <div key={l as string}>
             <div className="mb-1 flex justify-between text-[12.5px]"><span className="text-muted">{l}</span></div>
-            <div className="h-1.5 overflow-hidden rounded-full bg-canvas"><motion.div className="h-full rounded-full bg-blue" initial={{ width: 0 }} animate={{ width: `${v}%` }} transition={{ duration: 1, delay: 0.15 * k, ease }} /></div>
+            <div className="h-1.5 overflow-hidden rounded-full bg-canvas"><motion.div className="h-full rounded-full bg-accent" initial={{ width: 0 }} animate={{ width: `${v}%` }} transition={{ duration: 1, delay: 0.15 * k, ease }} /></div>
           </div>
         ))}
       </div>
@@ -209,7 +209,7 @@ function CardBody({ i }: { i: number }) {
   if (i === 3) return <ScanCalendar />;
   return (
     <div>
-      <div className="rounded-2xl bg-blue p-4 text-white">
+      <div className="rounded-2xl bg-accent p-4 text-white">
         <span className="text-[12px] text-white/70">Donderdag 12 november</span>
         <p className="text-[20px] font-semibold tracking-tight">11:00 · Knippen · Sanne</p>
       </div>
@@ -234,7 +234,7 @@ function ScanCalendar() {
   return (
     <div className="overflow-hidden rounded-2xl border border-line">
       <div className="grid grid-cols-[44px_repeat(5,minmax(0,1fr))] bg-canvas font-mono text-[10px] text-soft">
-        <span />{['MA', 'DI', 'WO', 'DO', 'VR'].map((d) => <span key={d} className={'px-1.5 py-2 ' + (d === 'DO' ? 'text-blue' : '')}>{d}</span>)}
+        <span />{['MA', 'DI', 'WO', 'DO', 'VR'].map((d) => <span key={d} className={'px-1.5 py-2 ' + (d === 'DO' ? 'text-accent' : '')}>{d}</span>)}
       </div>
       {['09:00', '10:00', '11:00'].map((h, r) => (
         <div key={h} className="grid h-9 grid-cols-[44px_repeat(5,minmax(0,1fr))] border-t border-line">
@@ -244,7 +244,7 @@ function ScanCalendar() {
             const scan = d === 3 && row === r && row < 3;
             const free = d === 3 && r === 2 && row >= 3;
             return (
-              <span key={d} className={'m-1 flex items-center overflow-hidden whitespace-nowrap rounded-md px-1.5 text-[9.5px] font-semibold transition-all duration-300 ' + (b ? 'bg-blue-50 text-[#1a3d8f]' : scan ? 'ring-2 ring-blue bg-blue/10' : free ? 'bg-[#16a34a] text-white' : '')}>
+              <span key={d} className={'m-1 flex items-center overflow-hidden whitespace-nowrap rounded-md px-1.5 text-[9.5px] font-semibold transition-all duration-300 ' + (b ? 'bg-accent-50 text-[#1a3d8f]' : scan ? 'ring-2 ring-accent bg-accent/10' : free ? 'bg-[#16a34a] text-white' : '')}>
                 {b || (free ? 'Vrij ✓' : '')}
               </span>
             );

@@ -33,7 +33,7 @@ export default function ProjectsRail() {
               <h2 id="werk-title" className="h2 mt-3 text-[clamp(40px,4.6vw,80px)]">Gebouwd en <span className="script text-[1.15em]">live</span>.</h2>
             </div>
             <div className="flex items-center gap-6">
-              <span className="relative h-[3px] w-48 overflow-hidden rounded bg-line"><motion.span className="absolute inset-y-0 left-0 rounded bg-blue" style={{ width: bar }} /></span>
+              <span className="relative h-[3px] w-48 overflow-hidden rounded bg-line"><motion.span className="absolute inset-y-0 left-0 rounded bg-accent" style={{ width: bar }} /></span>
               <Link href="/projecten" className="btn-ghost">Alle projecten</Link>
             </div>
           </div>
@@ -130,7 +130,7 @@ function MobileRail() {
       </div>
       <div className="wrap mt-4 flex items-center gap-2" aria-hidden>
         {projects.map((p, i) => (
-          <span key={p.slug} className={'h-1.5 rounded-full transition-all duration-500 ' + (i === active ? 'w-8 bg-blue' : 'w-1.5 bg-line')} />
+          <span key={p.slug} className={'h-1.5 rounded-full transition-all duration-500 ' + (i === active ? 'w-8 bg-accent' : 'w-1.5 bg-line')} />
         ))}
         <span className="ml-3 font-mono text-[11px] uppercase tracking-[.12em] text-soft">Swipe</span>
       </div>
