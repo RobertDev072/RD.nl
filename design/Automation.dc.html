@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<title>Demo afspraak naar agenda</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&amp;family=Geist+Mono:wght@400;500&amp;family=Instrument+Serif:ital@0;1&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#9cc3ff}a:hover{color:#ffffff}
+.au *{box-sizing:border-box}
+.au button{font-family:inherit}
+.slot{min-height:44px;border-radius:10px;border:1px solid #e6d5cd;background:#fff;color:#3b2a26;font-size:15px;font-weight:600;cursor:pointer}
+.slot:hover{border-color:#b4533d}
+.slot:focus-visible,.go:focus-visible,.reset:focus-visible{outline:3px solid #4d8dff;outline-offset:2px}
+.slot.on{background:#3b2a26;color:#fff;border-color:#3b2a26}
+.go{min-height:52px;border:0;border-radius:999px;background:#b4533d;color:#fff;font-size:16px;font-weight:700;cursor:pointer}
+.go[disabled]{opacity:.45;cursor:default}
+.reset{min-height:44px;padding:0 18px;border-radius:999px;border:1px solid rgba(160,185,235,.25);background:transparent;color:#eef2fa;font-size:14px;cursor:pointer}
+.step{transition:opacity .4s,transform .4s,border-color .4s,background .4s}
+.pop{transition:opacity .45s,transform .45s}
+</style>
+</helmet>
+<div class="au" style="width: 1440px; height: 900px; background: radial-gradient(1200px 700px at 75% 40%,#0f2147 0%,#05070d 60%); color: #eef2fa; font-family: 'Geist', system-ui, sans-serif; display: grid; grid-template-columns: 520px minmax(0,1fr); gap: 64px; padding: 64px 72px; position: relative; overflow: hidden">
+
+  <!-- left: tablet with booking -->
+  <div style="display: flex; flex-direction: column; gap: 28px">
+    <div>
+      <div style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: #ffb547">Live demo</div>
+      <h1 style="margin: 12px 0 0; font-size: 46px; line-height: 1; letter-spacing: -.045em; font-weight: 650">Boek een afspraak <span style="font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; color: #9cc3ff">en kijk mee.</span></h1>
+      <p style="margin: 14px 0 0; color: rgba(220,228,245,.65); font-size: 16px; line-height: 1.5">Kies een tijd en bevestig. Rechts zie je wat er automatisch gebeurt.</p>
+    </div>
+    <div style="border-radius: 34px; padding: 18px; background: linear-gradient(145deg,#3a3f48,#0b0c0f 55%); box-shadow: inset 0 0 0 1.5px #5b616c, inset 0 0 0 4px #0b0c0f, 0 50px 90px -30px rgba(0,0,0,.95)">
+      <div style="border-radius: 18px; background: #fbf7f4; padding: 28px; display: flex; flex-direction: column; gap: 18px; color: #2a1d1a">
+        <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: 28px; color: #3b2a26">Salon Mira</span><span style="color: #7a5a52; font-size: 14px">Do 12 november</span></div>
+        <div style="font-size: 15px; color: #7a5a52">Knippen + föhnen · 45 min · € 42</div>
+        <div style="display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px">
+          <sc-for list="{{slots}}" as="s" hint-placeholder-count="6">
+            <button type="button" class="{{s.cls}}" onClick="{{s.pick}}" aria-pressed="{{s.pressed}}">{{s.t}}</button>
+          </sc-for>
+        </div>
+        <button type="button" class="go" onClick="{{confirm}}" disabled="{{goDisabled}}">{{goLabel}}</button>
+      </div>
+    </div>
+    <div style="display: flex; gap: 12px; align-items: center">
+      <button type="button" class="reset" onClick="{{reset}}">Opnieuw</button>
+      <span style="color: rgba(220,228,245,.5); font-size: 13px; font-family: 'Geist Mono', monospace">Voorbeeld met verzonnen salon en klant</span>
+    </div>
+  </div>
+
+  <!-- right: pipeline + phone + calendar -->
+  <div style="display: grid; grid-template-columns: minmax(0,1fr) 300px; gap: 40px; align-items: center; min-width: 0">
+    <ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px">
+      <sc-for list="{{steps}}" as="st" hint-placeholder-count="5">
+        <li class="step" style="{{st.style}}">
+          <span style="{{st.dot}}">{{st.n}}</span>
+          <span style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
+            <strong style="font-size: 18px; letter-spacing: -.02em">{{st.title}}</strong>
+            <span style="color: rgba(220,228,245,.62); font-size: 14px">{{st.text}}</span>
+          </span>
+          <span style="margin-left: auto; font-family: 'Geist Mono', monospace; font-size: 12px; color: #9cc3ff">{{st.time}}</span>
+        </li>
+      </sc-for>
+    </ol>
+
+    <div style="display: flex; flex-direction: column; gap: 18px">
+      <!-- phone -->
+      <div style="border-radius: 46px; padding: 12px; background: linear-gradient(150deg,#3f4550,#0a0b0e 50%,#2a2e36); box-shadow: inset 0 0 0 1.5px #626a77, inset 0 0 0 4px #08090b, 0 50px 90px -25px rgba(0,0,0,.95); position: relative">
+        <div style="position: absolute; top: 24px; left: 50%; width: 92px; height: 26px; translate: -50% 0; border-radius: 99px; background: #000; z-index: 2"></div>
+        <div style="border-radius: 36px; height: 520px; background: linear-gradient(180deg,#14284f,#0a1630); padding: 70px 14px 14px; display: flex; flex-direction: column; gap: 10px; overflow: hidden">
+          <div style="text-align: center; color: rgba(255,255,255,.85); font-size: 54px; font-weight: 300; letter-spacing: -.03em">9:41</div>
+          <div class="pop" style="{{waStyle}}">
+            <div style="display: flex; gap: 6px; align-items: center; color: #6b7894; font-size: 11px"><span style="width: 16px; height: 16px; border-radius: 5px; background: #2bb673"></span>WHATSAPP · nu</div>
+            <div style="font-weight: 700; margin-top: 4px; color: #0e1a33; font-size: 14px">Salon Mira</div>
+            <div style="color: #2a3550; font-size: 13px; line-height: 1.4">Hoi Sanne, je afspraak staat vast: do 12 nov om {{time}}. Tot dan!</div>
+          </div>
+          <div class="pop" style="{{calStyle}}">
+            <div style="display: flex; gap: 6px; align-items: center; color: #6b7894; font-size: 11px"><span style="width: 16px; height: 16px; border-radius: 5px; background: #4d8dff"></span>AGENDA · nu</div>
+            <div style="font-weight: 700; margin-top: 4px; color: #0e1a33; font-size: 14px">Toegevoegd aan je agenda</div>
+            <div style="color: #2a3550; font-size: 13px">Knippen + föhnen · {{time}}</div>
+          </div>
+          <div class="pop" style="{{remStyle}}">
+            <div style="display: flex; gap: 6px; align-items: center; color: #6b7894; font-size: 11px"><span style="width: 16px; height: 16px; border-radius: 5px; background: #ffb547"></span>HERINNERING · gepland</div>
+            <div style="color: #2a3550; font-size: 13px; margin-top: 4px">Wo 11 nov om {{time}}: morgen je afspraak.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { picked: null, step: 0 }; this.timers = []; }
+  componentWillUnmount() { this.timers.forEach(clearTimeout); }
+  run() {
+    this.timers.forEach(clearTimeout); this.timers = [];
+    this.setState({ step: 1 });
+    [2, 3, 4, 5].forEach((s, i) => { this.timers.push(setTimeout(() => this.setState({ step: s }), 900 * (i + 1))); });
+  }
+  renderVals() {
+    const times = ['09:30', '11:00', '13:15', '14:00', '15:30', '16:45'];
+    const { picked, step } = this.state;
+    const slots = times.map((t) => ({
+      t, pressed: picked === t ? 'true' : 'false',
+      cls: picked === t ? 'slot on' : 'slot',
+      pick: () => { if (step === 0) this.setState({ picked: t }); }
+    }));
+    const defs = [
+      ['Klant boekt online', 'Sanne kiest een tijd op de website.', '0,0 s'],
+      ['Agenda gecheckt', 'Tijd is vrij, pauzes en buffers kloppen.', '0,4 s'],
+      ['Bevestiging via WhatsApp', 'Automatisch bericht in jouw toon.', '1,1 s'],
+      ['Opgeslagen in je agenda', 'Google Calendar of Outlook, voor het hele team.', '1,6 s'],
+      ['Herinnering ingepland', '24 uur vooraf, plus reviewverzoek na afloop.', '2,0 s']
+    ];
+    const steps = defs.map((d, i) => {
+      const done = step > i, active = step === i + 1;
+      return {
+        n: done ? '✓' : String(i + 1), title: d[0], text: d[1], time: done ? d[2] : '',
+        style: 'display:flex;gap:16px;align-items:center;padding:18px 20px;border-radius:18px;border:1px solid ' + (done ? 'rgba(77,141,255,.55)' : 'rgba(160,185,235,.14)') + ';background:' + (done ? 'rgba(77,141,255,.12)' : 'rgba(255,255,255,.02)') + ';opacity:' + (done || step === 0 ? 1 : .45) + ';transform:translateX(' + (active ? '6px' : '0') + ')',
+        dot: 'display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:50%;font-weight:700;font-size:14px;' + (done ? 'background:#4d8dff;color:#fff' : 'border:1px solid rgba(160,185,235,.3);color:#9cc3ff')
+      };
+    });
+    const card = (on) => 'background:rgba(255,255,255,.94);border-radius:16px;padding:12px 14px;box-shadow:0 10px 24px rgba(0,0,0,.3);opacity:' + (on ? 1 : 0) + ';transform:translateY(' + (on ? 0 : -12) + 'px)';
+    return {
+      slots, steps, time: picked || '11:00',
+      goDisabled: !picked || step > 0,
+      goLabel: step >= 5 ? 'Afspraak staat vast ✓' : step > 0 ? 'Bezig…' : picked ? 'Bevestig ' + picked : 'Kies eerst een tijd',
+      confirm: () => { if (picked && this.state.step === 0) this.run(); },
+      reset: () => { this.timers.forEach(clearTimeout); this.setState({ picked: null, step: 0 }); },
+      waStyle: card(step >= 3), calStyle: card(step >= 4), remStyle: card(step >= 5)
+    };
+  }
+}
+</script>
+</body>
+</html>

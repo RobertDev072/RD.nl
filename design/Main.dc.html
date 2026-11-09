@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<title>Website laten maken Alkmaar | Webdesign Alkmaar | R DEV</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400..700&amp;family=Pinyon+Script&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;background:#f6f7f9}
+a{color:#0b0d12}a:hover{color:#1f5cff}
+.rd{--ink:#0b0d12;--mut:#5a606b;--grey:#9aa0aa;--line:#e4e6eb;--blue:#1f5cff;--soft:#e8efff;
+  font-family:"Mona Sans",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:#f6f7f9;-webkit-font-smoothing:antialiased;position:relative;overflow:hidden}
+.rd *{box-sizing:border-box}
+.frame{max-width:1180px;margin:0 auto;border-left:1px solid var(--line);border-right:1px solid var(--line);position:relative}
+.pad{padding-left:max(22px,env(safe-area-inset-left,0px));padding-right:max(22px,env(safe-area-inset-right,0px))}
+@media (min-width:900px){.pad{padding-left:64px;padding-right:64px}}
+.band{border-top:1px solid var(--line)}
+.mono{font-family:"Geist Mono",ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.script{font-family:"Pinyon Script","Snell Roundhand",cursive;font-weight:400;letter-spacing:0;color:var(--blue)}
+.two{margin:0;font-weight:500;letter-spacing:-.04em;line-height:1;text-wrap:balance}
+.two .g{color:var(--grey);display:block}.two .b{display:block}
+.lead{font-size:17px;line-height:1.6;color:var(--mut);margin:0}.lead b{color:var(--ink);font-weight:600}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:50px;padding:0 22px;border-radius:999px;font:600 15px/1 "Mona Sans",sans-serif;text-decoration:none;white-space:nowrap;transition:transform .25s,box-shadow .25s,background .25s}
+.btn.dark{background:#0b0d12;color:#fff;box-shadow:0 10px 24px -8px rgba(11,13,18,.5)}
+.btn.dark:hover{color:#fff;transform:translateY(-2px);box-shadow:0 18px 34px -12px rgba(31,92,255,.65)}
+.btn.blue{background:#1f5cff;color:#fff;box-shadow:0 12px 30px -10px rgba(31,92,255,.8)}
+.btn.blue:hover{color:#fff;transform:translateY(-2px)}
+.btn.light{background:#fff;color:#0b0d12;border:1px solid var(--line)}
+.btn.light:hover{color:#0b0d12;border-color:#c9cdd6}
+.ico{width:42px;height:42px;flex:none;border-radius:12px;display:grid;place-items:center;background:#0b0d12;color:#fff}
+.ico.soft{background:var(--soft);color:var(--blue)}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 1px 2px rgba(11,13,18,.04),0 14px 34px -22px rgba(11,13,18,.22)}
+.lift{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s}
+.lift:hover{transform:translateY(-6px);border-color:rgba(31,92,255,.35);box-shadow:0 2px 4px rgba(11,13,18,.05),0 34px 60px -28px rgba(31,92,255,.55)}
+.shot{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.reveal{transition:opacity .8s,filter .8s,transform .8s}
+.marq{display:flex;gap:56px;align-items:center;width:max-content;animation:marq 30s linear infinite}
+@keyframes marq{to{transform:translateX(-50%)}}
+@keyframes flow{to{stroke-dashoffset:-40}}
+.wire{stroke-dasharray:6 6;animation:flow 1.2s linear infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,92,255,.45)}100%{box-shadow:0 0 0 14px rgba(31,92,255,0)}}
+.pulse{animation:pulse 2s ease-out infinite}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--mut);line-height:1.45}
+.chk svg{flex:none;margin-top:2px;color:var(--blue)}
+.nav{position:sticky;top:calc(14px + env(safe-area-inset-top,0px));z-index:30;display:flex;justify-content:center;pointer-events:none}
+.nav .in{pointer-events:auto;display:flex;align-items:center;gap:22px;padding:6px 6px 6px 10px;border-radius:999px;background:rgba(255,255,255,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);box-shadow:0 8px 24px -14px rgba(11,13,18,.3)}
+.nav a.l{font-size:13px;font-weight:500;text-decoration:none}
+@media (max-width:760px){.nav a.l{display:none}}
+.dock{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));translate:-50% 0;z-index:40;display:flex;align-items:center;gap:10px;padding:8px 8px 8px 18px;border-radius:999px;background:rgba(255,255,255,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);box-shadow:0 18px 40px -16px rgba(11,13,18,.35)}
+.dock a.i{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#0b0d12;color:#fff}
+.dock a.i:hover{background:var(--blue);color:#fff}
+.rd a:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:12px}
+@media (prefers-reduced-motion:reduce){.marq,.wire,.pulse{animation:none}.reveal,.lift{transition:none}}
+</style>
+</helmet>
+
+<div class="rd">
+  <div aria-hidden="true" style="position: absolute; left: 50%; top: -300px; width: 1400px; height: 1000px; translate: -50% 0; background: radial-gradient(closest-side,rgba(31,92,255,.22),rgba(31,92,255,0)); pointer-events: none"></div>
+
+  <div class="nav"><div class="in">
+    <a href="#top" aria-label="R DEV, naar boven" style="display: flex; align-items: center; gap: 10px; text-decoration: none">
+      <span style="width: 34px; height: 34px; border-radius: 50%; background: #fff; border: 1px solid #e4e6eb; display: grid; place-items: center"><img src="/_blob/cf5c94529c5aad6fc237eca8a5491dbc" alt="" style="height: 20px; width: auto; filter: invert(1)"></span>
+      <b style="font-size: 13px; font-weight: 600">Robert Rocha</b>
+    </a>
+    <a class="l" href="#hoe">Hoe het werkt</a><a class="l" href="#werk">Werk</a><a class="l" href="#diensten">Diensten</a><a class="l" href="#over">Over</a>
+    <a href="#contact" style="font-size: 13px; font-weight: 600; text-decoration: none; padding: 10px 16px; border-radius: 999px; background: #0b0d12; color: #fff">Bel of app me</a>
+  </div></div>
+
+  <div class="frame">
+
+    <!-- HERO -->
+    <section id="top" class="pad" style="padding-top: 64px; padding-bottom: 72px">
+      <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: center">
+        <div style="flex: 1 1 400px; min-width: 0; display: flex; flex-direction: column; gap: 24px; align-items: flex-start">
+          <span style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: #fff; border: 1px solid #e4e6eb; font-size: 12.5px; font-weight: 500"><span class="pulse" style="width: 8px; height: 8px; border-radius: 50%; background: #1f5cff"></span>Webdesign en development · Alkmaar</span>
+          <h1 class="two" style="font-size: clamp(42px,5.2vw,70px)">
+            <span class="b reveal" style="{{r1}}">Ik bouw je website, app of platform.</span>
+            <span class="g reveal" style="{{r2}}">En zorg dat je <span class="script" style="font-size: 1.25em; line-height: .8">geen klant</span> mist.</span>
+          </h1>
+          <p class="lead reveal" style="max-width: 46ch; {{r3}}"><b>Website laten maken in Alkmaar?</b> Ik bouw websites, web apps, SaaS en apps die er strak uitzien en je zaak makkelijker maken. Met slimme automatisering erachter komen aanvragen binnen en staan afspraken vanzelf in je agenda.</p>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap">
+            <a class="btn blue" href="https://wa.me/31628669488"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>App me direct</a>
+            <a class="btn light" href="#werk">Bekijk mijn werk</a>
+          </div>
+          <div style="display: flex; gap: 22px; flex-wrap: wrap; font-size: 13px; color: #5a606b">
+            <span style="display: inline-flex; gap: 6px; align-items: center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1f5cff" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Vanaf €100</span>
+            <span style="display: inline-flex; gap: 6px; align-items: center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1f5cff" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Geen vaste kosten</span>
+            <span style="display: inline-flex; gap: 6px; align-items: center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1f5cff" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>100+ websites gebouwd</span>
+          </div>
+        </div>
+        <div style="flex: 1 1 520px; min-width: 0; position: relative; height: 470px">
+          <div aria-hidden="true" style="position: absolute; inset: 8% 4%; background: radial-gradient(closest-side,rgba(31,92,255,.35),rgba(31,92,255,0)); filter: blur(24px)"></div>
+          <div class="card" style="position: absolute; left: 0; top: 16%; width: 56%; aspect-ratio: 16/10; overflow: hidden; padding: 0; transform: rotate(-7deg)"><img class="shot" src="/_blob/ab8d42dcb29b05d3a3052cd4bc71d063" alt="BN Elektra website door R DEV"></div>
+          <div class="card" style="position: absolute; right: 0; top: 14%; width: 56%; aspect-ratio: 16/10; overflow: hidden; padding: 0; transform: rotate(6deg)"><img class="shot" src="/_blob/4b73d610c1e7a090e9c8cc971086cfd7" alt="VeriPasso SaaS door R DEV"></div>
+          <div class="card" style="position: absolute; left: 50%; top: 2%; width: 66%; aspect-ratio: 16/10; overflow: hidden; padding: 0; translate: -50% 0; box-shadow: 0 34px 70px -24px rgba(31,92,255,.55),0 0 0 1px #e4e6eb"><img class="shot" src="/_blob/510226f31c6efd31f8741662d4a071e4" alt="SG Onderneming website door R DEV"></div>
+          <div class="card" style="position: absolute; left: 10%; bottom: 0; width: 19%; aspect-ratio: 9/19.5; overflow: hidden; border-radius: 18px; padding: 0; box-shadow: 0 24px 50px -16px rgba(11,13,18,.45)"><img class="shot" src="/_blob/5968cc0312d3fdb370ba16570e2f7531" alt="VeriPasso op mobiel"></div>
+          <div class="card" style="position: absolute; right: 9%; bottom: 2%; width: 19%; aspect-ratio: 9/19.5; overflow: hidden; border-radius: 18px; padding: 0; box-shadow: 0 24px 50px -16px rgba(11,13,18,.45)"><img class="shot" src="/_blob/df1730b3d2100c794a6844a2e2da64bc" alt="Goaltje web app op mobiel"></div>
+          <div class="card" style="position: absolute; left: 50%; bottom: 6%; translate: -50% 0; padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-radius: 999px"><span class="ico soft" style="width: 30px; height: 30px; border-radius: 50%"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span style="font-size: 13px"><b>100+ websites</b> in 5 jaar</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <section class="band" style="display: flex; align-items: center; gap: 24px; padding-block: 24px; overflow: hidden">
+      <div class="pad" style="flex: none; padding-right: 0; font-size: 13px; line-height: 1.3"><b>100+ websites</b><br><span style="color: #5a606b">in de afgelopen 5 jaar</span></div>
+      <div style="overflow: hidden; flex: 1; mask-image: linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent); -webkit-mask-image: linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)">
+        <div class="marq" style="font-size: 21px; font-weight: 600; letter-spacing: -.02em; color: #9aa0aa">
+          <span>SG Onderneming</span><span>BN Elektra</span><span>VeriPasso</span><span>Goaltje</span><span class="script" style="font-size: 30px">en nog meer</span>
+          <span aria-hidden="true">SG Onderneming</span><span aria-hidden="true">BN Elektra</span><span aria-hidden="true">VeriPasso</span><span aria-hidden="true">Goaltje</span><span aria-hidden="true" class="script" style="font-size: 30px">en nog meer</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW: workflow -->
+    <section id="hoe" class="band pad" style="padding-top: 96px; padding-bottom: 96px">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 28px">
+        <h2 class="two" style="font-size: clamp(38px,4.8vw,62px)"><span class="g">Een site die voor je werkt.</span><span class="b">Ook als <span class="script" style="font-size: 1.2em">jij</span> werkt.</span></h2>
+        <p class="lead" style="max-width: 38ch"><b>Bovenop je website of app kan ik automatisering bouwen.</b> Zo loopt het van zoekopdracht tot afspraak in je agenda.</p>
+      </div>
+      <div style="margin-top: 48px"><dc-import name="Flow" hint-size="100%,700px"></dc-import></div>
+      <div style="position: relative; margin-top: 56px">
+        <svg aria-hidden="true" width="100%" height="4" style="position: absolute; left: 0; top: 30px; overflow: visible"><line x1="4%" y1="2" x2="96%" y2="2" stroke="#1f5cff" stroke-opacity=".45" stroke-width="2" class="wire"></line></svg>
+        <ol style="position: relative; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,180px),1fr)); gap: 18px">
+          <li style="display: flex; flex-direction: column; gap: 14px"><span class="ico" style="width: 60px; height: 60px; border-radius: 18px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></span><b style="font-size: 17px; font-weight: 600">Gevonden in Google</b><span style="font-size: 14px; color: #5a606b; line-height: 1.5">Goede SEO en een sterk Bedrijfsprofiel brengen klanten uit de buurt.</span></li>
+          <li style="display: flex; flex-direction: column; gap: 14px"><span class="ico" style="width: 60px; height: 60px; border-radius: 18px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="3"></rect><path d="M11 18h2"></path></svg></span><b style="font-size: 17px; font-weight: 600">Snelle website</b><span style="font-size: 14px; color: #5a606b; line-height: 1.5">Laadt direct op mobiel, met één duidelijke knop om te boeken.</span></li>
+          <li style="display: flex; flex-direction: column; gap: 14px"><span class="ico" style="width: 60px; height: 60px; border-radius: 18px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span><b style="font-size: 17px; font-weight: 600">Bericht via WhatsApp</b><span style="font-size: 14px; color: #5a606b; line-height: 1.5">De klant appt zoals hij gewend is. Geen formulier, geen drempel.</span></li>
+          <li style="display: flex; flex-direction: column; gap: 14px"><span class="ico" style="width: 60px; height: 60px; border-radius: 18px; background: #1f5cff"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"></path></svg></span><b style="font-size: 17px; font-weight: 600">AI checkt je agenda</b><span style="font-size: 14px; color: #5a606b; line-height: 1.5">De agent kijkt of er plek is en plant de afspraak direct in.</span></li>
+          <li style="display: flex; flex-direction: column; gap: 14px"><span class="ico" style="width: 60px; height: 60px; border-radius: 18px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 11h18M9 16l2 2 4-4"></path></svg></span><b style="font-size: 17px; font-weight: 600">Afspraak staat</b><span style="font-size: 14px; color: #5a606b; line-height: 1.5">Bevestiging, herinnering en reviewverzoek gaan automatisch.</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- WORK -->
+    <section id="werk" class="band pad" style="padding-top: 96px; padding-bottom: 96px">
+      <h2 class="two" style="font-size: clamp(38px,4.8vw,62px)"><span class="g">Gebouwd en</span><span class="b"><span class="script" style="font-size: 1.2em">live</span> online.</span></h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,420px),1fr)); gap: 28px; margin-top: 48px">
+        <sc-for list="{{projects}}" as="p" hint-placeholder-count="4">
+          <article style="display: flex; flex-direction: column; gap: 14px">
+            <a class="card lift" href="{{p.url}}" style="position: relative; display: block; aspect-ratio: 16/11; overflow: hidden; padding: 0; background: {{p.tint}}">
+              <img class="shot" src="{{p.desk}}" alt="{{p.alt}}" style="position: absolute; left: 7%; top: 9%; width: 86%; height: auto; aspect-ratio: 16/10; border-radius: 10px; box-shadow: 0 20px 40px -18px rgba(11,13,18,.5)">
+              <img class="shot" src="{{p.mob}}" alt="{{p.altm}}" style="position: absolute; right: 5%; bottom: -10%; width: 22%; height: auto; aspect-ratio: 9/19.5; border-radius: 14px; box-shadow: 0 20px 40px -12px rgba(11,13,18,.55); border: 3px solid #fff">
+            </a>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px">
+              <div><b style="font-size: 18px; font-weight: 600; letter-spacing: -.02em">{{p.name}}</b><div style="font-size: 13px; color: #5a606b; margin-top: 4px">{{p.cat}}</div></div>
+              <a href="{{p.url}}" style="font-size: 13px; text-decoration: none; display: inline-flex; gap: 6px; align-items: center">Bekijk live <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></a>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="diensten" class="band pad" style="padding-top: 96px; padding-bottom: 96px">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 28px">
+        <h2 class="two" style="font-size: clamp(38px,4.8vw,62px)"><span class="g">Van domein</span><span class="b">tot <span class="script" style="font-size: 1.2em">mailbox</span> geregeld.</span></h2>
+        <p class="lead" style="max-width: 38ch"><b>Developer, systeembeheerder en UI/UX-designer in één.</b> Eén aanspreekpunt voor alles online, in Alkmaar en omgeving.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,300px),1fr)); gap: 16px; margin-top: 48px">
+        <sc-for list="{{services}}" as="s" hint-placeholder-count="9">
+          <div class="card lift" style="padding: 24px; display: flex; flex-direction: column; gap: 14px">
+            <span class="{{s.cls}}"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{s.icon}}"></path></svg></span>
+            <b style="font-size: 18px; font-weight: 600; letter-spacing: -.02em">{{s.name}}</b>
+            <span style="font-size: 14px; color: #5a606b; line-height: 1.55">{{s.text}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- WORKING TOGETHER -->
+    <section id="samenwerken" class="band pad" style="padding-top: 96px; padding-bottom: 96px">
+      <h2 class="two" style="font-size: clamp(38px,4.8vw,62px)"><span class="g">Geen contracten.</span><span class="b">Gewoon <span class="script" style="font-size: 1.2em">bellen</span> als het nodig is.</span></h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,240px),1fr)); gap: 16px; margin-top: 48px">
+        <div class="card" style="padding: 26px; display: flex; flex-direction: column; gap: 12px"><span class="ico soft"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6M9 15l6-6"></path></svg></span><b style="font-size: 18px; font-weight: 600">Geen contracten</b><span style="font-size: 14px; color: #5a606b; line-height: 1.55">Je zit nergens aan vast. Je schakelt me in wanneer jij dat wilt.</span></div>
+        <div class="card" style="padding: 26px; display: flex; flex-direction: column; gap: 12px"><span class="ico soft"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M15 9.5a3 3 0 1 0 0 5M8 11h5M8 13h5"></path></svg></span><b style="font-size: 18px; font-weight: 600">Geen vaste kosten</b><span style="font-size: 14px; color: #5a606b; line-height: 1.55">Je betaalt per klus. Werk begint vanaf €100.</span></div>
+        <div class="card" style="padding: 26px; display: flex; flex-direction: column; gap: 12px"><span class="ico soft"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"></path></svg></span><b style="font-size: 18px; font-weight: 600">Directe lijn</b><span style="font-size: 14px; color: #5a606b; line-height: 1.55">Geen ticketsysteem of accountmanager. Je belt of appt mij.</span></div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,240px),1fr)); gap: 16px; margin-top: 16px">
+        <sc-for list="{{packs}}" as="k" hint-placeholder-count="4">
+          <article class="card lift" style="padding: 26px; display: flex; flex-direction: column; gap: 16px">
+            <span class="ico"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{k.icon}}"></path></svg></span>
+            <div><b style="font-size: 20px; font-weight: 600; letter-spacing: -.02em">{{k.name}}</b><p style="margin: 6px 0 0; font-size: 14px; color: #5a606b; line-height: 1.5">{{k.desc}}</p></div>
+            <div style="height: 1px; background: #e4e6eb"></div>
+            <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px">
+              <sc-for list="{{k.feats}}" as="f" hint-placeholder-count="4"><li class="chk"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>{{f}}</li></sc-for>
+            </ul>
+            <a class="btn light" href="https://wa.me/31628669488" style="margin-top: auto; justify-content: center">Bespreek dit</a>
+          </article>
+        </sc-for>
+      </div>
+      <p style="margin: 24px 0 0; font-size: 15px; color: #5a606b; text-align: center"><b style="color: #0b0d12">Werk begint vanaf €100.</b> Geen vaste kosten, geen abonnement. Je krijgt vooraf een prijs per klus.</p>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="over" class="band pad" style="padding-top: 96px; padding-bottom: 96px; display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-start">
+      <div style="flex: 0 1 300px; min-width: 0">
+        <div style="aspect-ratio: 4/5; border-radius: 22px; background: radial-gradient(circle at 70% 20%,rgba(31,92,255,.6),rgba(31,92,255,0) 60%),#0b0d12; display: grid; place-items: center; box-shadow: 0 30px 60px -28px rgba(31,92,255,.7)"><img src="/_blob/cf5c94529c5aad6fc237eca8a5491dbc" alt="R DEV, webdesign Alkmaar" style="width: 46%; height: auto"></div>
+        <b style="display: block; margin-top: 14px; font-size: 16px; font-weight: 600">Robert Rocha, 24</b><span style="font-size: 13px; color: #5a606b">Developer · Alkmaar</span>
+      </div>
+      <div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+        <h2 class="two" style="font-size: clamp(34px,4vw,52px)"><span class="g">Hoi, ik ben Robert.</span><span class="b">Van <span class="script" style="font-size: 1.2em">schets</span> tot productie.</span></h2>
+        <p class="lead"><b>Ik ben 24, kom uit Alkmaar en heb een opleiding als developer.</b> Daarnaast heb ik kennis van technische systemen vanuit mijn werk als systeembeheerder. In de afgelopen 5 jaar heb ik meer dan 100 websites gebouwd.</p>
+        <p class="lead"><b>Ik ontwerp en bouw zelf.</b> UI- en UX-design, van eerste schets tot concept en een werkend product. Daarnaast moderniseer ik bestaande systemen, koppel ik API's en zet ik AI-agents in waar dat je tijd bespaart.</p>
+        <div style="display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; margin-top: 6px">
+          <div class="card" style="padding: 18px"><b style="font-size: 30px; font-weight: 600; letter-spacing: -.03em">100+</b><div style="font-size: 13px; color: #5a606b">websites gebouwd</div></div>
+          <div class="card" style="padding: 18px"><b style="font-size: 30px; font-weight: 600; letter-spacing: -.03em">5 jaar</b><div style="font-size: 13px; color: #5a606b">ervaring</div></div>
+          <div class="card" style="padding: 18px"><b style="font-size: 30px; font-weight: 600; letter-spacing: -.03em">1</b><div style="font-size: 13px; color: #5a606b">directe lijn</div></div>
+        </div>
+        <ul style="list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px">
+          <sc-for list="{{stack}}" as="x" hint-placeholder-count="9"><li style="font-size: 13px; padding: 7px 12px; border-radius: 999px; background: #fff; border: 1px solid #e4e6eb">{{x}}</li></sc-for>
+        </ul>
+      </div>
+    </section>
+
+    <!-- LOCAL SEO -->
+    <section id="alkmaar" class="band pad" style="padding-top: 96px; padding-bottom: 96px">
+      <div style="display: flex; flex-wrap: wrap; gap: 48px">
+        <div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
+          <h2 class="two" style="font-size: clamp(34px,4.2vw,54px)"><span class="g">Website laten maken</span><span class="b">in <span class="script" style="font-size: 1.2em">Alkmaar.</span></span></h2>
+          <p class="lead"><b>Webdesign uit Alkmaar, voor ondernemers in de regio.</b> Ik kom langs, ken de markt hier en bouw sites die lokaal goed gevonden worden in Google.</p>
+          <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px">
+            <sc-for list="{{areas}}" as="a" hint-placeholder-count="8"><li style="display: inline-flex; gap: 6px; align-items: center; font-size: 13px; padding: 7px 12px; border-radius: 999px; background: #e8efff; color: #1f5cff"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>{{a}}</li></sc-for>
+          </ul>
+        </div>
+        <div style="flex: 1 1 440px; min-width: 0; display: flex; flex-direction: column; gap: 10px">
+          <sc-for list="{{faq}}" as="q" hint-placeholder-count="5">
+            <details class="card" style="padding: 18px 20px; border-radius: 16px">
+              <summary style="cursor: pointer; font-weight: 600; font-size: 16px; list-style: none; display: flex; justify-content: space-between; gap: 12px">{{q.q}}<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1f5cff" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></summary>
+              <p style="margin: 10px 0 0; font-size: 14.5px; color: #5a606b; line-height: 1.6">{{q.a}}</p>
+            </details>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contact" class="band pad" style="padding-top: 96px; padding-bottom: 150px">
+      <div style="position: relative; overflow: hidden; border-radius: 28px; padding: clamp(32px,6vw,72px); background: radial-gradient(70% 120% at 100% 0%,rgba(31,92,255,.35),rgba(31,92,255,0) 60%),#fff; border: 1px solid #e4e6eb; box-shadow: 0 40px 80px -40px rgba(31,92,255,.5)">
+        <h2 class="two" style="font-size: clamp(42px,5.6vw,72px)"><span class="g">Bel me wanneer</span><span class="b">je me <span class="script" style="font-size: 1.2em">nodig</span> hebt.</span></h2>
+        <p class="lead" style="margin-top: 20px; max-width: 46ch"><b>Directe lijn, snel antwoord.</b> Geen contract, geen vaste kosten. Werk begint vanaf €100.</p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; align-items: center">
+          <a class="btn blue" href="https://wa.me/31628669488"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>App me</a>
+          <span style="font-size: 22px; font-weight: 600; letter-spacing: -.02em; user-select: all">+31 6 28669488</span>
+        </div>
+      </div>
+      <footer style="display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 40px" class="mono"><span>© 2026 R DEV · Robert Rocha · Alkmaar · +31 6 28669488</span><span>Webdesign Alkmaar · Websites · Web apps · SaaS · Apps · SEO</span></footer>
+    </section>
+  </div>
+
+  <div class="dock">
+    <span style="font-size: 13px; line-height: 1.25"><b>Directe lijn</b><br><span style="color: #5a606b">+31 6 28669488</span></span>
+    <a class="i" href="https://wa.me/31628669488" aria-label="App Robert via WhatsApp"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":7000}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { step: 0 }; }
+  componentDidMount() {
+    const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) { this.setState({ step: 3 }); return; }
+    this.t = [1, 2, 3].map((s) => setTimeout(() => this.setState({ step: s }), 100 + s * 220));
+  }
+  componentWillUnmount() { (this.t || []).forEach(clearTimeout); }
+  renderVals() {
+    const st = this.state.step;
+    const rv = (n) => st >= n ? 'opacity:1;filter:blur(0);transform:none' : 'opacity:0;filter:blur(10px);transform:translateY(14px)';
+    const B = '/_blob/';
+    const projects = [
+      { name: 'SG Onderneming', cat: 'Website · Bouw en verduurzaming', url: 'https://www.sgonderneming.nl/', desk: B + '510226f31c6efd31f8741662d4a071e4', mob: B + 'c47f304cea5d5b27e3ee34111238247c', tint: 'linear-gradient(150deg,#fff1e6,#ffe0c7)' },
+      { name: 'BN Elektra', cat: 'Website · Installatiebedrijf', url: 'https://www.bnelektra.nl/', desk: B + 'ab8d42dcb29b05d3a3052cd4bc71d063', mob: B + '3ee9f70ea453705c02be135dd0241ff0', tint: 'linear-gradient(150deg,#fff8e1,#ffe9a8)' },
+      { name: 'VeriPasso', cat: 'SaaS · Digitaal productpaspoort', url: 'https://www.veripasso.com/', desk: B + '4b73d610c1e7a090e9c8cc971086cfd7', mob: B + '5968cc0312d3fdb370ba16570e2f7531', tint: 'linear-gradient(150deg,#e8efff,#cfdcff)' },
+      { name: 'Goaltje', cat: 'Web app · WK-voetbalpoule', url: 'https://goaltje.nl/', desk: B + 'ee115767728c35a4c7647ed01262d576', mob: B + 'df1730b3d2100c794a6844a2e2da64bc', tint: 'linear-gradient(150deg,#e6ecff,#fff3c4)' }
+    ].map((p) => ({ ...p, alt: p.name + ' op desktop', altm: p.name + ' op mobiel' }));
+    const I = {
+      web: 'M3 5h18v12H3zM8 21h8M12 17v4', app: 'M7 2h10a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3zM11 18h2',
+      saas: 'M4 7l8-4 8 4-8 4-8-4zM4 12l8 4 8-4M4 17l8 4 8-4', ai: 'M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z',
+      mail: 'M3 6h18v12H3zM3 7l9 6 9-6', data: 'M12 3c4.4 0 8 1.3 8 3s-3.6 3-8 3-8-1.3-8-3 3.6-3 8-3zM4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6',
+      shield: 'M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4zM9 12l2 2 4-4', seo: 'M11 4a7 7 0 1 1 0 14 7 7 0 0 1 0-14zM20 20l-3.5-3.5M8 11h6M11 8v6',
+      chart: 'M4 20V10M10 20V4M16 20v-7M22 20H2'
+    };
+    const services = [
+      ['Websites', 'Snel, strak en gemaakt om bezoekers te laten boeken of bellen.', I.web],
+      ['Web apps en SaaS', 'Portalen, boekingssystemen en platformen met accounts en betalingen.', I.saas],
+      ['Mobiele apps', 'Eén app voor iPhone en Android, in je eigen huisstijl.', I.app],
+      ['AI-agent en automatisering', 'Berichten beantwoorden, agenda checken en afspraken inplannen.', I.ai, true],
+      ['Domein en mailboxen', 'Ik regel je domeinnaam en zakelijke e-mail, van A tot Z.', I.mail],
+      ['Data veilig opgeslagen', 'Klantgegevens en afspraken netjes en veilig in Europa.', I.data],
+      ['Strak en up-to-date', 'Updates, beveiliging en snelheid. Je site of app blijft scherp.', I.shield],
+      ['SEO en Google', 'Beter gevonden worden, met een sterk Google Bedrijfsprofiel.', I.seo],
+      ['Marketingstrategie', 'Waar je klanten vandaan komen en hoe je er meer krijgt.', I.chart]
+    ].map(([name, text, icon, hl]) => ({ name, text, icon, cls: hl ? 'ico' : 'ico soft' }));
+    const packs = [
+      { name: 'Website', desc: 'Een snelle site die aanvragen oplevert.', icon: I.web, feats: ['Mobiel eerst en razendsnel', 'Boek- of WhatsApp-knop', 'SEO-basis en Google-profiel', 'Domein, mail en hosting geregeld'] },
+      { name: 'Web app of SaaS', desc: 'Software op maat voor je bedrijf of product.', icon: I.saas, feats: ['Inloggen en gebruikersrollen', 'Database en beheeromgeving', 'Betalingen en abonnementen', 'Schaalbaar in de cloud'] },
+      { name: 'AI en automatisering', desc: 'Nooit meer een aanvraag missen.', icon: I.ai, feats: ['WhatsApp-assistent met AI', 'Koppeling met je agenda', 'Bevestiging en herinnering', 'Reviewverzoek na afloop'] },
+      { name: 'Onderhoud en SEO', desc: 'Alles strak houden en beter gevonden worden.', icon: I.seo, feats: ['Updates en beveiliging', 'Snelheid en back-ups', 'SEO-verbeteringen', 'Bellen wanneer nodig'] }
+    ];
+    const stack = ['React', 'JavaScript', 'Node.js', 'Docker en containers', 'AI-agents', 'API-koppelingen', 'Systeembeheer', 'UI/UX-design', 'SEO'];
+    const areas = ['Alkmaar', 'Heiloo', 'Heerhugowaard', 'Castricum', 'Bergen', 'Langedijk', 'Schagen', 'Noord-Holland'];
+    const faq = [
+      { q: 'Wat kost een website laten maken in Alkmaar?', a: 'Werk begint vanaf €100. Je krijgt vooraf een prijs per klus, zonder contract of vaste maandkosten.' },
+      { q: 'Hoe snel staat mijn website online?', a: 'Een eenvoudige site staat vaak binnen enkele weken live. Je ziet eerst een voorbeeld voordat we verder bouwen.' },
+      { q: 'Zorg je ook dat ik gevonden word in Google?', a: 'Ja. Elke site krijgt een goede SEO-basis, een snelle laadtijd en ik help met je Google Bedrijfsprofiel.' },
+      { q: 'Regel je ook domein, mailboxen en hosting?', a: 'Ja, van domeinnaam en zakelijke e-mail tot hosting en het veilig opslaan van je data.' },
+      { q: 'Bouw je ook web apps, SaaS en apps?', a: 'Ja. Van klantportaal en boekingssysteem tot SaaS-platform en mobiele app, met koppelingen en automatisering.' }
+    ];
+    return { r1: rv(1), r2: rv(2), r3: rv(3), projects, services, packs, stack, areas, faq };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<title>Sitemap en SEO-plan</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400..700&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div style="width: 1440px; min-height: 1500px; background: #f6f7f9; color: #0b0d12; font-family: 'Mona Sans', system-ui, sans-serif; padding: 64px 72px; box-sizing: border-box; display: flex; flex-direction: column; gap: 36px">
+  <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px">
+    <div>
+      <div style="font: 500 12px/1 'Geist Mono', monospace; letter-spacing: .08em; text-transform: uppercase; color: #1f5cff">Sitemap en SEO-plan</div>
+      <h1 style="margin: 12px 0 0; font-size: 52px; font-weight: 500; letter-spacing: -.04em; line-height: 1">R DEV · webdesign Alkmaar</h1>
+    </div>
+    <p style="margin: 0; max-width: 46ch; font-size: 15px; color: #5a606b; line-height: 1.6">Elke pagina richt zich op één zoekterm. De homepage op "website laten maken Alkmaar", de dienstpagina's op hun eigen dienst plus Alkmaar. Vervang [domein] door je echte domein.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px">
+    <sc-for list="{{pages}}" as="p" hint-placeholder-count="12">
+      <article style="{{p.style}}">
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+          <span style="font: 500 12px/1.3 'Geist Mono', monospace; color: #1f5cff; word-break: break-all">{{p.url}}</span>
+          <span style="font: 500 10px/1 'Geist Mono', monospace; text-transform: uppercase; letter-spacing: .06em; padding: 4px 8px; border-radius: 99px; background: #e8efff; color: #1f5cff; flex: none">{{p.level}}</span>
+        </div>
+        <b style="font-size: 16px; font-weight: 600; letter-spacing: -.01em; line-height: 1.3">{{p.title}}</b>
+        <span style="font-size: 13px; color: #5a606b; line-height: 1.5">{{p.desc}}</span>
+        <div style="display: flex; gap: 6px; align-items: center; font-size: 12px; color: #0b0d12; border-top: 1px solid #eceef2; padding-top: 10px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1f5cff" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>{{p.kw}}</div>
+      </article>
+    </sc-for>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 14px">
+    <div style="background: #fff; border: 1px solid #e4e6eb; border-radius: 16px; padding: 20px"><b>Google Bedrijfsprofiel</b><p style="margin: 8px 0 0; font-size: 13px; color: #5a606b; line-height: 1.5">Categorie "Webdesigner", adres Alkmaar, link naar homepage, foto's van werk, reviews vragen na elke oplevering.</p></div>
+    <div style="background: #fff; border: 1px solid #e4e6eb; border-radius: 16px; padding: 20px"><b>Structured data</b><p style="margin: 8px 0 0; font-size: 13px; color: #5a606b; line-height: 1.5">LocalBusiness- en FAQPage-schema op de homepage, zodat Google je naam, regio en vragen direct toont.</p></div>
+    <div style="background: #fff; border: 1px solid #e4e6eb; border-radius: 16px; padding: 20px"><b>Snelheid</b><p style="margin: 8px 0 0; font-size: 13px; color: #5a606b; line-height: 1.5">Afbeeldingen als WebP, lazy loading, groen in PageSpeed op mobiel. Snelheid telt mee in de ranking.</p></div>
+    <div style="background: #fff; border: 1px solid #e4e6eb; border-radius: 16px; padding: 20px"><b>Interne links</b><p style="margin: 8px 0 0; font-size: 13px; color: #5a606b; line-height: 1.5">Elke projectpagina linkt naar de dienst en naar de Alkmaar-pagina. Ankertekst met de zoekterm.</p></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const P = [
+      ['/', 'Home', 'Website laten maken Alkmaar | Webdesign Alkmaar | R DEV', 'Websites, web apps, SaaS en apps uit Alkmaar. Strak, snel en goed vindbaar. Werk vanaf €100, geen contracten.', 'website laten maken alkmaar'],
+      ['/webdesign-alkmaar', 'Dienst', 'Webdesign Alkmaar | Moderne websites op maat | R DEV', 'Webdesign uit Alkmaar: modern ontwerp, mobiel eerst en gemaakt om klanten op te leveren.', 'webdesign alkmaar'],
+      ['/websites-laten-maken', 'Dienst', 'Website laten maken | Snel, strak en vindbaar | R DEV', 'Een nieuwe of vernieuwde website met SEO-basis, domein, mail en hosting geregeld.', 'websites maken alkmaar'],
+      ['/web-apps', 'Dienst', 'Web app laten maken | Portalen en boekingssystemen | R DEV', 'Web apps op maat: klantportalen, dashboards en boekingssystemen met API-koppelingen.', 'web app laten maken'],
+      ['/saas-ontwikkeling', 'Dienst', 'SaaS laten ontwikkelen | Van idee tot product | R DEV', 'SaaS-platformen met accounts, abonnementen en betalingen. Schaalbaar en veilig.', 'saas ontwikkeling'],
+      ['/apps-laten-maken', 'Dienst', 'App laten maken | iPhone en Android | R DEV', 'Mobiele apps voor iPhone en Android, in je eigen huisstijl en gekoppeld aan je systemen.', 'app laten maken alkmaar'],
+      ['/ai-automatisering', 'Dienst', 'AI-automatisering voor ondernemers | R DEV', 'AI-agents die WhatsApp beantwoorden, je agenda checken en afspraken inplannen.', 'ai automatisering bedrijf'],
+      ['/seo-alkmaar', 'Dienst', 'SEO Alkmaar | Beter gevonden worden in Google | R DEV', 'Lokale SEO en Google Bedrijfsprofiel voor ondernemers in Alkmaar en omgeving.', 'seo alkmaar'],
+      ['/projecten', 'Overzicht', 'Projecten | Websites en apps gebouwd door R DEV', 'Een selectie uit 100+ websites, web apps en SaaS-projecten.', 'portfolio webdesigner alkmaar'],
+      ['/projecten/sg-onderneming', 'Case', 'SG Onderneming website | Case R DEV', 'Website voor bouw en verduurzaming met offerte-aanvragen.', 'website bouwbedrijf'],
+      ['/projecten/veripasso', 'Case', 'VeriPasso SaaS | Case R DEV', 'SaaS voor digitale productpaspoorten met QR-code.', 'saas case'],
+      ['/over-robert', 'Over', 'Over Robert Rocha | Developer uit Alkmaar | R DEV', 'Developer en systeembeheerder uit Alkmaar, 100+ websites in 5 jaar.', 'webdeveloper alkmaar'],
+      ['/contact', 'Contact', 'Contact | Bel of app R DEV in Alkmaar', 'Directe lijn, geen contracten. Bel of app +31 6 28669488.', 'webdesigner alkmaar contact'],
+      ['/projecten/bn-elektra', 'Case', 'BN Elektra website | Case R DEV', 'Website voor een installatiebedrijf met WhatsApp-knop.', 'website installateur'],
+      ['/projecten/goaltje', 'Case', 'Goaltje web app | Case R DEV', 'Web app voor WK-voetbalpoules met live scores.', 'web app case']
+    ];
+    const pages = P.map(([path, level, title, desc, kw]) => ({ url: '[domein]' + path, level, title, desc, kw,
+      style: 'background:#fff;border:1px solid ' + (path === '/' ? '#1f5cff' : '#e4e6eb') + ';border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px;' + (path === '/' ? 'box-shadow:0 0 0 1px #1f5cff,0 24px 50px -28px rgba(31,92,255,.6)' : '') }));
+    return { pages };
+  }
+}
+</script>
+</body>
+</html>
