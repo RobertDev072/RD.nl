@@ -131,7 +131,12 @@ export default function PrijsCheck({ intro }: { intro: ReactNode }) {
           </button>
           <p className="text-[13px] text-soft">Gratis en vrijblijvend. Duurt ongeveer een minuut.</p>
         </div>
-        {error && phase === 'error' && <p role="alert" className="rounded-2xl bg-canvas px-4 py-3 text-[14.5px]">{error}</p>}
+        {error && phase === 'error' && (
+          <div role="alert" className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-canvas px-4 py-3 text-[14.5px]">
+            <span>{error}</span>
+            <a href={waLink(`Hoi Robert, ik wil weten wat een nieuwe website kost${url ? ` voor ${url}` : ''}.${wens ? ` Mijn wens: ${wens}` : ''}`)} className="inline-flex items-center gap-1.5 font-semibold underline underline-offset-4"><MessageCircle size={15} /> Vraag het Robert via WhatsApp</a>
+          </div>
+        )}
       </motion.form>
 
       <AnimatePresence>
