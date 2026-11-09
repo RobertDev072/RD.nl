@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowUpRight, MessageCircle, Phone } from 'lucide-react';
+import { ArrowUpRight, MessageCircle, Phone, Star } from 'lucide-react';
 import { projects, services } from '@/lib/content';
 import { site } from '@/lib/site';
 import { LogoFull, Wordmark } from './Logo';
@@ -16,6 +16,7 @@ export default function Footer() {
           <div className="flex flex-wrap gap-3">
             <a href={site.whatsapp} className="btn-light"><MessageCircle size={18} /> App me direct</a>
             <a href={site.phoneHref} className="btn border border-white/15 bg-white/5 text-white hover:bg-white/10"><Phone size={16} /> {site.phone}</a>
+            <a href={site.googleReview} target="_blank" rel="noopener" className="btn border border-white/15 bg-white/5 text-white hover:bg-white/10"><Star size={16} /> Beoordeel ons op Google</a>
           </div>
         </div>
 

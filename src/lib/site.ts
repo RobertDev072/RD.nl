@@ -7,6 +7,7 @@ export const site = {
   phone: '+31 6 28669488',
   phoneHref: 'tel:+31628669488',
   whatsapp: 'https://wa.me/31628669488',
+  googleReview: 'https://g.page/r/CZpUEZFdZEWwECE/review',
   city: 'Alkmaar',
   region: 'Noord-Holland',
   areas: ['Alkmaar', 'Heiloo', 'Heerhugowaard', 'Castricum', 'Bergen', 'Langedijk', 'Schagen', 'Den Helder'],
