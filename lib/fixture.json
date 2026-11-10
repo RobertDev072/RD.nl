@@ -1,1 +1,999 @@
-{}
+{
+"products": [
+{
+"id": 3826,
+"slug": "mohi-scalp-massage-brush",
+"name": "MOHI Scalp Massage Brush",
+"type": "simple",
+"price": 765,
+"regular": 900,
+"onSale": true,
+"inStock": true,
+"lowStock": null,
+"purchasable": true,
+"short": "Zachte massageborstel voor de hoofdhuid, onder de douche of tijdens het wassen.",
+"descHtml": "<h2>Over dit product</h2><p>Zachte massageborstel voor de hoofdhuid, onder de douche of tijdens het wassen.</p><ul><li>Professionele salonkwaliteit</li><li>Advies vanuit de kapsalon</li></ul>",
+"images": [
+{
+"src": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/mohi-scalp-massage-brush.webp",
+"thumb": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/mohi-scalp-massage-brush-400x400.webp",
+"alt": "mohi-scalp-massage-brush"
+}
+],
+"cats": [
+{
+"id": 38,
+"slug": "haaraccessoires",
+"name": "Haaraccessoires"
+},
+{
+"id": 37,
+"slug": "borstels-kammen",
+"name": "Borstels & kammen"
+}
+],
+"brand": {
+"name": "MOHI",
+"slug": "mohi"
+},
+"rating": 0,
+"reviews": 0,
+"attrName": null,
+"options": null
+},
+{
+"id": 3835,
+"slug": "mohi-bonnet",
+"name": "MOHI Bonnet",
+"type": "variable",
+"price": 1360,
+"regular": 1600,
+"onSale": true,
+"inStock": true,
+"lowStock": null,
+"purchasable": true,
+"short": "Satijnen bonnet die je haar 's nachts beschermt tegen wrijving en kroes.",
+"descHtml": "<h2>Over dit product</h2><p>Satijnen bonnet die je haar 's nachts beschermt tegen wrijving en kroes.</p><ul><li>Professionele salonkwaliteit</li><li>Advies vanuit de kapsalon</li></ul>",
+"images": [
+{
+"src": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/mohi-bonnet.webp",
+"thumb": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/mohi-bonnet-400x400.webp",
+"alt": "mohi-bonnet"
+}
+],
+"cats": [
+{
+"id": 38,
+"slug": "haaraccessoires",
+"name": "Haaraccessoires"
+},
+{
+"id": 115,
+"slug": "satijnen-accessoires",
+"name": "Satijnen accessoires"
+}
+],
+"brand": {
+"name": "MOHI",
+"slug": "mohi"
+},
+"rating": 0,
+"reviews": 0,
+"attrName": "Kleur / tint",
+"options": [
+{
+"id": 38350,
+"label": "Pink & Champagne",
+"price": 1360,
+"regular": 1600,
+"inStock": true,
+"image": null
+},
+{
+"id": 38351,
+"label": "Black & Beige",
+"price": 1360,
+"regular": 1600,
+"inStock": true,
+"image": null
+}
+],
+"priceMax": 1360
+},
+{
+"id": 3840,
+"slug": "mohi-microfiber-hair-towel",
+"name": "MOHI Microfiber Hair Towel",
+"type": "variable",
+"price": 1356,
+"regular": 1595,
+"onSale": true,
+"inStock": true,
+"lowStock": null,
+"purchasable": true,
+"short": "Grote, zachte microvezel haarhanddoek die snel vocht opneemt met minder wrijving.",
+"descHtml": "<h2>Over dit product</h2><p>Grote, zachte microvezel haarhanddoek die snel vocht opneemt met minder wrijving.</p><ul><li>Professionele salonkwaliteit</li><li>Advies vanuit de kapsalon</li></ul>",
+"images": [
+{
+"src": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/mohi-microfiber-hair-towel.webp",
+"thumb": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/mohi-microfiber-hair-towel-400x400.webp",
+"alt": "mohi-microfiber-hair-towel"
+}
+],
+"cats": [
+{
+"id": 38,
+"slug": "haaraccessoires",
+"name": "Haaraccessoires"
+},
+{
+"id": 116,
+"slug": "haarhanddoeken",
+"name": "Haarhanddoeken"
+}
+],
+"brand": {
+"name": "MOHI",
+"slug": "mohi"
+},
+"rating": 0,
+"reviews": 0,
+"attrName": "Kleur / tint",
+"options": [
+{
+"id": 38400,
+"label": "Pink",
+"price": 1356,
+"regular": 1595,
+"inStock": true,
+"image": null
+},
+{
+"id": 38401,
+"label": "Grey",
+"price": 1356,
+"regular": 1595,
+"inStock": true,
+"image": null
+},
+{
+"id": 38402,
+"label": "Beige",
+"price": 1356,
+"regular": 1595,
+"inStock": true,
+"image": null
+},
+{
+"id": 38403,
+"label": "White",
+"price": 1356,
+"regular": 1595,
+"inStock": true,
+"image": null
+},
+{
+"id": 38404,
+"label": "Black",
+"price": 1356,
+"regular": 1595,
+"inStock": true,
+"image": null
+}
+],
+"priceMax": 1356
+},
+{
+"id": 3850,
+"slug": "mohi-satin-pillow-case",
+"name": "MOHI Satin Pillow Case",
+"type": "variable",
+"price": 1951,
+"regular": 2295,
+"onSale": true,
+"inStock": true,
+"lowStock": null,
+"purchasable": true,
+"short": "Satijnen kussensloop voor minder klitten en kroes bij het opstaan.",
+"descHtml": "<h2>Over dit product</h2><p>Satijnen kussensloop voor minder klitten en kroes bij het opstaan.</p><ul><li>Professionele salonkwaliteit</li><li>Advies vanuit de kapsalon</li></ul>",
+"images": [
+{
+"src": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/mohi-satin-pillow-case.webp",
+"thumb": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/mohi-satin-pillow-case-400x400.webp",
+"alt": "mohi-satin-pillow-case"
+}
+],
+"cats": [
+{
+"id": 38,
+"slug": "haaraccessoires",
+"name": "Haaraccessoires"
+},
+{
+"id": 115,
+"slug": "satijnen-accessoires",
+"name": "Satijnen accessoires"
+}
+],
+"brand": {
+"name": "MOHI",
+"slug": "mohi"
+},
+"rating": 0,
+"reviews": 0,
+"attrName": "Kleur / tint",
+"options": [
+{
+"id": 38500,
+"label": "Black",
+"price": 1951,
+"regular": 2295,
+"inStock": true,
+"image": null
+},
+{
+"id": 38501,
+"label": "Off White",
+"price": 1951,
+"regular": 2295,
+"inStock": true,
+"image": null
+},
+{
+"id": 38502,
+"label": "Soft Pink",
+"price": 1951,
+"regular": 2295,
+"inStock": true,
+"image": null
+},
+{
+"id": 38503,
+"label": "Champagne",
+"price": 1951,
+"regular": 2295,
+"inStock": true,
+"image": null
+}
+],
+"priceMax": 1951
+},
+{
+"id": 3860,
+"slug": "max-pro-lumo-fohn",
+"name": "Max Pro LUMO Föhn",
+"type": "variable",
+"price": 11896,
+"regular": 13995,
+"onSale": true,
+"inStock": true,
+"lowStock": null,
+"purchasable": true,
+"short": "Lichte, krachtige föhn met ionentechnologie voor snel en glanzend drogen.",
+"descHtml": "<h2>Over dit product</h2><p>Lichte, krachtige föhn met ionentechnologie voor snel en glanzend drogen.</p><ul><li>Professionele salonkwaliteit</li><li>Advies vanuit de kapsalon</li></ul>",
+"images": [
+{
+"src": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/max-pro-lumo-fohn.webp",
+"thumb": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/max-pro-lumo-fohn-400x400.webp",
+"alt": "max-pro-lumo-fohn"
+}
+],
+"cats": [
+{
+"id": 36,
+"slug": "tools",
+"name": "Tools"
+},
+{
+"id": 108,
+"slug": "fohns",
+"name": "Föhns"
+}
+],
+"brand": {
+"name": "Max Pro",
+"slug": "max-pro"
+},
+"rating": 0,
+"reviews": 0,
+"attrName": "Kleur / tint",
+"options": [
+{
+"id": 38600,
+"label": "Black",
+"price": 11896,
+"regular": 13995,
+"inStock": true,
+"image": null
+},
+{
+"id": 38601,
+"label": "Blush",
+"price": 11896,
+"regular": 13995,
+"inStock": true,
+"image": null
+},
+{
+"id": 38602,
+"label": "Champagne",
+"price": 11896,
+"regular": 13995,
+"inStock": true,
+"image": null
+}
+],
+"priceMax": 11896
+},
+{
+"id": 3870,
+"slug": "max-pro-detangler-brush",
+"name": "Max Pro Detangler Brush",
+"type": "variable",
+"price": 1526,
+"regular": 1795,
+"onSale": true,
+"inStock": true,
+"lowStock": null,
+"purchasable": true,
+"short": "Ontklittingsborstel die zacht door nat en droog haar glijdt.",
+"descHtml": "<h2>Over dit product</h2><p>Ontklittingsborstel die zacht door nat en droog haar glijdt.</p><ul><li>Professionele salonkwaliteit</li><li>Advies vanuit de kapsalon</li></ul>",
+"images": [
+{
+"src": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/max-pro-detangler-brush.webp",
+"thumb": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/max-pro-detangler-brush-400x400.webp",
+"alt": "max-pro-detangler-brush"
+}
+],
+"cats": [
+{
+"id": 38,
+"slug": "haaraccessoires",
+"name": "Haaraccessoires"
+},
+{
+"id": 37,
+"slug": "borstels-kammen",
+"name": "Borstels & kammen"
+}
+],
+"brand": {
+"name": "Max Pro",
+"slug": "max-pro"
+},
+"rating": 0,
+"reviews": 0,
+"attrName": "Kleur / tint",
+"options": [
+{
+"id": 38700,
+"label": "Gold",
+"price": 1526,
+"regular": 1795,
+"inStock": true,
+"image": null
+},
+{
+"id": 38701,
+"label": "Silver",
+"price": 1526,
+"regular": 1795,
+"inStock": true,
+"image": null
+},
+{
+"id": 38702,
+"label": "Rosé Gold",
+"price": 1526,
+"regular": 1795,
+"inStock": true,
+"image": null
+},
+{
+"id": 38703,
+"label": "Blush Peach",
+"price": 1526,
+"regular": 1795,
+"inStock": true,
+"image": null
+},
+{
+"id": 38704,
+"label": "Pastel Rose",
+"price": 1526,
+"regular": 1795,
+"inStock": true,
+"image": null
+},
+{
+"id": 38705,
+"label": "Midnight Black",
+"price": 1526,
+"regular": 1795,
+"inStock": true,
+"image": null
+}
+],
+"priceMax": 1526
+},
+{
+"id": 3880,
+"slug": "max-pro-silk-brush",
+"name": "Max Pro Silk Brush",
+"type": "simple",
+"price": 8995,
+"regular": 8995,
+"onSale": false,
+"inStock": true,
+"lowStock": null,
+"purchasable": true,
+"short": "Stijlborstel met 3 warmtestanden, keramische en ionentechnologie voor een gladde finish.",
+"descHtml": "<h2>Over dit product</h2><p>Stijlborstel met 3 warmtestanden, keramische en ionentechnologie voor een gladde finish.</p><ul><li>Professionele salonkwaliteit</li><li>Advies vanuit de kapsalon</li></ul>",
+"images": [
+{
+"src": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/max-pro-silk-brush.webp",
+"thumb": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/max-pro-silk-brush-400x400.webp",
+"alt": "max-pro-silk-brush"
+}
+],
+"cats": [
+{
+"id": 36,
+"slug": "tools",
+"name": "Tools"
+},
+{
+"id": 110,
+"slug": "stijlborstels",
+"name": "Stijlborstels"
+}
+],
+"brand": {
+"name": "Max Pro",
+"slug": "max-pro"
+},
+"rating": 0,
+"reviews": 0,
+"attrName": null,
+"options": null
+},
+{
+"id": 3001,
+"slug": "artistique-youstyle-pomade-original-150-ml",
+"name": "Artistique YouStyle Pomade Original 150 ml",
+"type": "simple",
+"price": 1595,
+"regular": 1595,
+"onSale": false,
+"inStock": true,
+"lowStock": null,
+"purchasable": true,
+"short": "Pomade met glans en flexibele grip voor strakke en klassieke looks.",
+"descHtml": "<h2>Over dit product</h2><p>Pomade met glans en flexibele grip voor strakke en klassieke looks.</p><ul><li>Professionele salonkwaliteit</li><li>Advies vanuit de kapsalon</li></ul>",
+"images": [
+{
+"src": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/artistique-ys-pomade-original.webp",
+"thumb": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/artistique-ys-pomade-original-400x400.webp",
+"alt": "artistique-ys-pomade-original"
+}
+],
+"cats": [
+{
+"id": 65,
+"slug": "artistique",
+"name": "Artistique"
+},
+{
+"id": 67,
+"slug": "artistique-youstyle-ys",
+"name": "Artistique YouStyle (YS)"
+},
+{
+"id": 34,
+"slug": "haarstyling",
+"name": "Haarstyling"
+},
+{
+"id": 42,
+"slug": "wax-paste-pomade",
+"name": "Wax, paste & pomade"
+}
+],
+"brand": {
+"name": "Artistique",
+"slug": "artistique"
+},
+"rating": 0,
+"reviews": 0,
+"attrName": null,
+"options": null
+},
+{
+"id": 3002,
+"slug": "artistique-ys-curl-power-150-ml",
+"name": "Artistique YS Curl Power 150 ml",
+"type": "simple",
+"price": 1730,
+"regular": 1730,
+"onSale": false,
+"inStock": true,
+"lowStock": null,
+"purchasable": true,
+"short": "Stylingcrème die krullen definieert en kroes vermindert.",
+"descHtml": "<h2>Over dit product</h2><p>Stylingcrème die krullen definieert en kroes vermindert.</p><ul><li>Professionele salonkwaliteit</li><li>Advies vanuit de kapsalon</li></ul>",
+"images": [
+{
+"src": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/artistique-ys-curl-power.webp",
+"thumb": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/artistique-ys-curl-power-400x400.webp",
+"alt": "artistique-ys-curl-power"
+}
+],
+"cats": [
+{
+"id": 65,
+"slug": "artistique",
+"name": "Artistique"
+},
+{
+"id": 67,
+"slug": "artistique-youstyle-ys",
+"name": "Artistique YouStyle (YS)"
+},
+{
+"id": 34,
+"slug": "haarstyling",
+"name": "Haarstyling"
+},
+{
+"id": 43,
+"slug": "gel-stylingcreme",
+"name": "Gel & stylingcrème"
+}
+],
+"brand": {
+"name": "Artistique",
+"slug": "artistique"
+},
+"rating": 0,
+"reviews": 0,
+"attrName": null,
+"options": null
+},
+{
+"id": 3003,
+"slug": "artistique-ys-dynamic-shape-150-ml",
+"name": "Artistique YS Dynamic Shape 150 ml",
+"type": "simple",
+"price": 1595,
+"regular": 1595,
+"onSale": false,
+"inStock": false,
+"lowStock": null,
+"purchasable": true,
+"short": "Vormbare paste voor textuur en controle.",
+"descHtml": "<h2>Over dit product</h2><p>Vormbare paste voor textuur en controle.</p><ul><li>Professionele salonkwaliteit</li><li>Advies vanuit de kapsalon</li></ul>",
+"images": [
+{
+"src": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/artistique-ys-dynamic-shape.webp",
+"thumb": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/artistique-ys-dynamic-shape-400x400.webp",
+"alt": "artistique-ys-dynamic-shape"
+}
+],
+"cats": [
+{
+"id": 65,
+"slug": "artistique",
+"name": "Artistique"
+},
+{
+"id": 67,
+"slug": "artistique-youstyle-ys",
+"name": "Artistique YouStyle (YS)"
+},
+{
+"id": 34,
+"slug": "haarstyling",
+"name": "Haarstyling"
+},
+{
+"id": 42,
+"slug": "wax-paste-pomade",
+"name": "Wax, paste & pomade"
+}
+],
+"brand": {
+"name": "Artistique",
+"slug": "artistique"
+},
+"rating": 0,
+"reviews": 0,
+"attrName": null,
+"options": null
+},
+{
+"id": 3004,
+"slug": "artistique-ys-fiber-mousse-200-ml",
+"name": "Artistique YS Fiber Mousse 200 ml",
+"type": "simple",
+"price": 1360,
+"regular": 1360,
+"onSale": false,
+"inStock": true,
+"lowStock": null,
+"purchasable": true,
+"short": "Mousse voor volume en houvast zonder plakkerig gevoel.",
+"descHtml": "<h2>Over dit product</h2><p>Mousse voor volume en houvast zonder plakkerig gevoel.</p><ul><li>Professionele salonkwaliteit</li><li>Advies vanuit de kapsalon</li></ul>",
+"images": [
+{
+"src": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/artistique-ys-fiber-mousse.webp",
+"thumb": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/artistique-ys-fiber-mousse-400x400.webp",
+"alt": "artistique-ys-fiber-mousse"
+}
+],
+"cats": [
+{
+"id": 65,
+"slug": "artistique",
+"name": "Artistique"
+},
+{
+"id": 67,
+"slug": "artistique-youstyle-ys",
+"name": "Artistique YouStyle (YS)"
+},
+{
+"id": 34,
+"slug": "haarstyling",
+"name": "Haarstyling"
+},
+{
+"id": 45,
+"slug": "haarmousse",
+"name": "Haarmousse"
+}
+],
+"brand": {
+"name": "Artistique",
+"slug": "artistique"
+},
+"rating": 0,
+"reviews": 0,
+"attrName": null,
+"options": null
+},
+{
+"id": 3005,
+"slug": "artistique-no-yellow-mask-1000-ml",
+"name": "Artistique No Yellow Mask 1000 ml",
+"type": "variable",
+"price": 5895,
+"regular": 5895,
+"onSale": false,
+"inStock": true,
+"lowStock": null,
+"purchasable": true,
+"short": "Zilvermasker dat gele tinten in blond en grijs haar neutraliseert.",
+"descHtml": "<h2>Over dit product</h2><p>Zilvermasker dat gele tinten in blond en grijs haar neutraliseert.</p><ul><li>Professionele salonkwaliteit</li><li>Advies vanuit de kapsalon</li></ul>",
+"images": [
+{
+"src": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/artistique-no-yellow-mask.webp",
+"thumb": "https://www.jehaarwinkel.nl/wp-content/uploads/2026/10/artistique-no-yellow-mask-400x400.webp",
+"alt": "artistique-no-yellow-mask"
+}
+],
+"cats": [
+{
+"id": 65,
+"slug": "artistique",
+"name": "Artistique"
+},
+{
+"id": 70,
+"slug": "artistique-no-yellow",
+"name": "Artistique No Yellow"
+},
+{
+"id": 35,
+"slug": "kleur-toning",
+"name": "Kleur & Toning"
+},
+{
+"id": 46,
+"slug": "zilvershampoo-zilvermasker",
+"name": "Zilvershampoo & zilvermasker"
+},
+{
+"id": 20,
+"slug": "haarverzorging",
+"name": "Haarverzorging"
+},
+{
+"id": 40,
+"slug": "haarmasker",
+"name": "Haarmasker"
+}
+],
+"brand": {
+"name": "Artistique",
+"slug": "artistique"
+},
+"rating": 0,
+"reviews": 0,
+"attrName": "Uitvoering",
+"options": [
+{
+"id": 30050,
+"label": "Zonder pomp",
+"price": 5895,
+"regular": 5895,
+"inStock": true,
+"image": null
+},
+{
+"id": 30051,
+"label": "Met pomp",
+"price": 6695,
+"regular": 6695,
+"inStock": true,
+"image": null
+}
+],
+"priceMax": 6695
+}
+],
+"cats": [
+{
+"id": 109,
+"name": "Airstylers",
+"slug": "airstylers",
+"parent": 36,
+"count": 3
+},
+{
+"id": 65,
+"name": "Artistique",
+"slug": "artistique",
+"parent": 0,
+"count": 147
+},
+{
+"id": 69,
+"name": "Artistique Artiplex",
+"slug": "artistique-artiplex",
+"parent": 65,
+"count": 5
+},
+{
+"id": 72,
+"name": "Artistique Beach Blonde",
+"slug": "artistique-beach-blonde",
+"parent": 65,
+"count": 6
+},
+{
+"id": 66,
+"name": "Artistique Core Lab",
+"slug": "artistique-core-lab",
+"parent": 65,
+"count": 34
+},
+{
+"id": 73,
+"name": "Artistique It’s a Magic",
+"slug": "artistique-it-s-a-magic",
+"parent": 65,
+"count": 7
+},
+{
+"id": 70,
+"name": "Artistique No Yellow",
+"slug": "artistique-no-yellow",
+"parent": 65,
+"count": 5
+},
+{
+"id": 68,
+"name": "Artistique Orchid",
+"slug": "artistique-orchid",
+"parent": 65,
+"count": 47
+},
+{
+"id": 71,
+"name": "Artistique Refresh Color",
+"slug": "artistique-refresh-color",
+"parent": 65,
+"count": 5
+},
+{
+"id": 67,
+"name": "Artistique YouStyle (YS)",
+"slug": "artistique-youstyle-ys",
+"parent": 65,
+"count": 38
+},
+{
+"id": 37,
+"name": "Borstels & kammen",
+"slug": "borstels-kammen",
+"parent": 38,
+"count": 2
+},
+{
+"id": 39,
+"name": "Conditioner",
+"slug": "conditioner",
+"parent": 20,
+"count": 14
+},
+{
+"id": 108,
+"name": "Föhns",
+"slug": "fohns",
+"parent": 36,
+"count": 3
+},
+{
+"id": 43,
+"name": "Gel & stylingcrème",
+"slug": "gel-stylingcreme",
+"parent": 34,
+"count": 12
+},
+{
+"id": 38,
+"name": "Haaraccessoires",
+"slug": "haaraccessoires",
+"parent": 0,
+"count": 6
+},
+{
+"id": 116,
+"name": "Haarhanddoeken",
+"slug": "haarhanddoeken",
+"parent": 38,
+"count": 1
+},
+{
+"id": 40,
+"name": "Haarmasker",
+"slug": "haarmasker",
+"parent": 20,
+"count": 18
+},
+{
+"id": 45,
+"name": "Haarmousse",
+"slug": "haarmousse",
+"parent": 34,
+"count": 5
+},
+{
+"id": 76,
+"name": "Haarolie & serum",
+"slug": "haarolie-serum",
+"parent": 20,
+"count": 6
+},
+{
+"id": 44,
+"name": "Haarspray & haarlak",
+"slug": "haarspray-haarlak",
+"parent": 34,
+"count": 4
+},
+{
+"id": 34,
+"name": "Haarstyling",
+"slug": "haarstyling",
+"parent": 0,
+"count": 39
+},
+{
+"id": 20,
+"name": "Haarverzorging",
+"slug": "haarverzorging",
+"parent": 0,
+"count": 99
+},
+{
+"id": 114,
+"name": "Hittebescherming",
+"slug": "hittebescherming",
+"parent": 34,
+"count": 1
+},
+{
+"id": 35,
+"name": "Kleur & Toning",
+"slug": "kleur-toning",
+"parent": 0,
+"count": 10
+},
+{
+"id": 47,
+"name": "Kleurshampoo",
+"slug": "kleurshampoo",
+"parent": 35,
+"count": 5
+},
+{
+"id": 106,
+"name": "Krultangen",
+"slug": "krultangen",
+"parent": 36,
+"count": 6
+},
+{
+"id": 41,
+"name": "Leave-in verzorging",
+"slug": "leave-in-verzorging",
+"parent": 20,
+"count": 18
+},
+{
+"id": 115,
+"name": "Satijnen accessoires",
+"slug": "satijnen-accessoires",
+"parent": 38,
+"count": 3
+},
+{
+"id": 21,
+"name": "Shampoo",
+"slug": "shampoo",
+"parent": 20,
+"count": 41
+},
+{
+"id": 110,
+"name": "Stijlborstels",
+"slug": "stijlborstels",
+"parent": 36,
+"count": 1
+},
+{
+"id": 107,
+"name": "Stijltangen",
+"slug": "stijltangen",
+"parent": 36,
+"count": 4
+},
+{
+"id": 36,
+"name": "Tools",
+"slug": "tools",
+"parent": 0,
+"count": 19
+},
+{
+"id": 77,
+"name": "Volume & textuur",
+"slug": "volume-textuur",
+"parent": 34,
+"count": 6
+},
+{
+"id": 113,
+"name": "Warmteborstels",
+"slug": "warmteborstels",
+"parent": 36,
+"count": 2
+},
+{
+"id": 42,
+"name": "Wax, paste & pomade",
+"slug": "wax-paste-pomade",
+"parent": 34,
+"count": 9
+},
+{
+"id": 46,
+"name": "Zilvershampoo & zilvermasker",
+"slug": "zilvershampoo-zilvermasker",
+"parent": 35,
+"count": 5
+}
+],
+"fetchedAt": "fixture"
+}
