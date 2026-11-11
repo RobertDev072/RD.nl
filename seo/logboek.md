@@ -12,6 +12,8 @@ Nieuwste bovenaan. De SEO-agent voegt hier elke week een entry toe.
   webdesign alkmaar, website maker alkmaar, ai automatisering, ai development en ai oplossingen mkb. Verwacht: de site en het domein zijn net nieuw.
   Lokale zoekresultaten worden gedomineerd door Trustoo, Sortlist en Semrush Agencies.
 - Gepubliceerd: [Website laten maken in Heerhugowaard: waar let je op?](/kennisbank/website-laten-maken-heerhugowaard) (965 woorden).
+- Deploy van main geslaagd (Vercel, READY); artikel live met status 200. IndexNow-ping niet gelukt: api.indexnow.org is vanuit de
+  agentomgeving geblokkeerd. Google vindt het artikel via de sitemap.
 - Verbeterd: interne link vanuit het artikel over website laten maken in Alkmaar naar het nieuwe Heerhugowaard-artikel.
 - Adviezen voor Robert:
   1. Google Search Console koppelen voor lorvex.nl en de sitemap indienen, zodat we echte posities zien.
