@@ -28,7 +28,7 @@ De SEO-agent pakt elke week het eerstvolgende `gepland`-zoekwoord van boven naar
 | website laten maken alkmaar | 1 | website-laten-maken-alkmaar | gepubliceerd 2026-11-09 |
 | ai automatisering mkb | 1 | ai-automatisering-mkb | gepubliceerd 2026-11-08 |
 | google bedrijfsprofiel alkmaar | 1 | google-bedrijfsprofiel-alkmaar | gepubliceerd 2026-11-07 |
-| website laten maken heerhugowaard | 1 |  | gepland |
+| website laten maken heerhugowaard | 1 | website-laten-maken-heerhugowaard | gepubliceerd 2026-11-11 |
 | chatbot voor je website | 1 |  | gepland |
 | website laten maken heiloo | 1 |  | gepland |
 | ai agent voor bedrijven | 1 |  | gepland |

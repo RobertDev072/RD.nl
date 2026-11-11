@@ -47,4 +47,4 @@ Een goede partij laat zien wat je kunt verwachten voordat je iets tekent. Een ee
 
 Lorvex is een AI tech company uit Alkmaar. We bouwen websites, web apps en AI-oplossingen voor ondernemers in Alkmaar, Heiloo, Heerhugowaard, Castricum, Bergen en de rest van Noord-Holland. Je krijgt eerst gratis een voorbeeld, daarna een vaste prijs per klus. Werk begint vanaf €100, zonder contract en zonder vaste maandkosten.
 
-Bekijk [onze projecten](/projecten) of lees meer over [website laten maken in Alkmaar](/diensten/websites-laten-maken). Liever direct sparren? [Bel of app ons](/contact).
+Bekijk [onze projecten](/projecten), lees meer over [website laten maken in Alkmaar](/diensten/websites-laten-maken) of over [website laten maken in Heerhugowaard](/kennisbank/website-laten-maken-heerhugowaard). Liever direct sparren? [Bel of app ons](/contact).
