@@ -5,6 +5,7 @@ const SIMPLE=/JouwWeb|Wix|Weebly|Webnode|Mijnwebwinkel|Sitebuilder|Joomla|OpenCa
 const rows=[];
 for(const c of all){if(c.dead)continue;c.m=(c.m||[]).filter(n=>!EX.has(n));if(EX.has(c.d))continue;
  let s=0;if(c.m.length)s+=6;if(c.shop)s+=3;if(SIMPLE.test(c.pl||''))s+=3;if(!c.vp)s+=3;if(c.yr&&+c.yr<=2022)s+=2;if(c.o)s+=1;s+=(45-c.dist)/15;c.s=s;rows.push(c);}
+const cnt={};for(const c of rows)for(const n of c.m)cnt[n]=(cnt[n]||0)+1;for(const c of rows){const b=c.m.length;c.m=c.m.filter(n=>cnt[n]==1);if(b&&!c.m.length)c.s-=6;}
 rows.sort((a,b)=>b.s-a.s);
 const top=rows.slice(0,+process.argv[2]||320);
 const cl=x=>String(x??'').replace(/[\t\n\r|]/g,' ').trim();
