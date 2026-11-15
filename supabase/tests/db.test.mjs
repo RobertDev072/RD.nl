@@ -90,6 +90,8 @@ await db.exec('reset role; set role anon');
 await t('anon cannot discover', up('node/6','X','x.nl','1'), true);
 await db.exec('reset role'); await db.exec(fs.readFileSync(new URL('../migrations/20261115000006_concepts_admin.sql', import.meta.url),'utf8'));
 await db.exec(fs.readFileSync(new URL('../migrations/20261115000007_brand.sql', import.meta.url),'utf8'));
+await db.exec(fs.readFileSync(new URL('../migrations/20261115000008_interest.sql', import.meta.url),'utf8'));
+await db.exec("set role service_role"); { const r=(await db.query("select id, domain from leads where domain is not null limit 1")).rows[0]; if(r){ await db.query("select admin_update_lead($1,'not_interested')",[r.id]); const s=(await db.query("select (select status from leads where id=$1) st, (select count(*) from suppression_list where domain=$2)::int n",[r.id,r.domain])).rows[0]; console.log(s.st==='lost'&&s.n>=1?'ok not_interested':'FAIL not_interested '+JSON.stringify(s)); } else console.log('FAIL no lead'); } await db.exec('reset role');
 await db.exec("set role service_role"); { const r=(await db.query("select id from leads limit 1")).rows[0]; if(r){ await db.query("select set_lead_brand($1,'{\"logo\":\"x\"}')",[r.id]); const b=(await db.query("select brand->>'logo' l from leads where id=$1",[r.id])).rows[0].l; console.log(b==='x'?'ok brand rpc':'FAIL brand rpc'); } } await db.exec('reset role');
 await db.exec('set role service_role');
 await t('qualified lead has slug', `select slug from leads where status='qualified' limit 1`);

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { ExternalLink, MessageCircle, Phone, Printer } from 'lucide-react';
 import { crmConfigured } from '@/lib/crm';
-import { getCallList, getInbound, getOpportunities, getStats, waNumber, whatsappReply, type Lead } from '@/lib/admin-data';
+import { getCallList, getInbound, getOpportunities, getRanking, getStats, waNumber, whatsappReply, type Lead } from '@/lib/admin-data';
 import { site } from '@/lib/site';
 
 export const dynamic = 'force-dynamic';
@@ -38,7 +38,7 @@ function Empty({ text }: { text: string }) {
 
 export default async function Admin() {
   if (!crmConfigured()) return <main className="wrap pt-32">CRM niet geconfigureerd.</main>;
-  const [stats, inbound, opps, calls] = await Promise.all([getStats(), getInbound(), getOpportunities(), getCallList()]);
+  const [stats, inbound, opps, calls, ranking] = await Promise.all([getStats(), getInbound(), getOpportunities(), getCallList(), getRanking()]);
 
   return (
     <main className="wrap max-w-[1100px] pb-24 pt-[120px]">
@@ -48,6 +48,37 @@ export default async function Admin() {
           <div key={l} className="rounded-2xl bg-canvas p-4"><p className="text-[13px] text-muted">{l}</p><p className="text-[28px] font-semibold tabular-nums">{n}</p></div>
         ))}
       </div>
+
+
+      <Section title="Ranking: bedrijven om te benaderen" hint="Kansscore 0–100: hoe groter de kans dat dit bedrijf een nieuwe website nodig heeft. Klik voor de volledige analyse en de kant-en-klare tekst.">
+        {ranking.length === 0 ? <Empty text="Nog geen geverifieerde bedrijven." /> : (
+          <div className="overflow-x-auto rounded-2xl border border-line">
+            <table className="w-full text-left text-[14.5px]">
+              <thead className="bg-canvas text-[12.5px] uppercase tracking-[.08em] text-muted">
+                <tr><th className="p-3">#</th><th className="p-3">Score</th><th className="p-3">Bedrijf</th><th className="p-3">Plaats</th><th className="p-3">Website</th><th className="p-3">Grootste problemen</th><th className="p-3">Status</th></tr>
+              </thead>
+              <tbody>
+                {ranking.map((l, i) => {
+                  const s = Number(l.score ?? 0);
+                  const c = s >= 80 ? '#15803d' : s >= 60 ? '#65a30d' : s >= 40 ? '#ca8a04' : '#9ca3af';
+                  const isNew = l.qualified_at && Date.now() - new Date(l.qualified_at).getTime() < 86_400_000;
+                  return (
+                    <tr key={l.id} className="border-t border-line hover:bg-canvas">
+                      <td className="p-3 text-muted">{i + 1}</td>
+                      <td className="p-3"><span className="inline-block min-w-[44px] rounded-full px-2.5 py-1 text-center font-semibold text-white" style={{ background: c }}>{s}</span></td>
+                      <td className="p-3"><a href={`/admin/lead/${l.id}`} className="font-semibold underline-offset-2 hover:underline">{l.business_name}</a>{isNew && <span className="ml-2 rounded bg-[#dcfce7] px-1.5 py-0.5 text-[11px] font-semibold text-[#15803d]">NIEUW</span>}<p className="text-[12.5px] text-muted">{l.category}</p></td>
+                      <td className="p-3">{l.city ?? '–'}</td>
+                      <td className="p-3">{l.audit?.score ?? '–'}/100</td>
+                      <td className="p-3 text-[13px] text-muted">{(l.audit?.findings ?? []).filter((f) => !f.ok).slice(0, 2).map((f) => f.title).join(' · ') || '–'}</td>
+                      <td className="p-3 text-[13px]">{l.status}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </Section>
 
       <Section title="1. Reacties en aanvragen" hint="Deze mensen vroegen zelf om contact (formulier, website-check of voorbeeldpagina). WhatsApp is hier toegestaan.">
         {inbound.length === 0 ? <Empty text="Nog geen aanvragen." /> : inbound.map((l) => <InboundCard key={l.id} l={l} />)}

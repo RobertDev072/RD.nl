@@ -45,14 +45,18 @@ const GREYISH = (hex: string) => {
   const max = Math.max(r, g, b), min = Math.min(r, g, b);
   return max - min < 28 || max < 35 || min > 225; // greys, near-black, near-white
 };
+// Default palettes shipped by WordPress (Gutenberg), Wix and common builders: not the business's brand.
+const PLATFORM_DEFAULTS = new Set(['#ff6900','#fcb900','#7bdcb5','#00d084','#8ed1fc','#0693e3','#9b51e0','#cf2e2e','#f78da7','#abb8c3',
+  '#003388','#116dff','#0f62fe','#97f4ff','#4854c7','#ff0000','#00ff00','#0000ff','#ffff00','#ff00ff','#00ffff','#1e73be','#21759b','#0073aa','#0085ba','#2271b1','#3858e9']);
 const toHex6 = (h: string) => (h.length === 4 ? '#' + [...h.slice(1)].map((c) => c + c).join('') : h).toLowerCase();
 
 function colors(html: string): string[] {
   const count = new Map<string, number>();
-  const add = (h: string, w: number) => { const x = toHex6(h); if (!GREYISH(x)) count.set(x, (count.get(x) ?? 0) + w); };
+  const add = (h: string, w: number) => { const x = toHex6(h); if (!GREYISH(x) && !PLATFORM_DEFAULTS.has(x)) count.set(x, (count.get(x) ?? 0) + w); };
   const theme = meta(html, 'theme-color'); if (theme && /^#[0-9a-f]{3,6}$/i.test(theme)) add(theme, 50);
-  for (const m of html.matchAll(/#([0-9a-f]{6}|[0-9a-f]{3})\b/gi)) add('#' + m[1], 1);
-  for (const m of html.matchAll(/rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})/gi)) {
+  const css = html.replace(/--wp--preset--[^;]+;/g, '').replace(/--wix-[^;]+;/g, '');
+  for (const m of css.matchAll(/#([0-9a-f]{6}|[0-9a-f]{3})\b/gi)) add('#' + m[1], 1);
+  for (const m of css.matchAll(/rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})/gi)) {
     add('#' + [m[1], m[2], m[3]].map((v) => Math.min(255, +v).toString(16).padStart(2, '0')).join(''), 1);
   }
   return [...count.entries()].sort((a, b) => b[1] - a[1]).map(([h]) => h).slice(0, 3);

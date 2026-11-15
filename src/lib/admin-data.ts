@@ -6,7 +6,7 @@ export type Lead = {
   domain: string | null; category: string | null; city: string | null; address: string | null; postcode: string | null;
   legal_form: string | null; business_phone: string | null; contact_name: string | null; contact_email: string | null;
   contact_phone: string | null; message: string | null; services_interest: string[]; score: number | null;
-  score_reasons: string[] | null; audit: { score?: number; findings?: { id: string; ok: boolean; title: string }[] } | null;
+  score_reasons: string[] | null; audit: { score?: number; findings?: { id: string; ok: boolean; title: string; detail: string; weight: number }[] } | null;
   slug: string | null; concept_views: number; letter_delivered_at: string | null; qualified_at: string | null;
   verification_status: string | null;
 };
@@ -51,4 +51,40 @@ export function whatsappReply(l: Lead) {
     : l.slug ? `het voorbeeldontwerp voor ${l.business_name}` : `de website-check van ${l.domain ?? 'je website'}`;
   return `Hoi ${first}, met Robert van Lorvex. Bedankt voor ${about}! Ik heb er al naar gekeken en heb een paar concrete ideeën. ` +
     `Past het als ik je morgen even bel, of zal ik het hier uitleggen?`;
+}
+
+export type LeadDetail = Lead & {
+  audit: (Lead['audit'] & { finalUrl?: string; loadMs?: number; pageKb?: number; platform?: string;
+    findings?: { id: string; ok: boolean; title: string; detail: string; weight: number }[] }) | null;
+  evidence: Record<string, unknown> | null; verified_at: string | null; brand: { logo?: string | null; images?: string[]; colors?: string[] } | null;
+};
+
+/** Today's ranking: every verified, still-open opportunity, best first. */
+export const getRanking = () =>
+  rest<Lead[]>(`leads?select=${cols}&source=eq.discovery&verification_status=eq.verified_active&status=in.(new,qualified,contacted)&order=score.desc.nullslast&limit=200`);
+
+export async function getLead(id: string) {
+  if (!/^[0-9a-f-]{36}$/.test(id)) return null;
+  const r = await rest<LeadDetail[]>(`leads?select=${cols},evidence,verified_at,brand&id=eq.${id}`);
+  return r[0] ?? null;
+}
+
+export const getActivities = (id: string) =>
+  rest<{ created_at: string; actor: string; type: string; data: { note?: string } | null }[]>(
+    `activities?select=created_at,actor,type,data&lead_id=eq.${id}&order=created_at.desc&limit=30`);
+
+/** Text for a phone call or a letter. Built only from what the analysis actually found. */
+export function pitchMessage(l: LeadDetail) {
+  const problems = (l.audit?.findings ?? []).filter((f) => !f.ok).sort((a, b) => b.weight - a.weight).slice(0, 4);
+  const lines = problems.map((f) => `• ${f.title}: ${f.detail}`).join('\n');
+  return `Goedendag, mijn naam is Robert van Lorvex, een webbureau uit Alkmaar.
+
+Ik heb de website van ${l.business_name}${l.domain ? ` (${l.domain})` : ''} bekeken en zag een paar dingen waardoor u klanten kunt mislopen:
+${lines || '• De website kan moderner en sneller, vooral op de telefoon.'}
+
+Ik heb een gratis voorbeeld gemaakt van hoe uw website eruit kan zien: modern, snel en met uw eigen logo, foto’s en teksten. Heeft u interesse om het te bekijken? Het is helemaal vrijblijvend.
+
+Met vriendelijke groet,
+Robert Rocha – Lorvex
+lorvex.nl · 06 41227451`;
 }
