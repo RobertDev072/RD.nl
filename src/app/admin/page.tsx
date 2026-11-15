@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { ExternalLink, MessageCircle, Phone, Printer } from 'lucide-react';
+import { ExternalLink, MessageCircle, Phone } from 'lucide-react';
 import { crmConfigured } from '@/lib/crm';
 import { getCallList, getInbound, getOpportunities, getRanking, getStats, waNumber, whatsappReply, type Lead } from '@/lib/admin-data';
 import { site } from '@/lib/site';
@@ -86,8 +86,7 @@ export default async function Admin() {
         {inbound.length === 0 ? <Empty text="Nog geen aanvragen." /> : inbound.map((l) => <InboundCard key={l.id} l={l} />)}
       </Section>
 
-      <Section title="2. Kansen (door de agents gevonden)" hint="Geverifieerde bedrijven met de hoogste score. Contact alleen via brief (zelf bezorgen) of, bij B.V./N.V., telefonisch.">
-        <a href="/admin/brieven" className="btn-accent justify-self-start"><Printer size={17} /> Brieven printen (op straat gesorteerd)</a>
+      <Section title="2. Kansen (door de agents gevonden)" hint="Geverifieerde bedrijven met de hoogste score. Contact alleen telefonisch, en alleen bij B.V./N.V.">
         {opps.length === 0 ? <Empty text="Nog geen kansen. De lead engine draait elke ochtend." /> : opps.map((l) => <OppCard key={l.id} l={l} />)}
       </Section>
 
