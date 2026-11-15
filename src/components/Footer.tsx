@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ArrowUpRight, MessageCircle, Phone, Star } from 'lucide-react';
 import { projects, services } from '@/lib/content';
 import { site } from '@/lib/site';
+import { legal, legalComplete } from '@/lib/legal';
 import { LogoFull, Wordmark } from './Logo';
 
 export default function Footer() {
@@ -47,6 +48,14 @@ export default function Footer() {
           <p className="mb-4">Website laten maken in {site.areas.join(', ')} en heel {site.region}.</p>
           <div className="flex flex-wrap justify-between gap-4">
             <span>© {new Date().getFullYear()} Lorvex · AI Tech Company · {site.city}</span>
+            {/* Legal details appear only once KvK-nummer, btw-id and address are set in Vercel. */}
+            {legalComplete && (
+              <span>
+                {legal.address} · KvK {legal.kvk} · Btw {legal.btw} ·{' '}
+                <a href={`mailto:${legal.email}`} className="hover:text-white">{legal.email}</a> ·{' '}
+                <Link href="/privacy" className="hover:text-white">Privacyverklaring</Link>
+              </span>
+            )}
             <span>Werk vanaf €100 · Geen contracten · Geen vaste kosten</span>
           </div>
         </div>
