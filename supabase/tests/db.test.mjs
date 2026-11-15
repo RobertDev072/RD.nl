@@ -37,3 +37,15 @@ await t('event payload edit blocked', `update events set payload='{}' where id=1
 await t('event delete denied', `delete from events`, true);
 await t('event from unknown agent rejected', `insert into events(type,source_agent) values('x','ghost')`, true);
 await t('approval request', `insert into approvals(requested_by,action,summary) values('website','outreach.send','test') returning status`);
+await db.exec('reset role'); await db.exec(fs.readFileSync(new URL('../migrations/20261115000002_save_inbound_lead.sql', import.meta.url),'utf8'));
+await db.exec('reset role; set role service_role');
+const call = (d,e) => `select save_inbound_lead('${d}','https://${d}','Biz','Naam','${e}','','{}'::jsonb,50,'tekst','{email}',null,'ua') as r`;
+await t('save new lead (atomic)', call('new.nl','a@new.nl'));
+await t('save repeat keeps first contact', call('new.nl','b@new.nl'));
+await t('first contact kept', `select contact_email from leads where domain='new.nl'`);
+await t('event + activities written', `select (select count(*) from events where subject_type='lead') ev, (select count(*) from activities) act, (select count(*) from consents where lead_id is null) orphans`);
+await db.exec('reset role'); await db.exec(`insert into suppression_list(domain,reason) values('optout.nl','test')`); await db.exec('set role service_role');
+await t('suppressed domain stores nothing', call('optout.nl','x@optout.nl'));
+await t('no row for suppressed', `select count(*) from leads where domain='optout.nl'`);
+await db.exec('reset role; set role anon');
+await t('anon cannot call save_inbound_lead', call('evil.nl','x@evil.nl'), true);

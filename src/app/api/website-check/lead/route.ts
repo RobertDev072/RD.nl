@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { checkWebsite, CheckError, normaliseUrl } from '@/lib/website-check';
-import { crmConfigured, isSuppressed, saveInboundLead } from '@/lib/crm';
+import { crmConfigured, saveInboundLead } from '@/lib/crm';
 import { clientIp, rateLimited } from '@/lib/rate-limit';
 import { CONSENT_TEXT } from '@/lib/consent';
 
@@ -39,7 +39,6 @@ export async function POST(req: Request) {
   try {
     const url = normaliseUrl(b.url);
     const result = await checkWebsite(url.href);
-    if (await isSuppressed(result.domain, email)) return NextResponse.json({ ok: true }); // respect earlier opt-out silently
     await saveInboundLead({
       domain: result.domain,
       website: result.finalUrl,
@@ -53,7 +52,7 @@ export async function POST(req: Request) {
       channels: phone ? ['email', 'phone', 'whatsapp'] : ['email'],
       ip,
       userAgent: req.headers.get('user-agent')
-    });
+    }); // suppressed domains/emails are silently ignored inside the transaction
     return NextResponse.json({ ok: true });
   } catch (e) {
     if (e instanceof CheckError) return NextResponse.json({ error: e.message }, { status: 422 });
