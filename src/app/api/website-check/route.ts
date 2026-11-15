@@ -5,6 +5,8 @@ import { clientIp, rateLimited } from '@/lib/rate-limit';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
+// GDPR: process requests in the EU (Frankfurt), close to the Supabase EU database.
+export const preferredRegion = 'fra1';
 
 export async function POST(req: Request) {
   const ip = clientIp(req.headers) || 'unknown';
