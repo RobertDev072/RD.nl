@@ -13,7 +13,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ['/projecten', 0.8, 'monthly'],
     ['/automatisering', 0.8, 'monthly'],
     ['/over', 0.7, 'monthly'],
-    ['/contact', 0.7, 'yearly']
+    ['/contact', 0.7, 'yearly'],
+    ['/website-check', 0.8, 'monthly'],
+    ['/privacy', 0.2, 'yearly']
   ];
   return [
     ...routes.map(([r, priority, changeFrequency]) => ({ url: `${site.url}${r}`, lastModified: now, changeFrequency, priority })),

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ArrowUpRight, MessageCircle, Phone, Star } from 'lucide-react';
 import { projects, services } from '@/lib/content';
 import { site } from '@/lib/site';
+import { legal } from '@/lib/legal';
 import { LogoFull, Wordmark } from './Logo';
 
 export default function Footer() {
@@ -36,6 +37,7 @@ export default function Footer() {
             items={[
               { href: '/automatisering', label: 'AI-automatisering demo' },
               { href: '/over', label: 'Over Lorvex' },
+              { href: '/website-check', label: 'Gratis website-check' },
               { href: '/kennisbank', label: 'Kennisbank' },
               { href: '/contact', label: 'Contact' },
               { href: '/diensten', label: 'Alle diensten' }
@@ -47,6 +49,12 @@ export default function Footer() {
           <p className="mb-4">Website laten maken in {site.areas.join(', ')} en heel {site.region}.</p>
           <div className="flex flex-wrap justify-between gap-4">
             <span>© {new Date().getFullYear()} Lorvex · AI Tech Company · {site.city}</span>
+            <span>
+              {[legal.address, legal.kvk && `KvK ${legal.kvk}`, legal.btw && `Btw ${legal.btw}`].filter(Boolean).join(' · ')}
+              {(legal.address || legal.kvk || legal.btw) && ' · '}
+              <a href={`mailto:${legal.email}`} className="hover:text-white">{legal.email}</a> ·{' '}
+              <Link href="/privacy" className="hover:text-white">Privacyverklaring</Link>
+            </span>
             <span>Werk vanaf €100 · Geen contracten · Geen vaste kosten</span>
           </div>
         </div>
