@@ -246,7 +246,12 @@ export function analyse(html: string, finalUrl: URL, loadMs: number): Omit<Check
 }
 
 export async function checkWebsite(input: string): Promise<CheckResult> {
+  return (await checkWebsiteWithHtml(input)).result;
+}
+
+/** Same as checkWebsite, but also returns the HTML (for brand extraction; never stored raw). */
+export async function checkWebsiteWithHtml(input: string): Promise<{ result: CheckResult; html: string; finalUrl: URL }> {
   const start = normaliseUrl(input);
   const { url, ms, html } = await safeFetch(start);
-  return { url: start.href, ...analyse(html, url, ms) };
+  return { result: { url: start.href, ...analyse(html, url, ms) }, html, finalUrl: url };
 }
