@@ -4,12 +4,12 @@ import { PGlite } from '@electric-sql/pglite';
 import { pg_trgm } from '@electric-sql/pglite/contrib/pg_trgm';
 import fs from 'fs';
 const db = new PGlite({ extensions: { pg_trgm } });
-const sql = fs.readFileSync(new URL('file:///home/claude/rd.nl/supabase/migrations/20261115000000_crm.sql', import.meta.url), 'utf8');
+const sql = fs.readFileSync(new URL('../migrations/20261115000000_crm.sql', import.meta.url), 'utf8');
 await db.exec(`create role anon; create role authenticated; create role service_role bypassrls;
   grant usage on schema public to anon, authenticated, service_role;
   alter default privileges in schema public grant all on tables to anon, authenticated, service_role;
   alter default privileges in schema public grant all on functions to anon, authenticated, service_role;`);
-await db.exec(sql); await db.exec(fs.readFileSync(new URL('file:///home/claude/rd.nl/supabase/migrations/20261115000001_os_core.sql', import.meta.url),'utf8'));
+await db.exec(sql); await db.exec(fs.readFileSync(new URL('../migrations/20261115000001_os_core.sql', import.meta.url),'utf8'));
 const t = async (name, q, expectFail) => {
   try { const r = await db.query(q); console.log(expectFail ? 'FAIL(should error)' : 'ok   ', name, r.rows?.[0] ? JSON.stringify(r.rows[0]) : ''); }
   catch (e) { console.log(expectFail ? 'ok   ' : 'FAIL ', name, '→', e.message.split('\n')[0]); }
