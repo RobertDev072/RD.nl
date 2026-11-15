@@ -16,7 +16,7 @@ const authHeaders = (): Record<string, string> =>
 
 export const crmConfigured = () => Boolean(URL_ && KEY);
 
-async function rest<T>(path: string, init: RequestInit & { prefer?: string } = {}): Promise<T> {
+export async function rest<T>(path: string, init: RequestInit & { prefer?: string } = {}): Promise<T> {
   if (!URL_ || !KEY) throw new Error('CRM not configured');
   const res = await fetch(`${URL_}/rest/v1/${path}`, {
     ...init,

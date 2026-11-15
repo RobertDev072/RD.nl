@@ -23,6 +23,8 @@ export type CheckResult = {
   pageKb: number;
   platform: string;
   findings: Finding[];
+  /** Text on the page suggesting the business stopped or the domain is parked (evidence for verification). */
+  inactiveSignal?: string;
 };
 
 export class CheckError extends Error {
@@ -239,7 +241,8 @@ export function analyse(html: string, finalUrl: URL, loadMs: number): Omit<Check
   ];
   const total = f.reduce((s, x) => s + x.weight, 0);
   const score = Math.round((f.filter((x) => x.ok).reduce((s, x) => s + x.weight, 0) / total) * 100);
-  return { finalUrl: finalUrl.href, domain: finalUrl.hostname.replace(/^www\./, ''), score, loadMs, pageKb, platform: detectPlatform(html), findings: f };
+  const inactive = text.match(/definitief gesloten|permanent gesloten|wij zijn gestopt|we zijn gestopt|is gestopt|opgeheven|failliet|domein(naam)? (is )?te koop|domain (is )?for sale|this domain is parked|binnenkort online|coming soon|under construction|website in aanbouw/i);
+  return { finalUrl: finalUrl.href, domain: finalUrl.hostname.replace(/^www\./, ''), score, loadMs, pageKb, platform: detectPlatform(html), findings: f, inactiveSignal: inactive?.[0] };
 }
 
 export async function checkWebsite(input: string): Promise<CheckResult> {
