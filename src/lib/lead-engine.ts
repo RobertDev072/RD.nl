@@ -63,7 +63,9 @@ export async function discover(): Promise<{ found: number; new: number; existing
       p_website: url.origin + '/', p_domain: domain,
       p_address: [t['addr:street'], t['addr:housenumber']].filter(Boolean).join(' ') || null,
       p_postcode: t['addr:postcode']?.replace(/\s/g, '').toUpperCase() || null,
-      p_city: t['addr:city'] || null, p_source: 'osm'
+      p_city: t['addr:city'] || null, p_source: 'osm',
+      // Stored by the database only for B.V./N.V. (legal persons may be called); ignored otherwise.
+      p_phone: t.phone || t['contact:phone'] || null
     }];
   });
   stats.found = rows.length;

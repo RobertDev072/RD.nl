@@ -10,3 +10,7 @@ export const CONTACT_NOTICE_TEXT =
 // Separate, optional marketing consent — never pre-ticked, never required.
 export const MARKETING_CONSENT_TEXT =
   'Ja, ik wil af en toe tips en aanbiedingen van Lorvex per e-mail ontvangen. Afmelden kan altijd.';
+
+// Concept page ("lorvex.nl/voor/…"): explicit consent to be contacted about the concept.
+export const CONCEPT_CONSENT_TEXT =
+  'Ja, Lorvex mag contact met mij opnemen over dit ontwerp via e-mail, en via telefoon of WhatsApp als ik mijn nummer invul. Ik kan dit altijd intrekken.';
