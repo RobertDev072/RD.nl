@@ -7,8 +7,8 @@ import { CONSENT_TEXT } from '@/lib/consent';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
-// GDPR: process requests in the EU (Frankfurt), close to the Supabase EU database.
-export const preferredRegion = 'fra1';
+// GDPR: process requests in the EU (Dublin), next to the Supabase EU database (eu-west-1).
+export const preferredRegion = 'dub1';
 
 const EMAIL = /^[^\s@]{1,64}@[^\s@]{1,190}\.[a-z]{2,}$/i;
 

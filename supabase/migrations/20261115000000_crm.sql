@@ -102,11 +102,11 @@ create table audit_log (
   data        jsonb not null default '{}'
 );
 
-create or replace function touch_updated_at() returns trigger language plpgsql as $$
+create or replace function touch_updated_at() returns trigger language plpgsql set search_path = '' as $$
 begin new.updated_at = now(); return new; end $$;
 create trigger leads_touch before update on leads for each row execute function touch_updated_at();
 
-create or replace function audit_log_no_change() returns trigger language plpgsql as $$
+create or replace function audit_log_no_change() returns trigger language plpgsql set search_path = '' as $$
 begin raise exception 'audit_log is append-only'; end $$;
 create trigger audit_log_immutable before update or delete on audit_log for each row execute function audit_log_no_change();
 

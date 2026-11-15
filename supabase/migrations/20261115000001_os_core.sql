@@ -37,7 +37,7 @@ create table events (
 create index events_unprocessed_idx on events (type, created_at) where processed_at is null;
 create index events_subject_idx on events (subject_type, subject_id);
 
-create or replace function events_protect_payload() returns trigger language plpgsql as $$
+create or replace function events_protect_payload() returns trigger language plpgsql set search_path = '' as $$
 begin
   if new.type is distinct from old.type or new.payload is distinct from old.payload
      or new.source_agent is distinct from old.source_agent or new.created_at is distinct from old.created_at
