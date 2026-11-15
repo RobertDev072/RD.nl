@@ -8,7 +8,7 @@ import { rest } from './crm';
 
 const CENTER = { lat: 52.6324, lon: 4.7534 }; // Alkmaar
 const RADIUS_M = 15_000;
-const OVERPASS = ['https://overpass-api.de/api/interpreter', 'https://overpass.kumi.systems/api/interpreter'];
+const OVERPASS = ['https://overpass-api.de/api/interpreter', 'https://overpass.private.coffee/api/interpreter', 'https://overpass.kumi.systems/api/interpreter'];
 
 // OSM tag → category label + relevance for Lorvex (priority sectors from the project plan).
 const CATEGORIES: { match: (t: Record<string, string>) => boolean; label: string; relevance: number }[] = [
@@ -39,7 +39,7 @@ export async function discover(): Promise<{ found: number; new: number; existing
         method: 'POST',
         body: 'data=' + encodeURIComponent(q),
         headers: { 'content-type': 'application/x-www-form-urlencoded', 'user-agent': 'LorvexLeadEngine/1.0 (+https://lorvex.nl)' },
-        signal: AbortSignal.timeout(25_000)
+        signal: AbortSignal.timeout(15_000)
       });
       if (r.ok) { elements = (await r.json()).elements; break; }
       failures.push(`${new URL(ep).host}:${r.status}`);
