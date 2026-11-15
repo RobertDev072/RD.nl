@@ -4,12 +4,12 @@ import { PGlite } from '@electric-sql/pglite';
 import { pg_trgm } from '@electric-sql/pglite/contrib/pg_trgm';
 import fs from 'fs';
 const db = new PGlite({ extensions: { pg_trgm } });
-const sql = fs.readFileSync(new URL('../migrations/20261115000000_crm.sql', import.meta.url), 'utf8');
+const sql = fs.readFileSync(new URL('file:///home/claude/rd.nl/supabase/migrations/20261115000000_crm.sql', import.meta.url), 'utf8');
 await db.exec(`create role anon; create role authenticated; create role service_role bypassrls;
   grant usage on schema public to anon, authenticated, service_role;
   alter default privileges in schema public grant all on tables to anon, authenticated, service_role;
   alter default privileges in schema public grant all on functions to anon, authenticated, service_role;`);
-await db.exec(sql); await db.exec(fs.readFileSync(new URL('../migrations/20261115000001_os_core.sql', import.meta.url),'utf8'));
+await db.exec(sql); await db.exec(fs.readFileSync(new URL('file:///home/claude/rd.nl/supabase/migrations/20261115000001_os_core.sql', import.meta.url),'utf8'));
 const t = async (name, q, expectFail) => {
   try { const r = await db.query(q); console.log(expectFail ? 'FAIL(should error)' : 'ok   ', name, r.rows?.[0] ? JSON.stringify(r.rows[0]) : ''); }
   catch (e) { console.log(expectFail ? 'ok   ' : 'FAIL ', name, '→', e.message.split('\n')[0]); }
@@ -89,6 +89,8 @@ await t('second run selects nothing new', `select count(*) n from select_daily_o
 await db.exec('reset role; set role anon');
 await t('anon cannot discover', up('node/6','X','x.nl','1'), true);
 await db.exec('reset role'); await db.exec(fs.readFileSync(new URL('../migrations/20261115000006_concepts_admin.sql', import.meta.url),'utf8'));
+await db.exec(fs.readFileSync(new URL('../migrations/20261115000007_brand.sql', import.meta.url),'utf8'));
+await db.exec("set role service_role"); { const r=(await db.query("select id from leads limit 1")).rows[0]; if(r){ await db.query("select set_lead_brand($1,'{\"logo\":\"x\"}')",[r.id]); const b=(await db.query("select brand->>'logo' l from leads where id=$1",[r.id])).rows[0].l; console.log(b==='x'?'ok brand rpc':'FAIL brand rpc'); } } await db.exec('reset role');
 await db.exec('set role service_role');
 await t('qualified lead has slug', `select slug from leads where status='qualified' limit 1`);
 const sl = (await db.query(`select slug from leads where status='qualified' limit 1`)).rows[0].slug;

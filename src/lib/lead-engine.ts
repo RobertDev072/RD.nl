@@ -1,6 +1,7 @@
 import 'server-only';
-import { checkWebsite, CheckError, type CheckResult } from './website-check';
+import { checkWebsiteWithHtml, CheckError, type CheckResult } from './website-check';
 import { rest } from './crm';
+import { extractBrand } from './brand';
 
 // Lead engine v1 — fully deterministic, no paid AI.
 // discover (OpenStreetMap, Alkmaar ±15 km) → dedup (database) → verify + analyse (website-check
@@ -128,8 +129,12 @@ export async function verifyAndAnalyse(limit = 20) {
       let evidence: Record<string, unknown> = { checked_url: lead.website, at: new Date().toISOString() };
       try {
         if (!lead.website) throw new CheckError('unreachable', 'no website');
-        const check = await checkWebsite(lead.website);
+        const fetched = await checkWebsiteWithHtml(lead.website);
+        const check = fetched.result;
         audit = check;
+        if (!check.inactiveSignal) {
+          await saveBrand(lead.id, extractBrand(fetched.html, fetched.finalUrl)).catch(() => undefined);
+        }
         if (check.inactiveSignal) {
           status = 'appears_inactive';
           evidence = { ...evidence, final_url: check.finalUrl, inactive_text: check.inactiveSignal };
@@ -173,4 +178,20 @@ export async function discoveryDue(): Promise<boolean> {
 
 export async function logRun(type: string, payload: unknown) {
   await rest('events', { method: 'POST', prefer: 'return=minimal', body: JSON.stringify({ type, source_agent: 'lead-agent', payload }) });
+}
+
+async function saveBrand(id: string, brand: unknown) {
+  await rest('rpc/set_lead_brand', { method: 'POST', prefer: 'return=minimal', body: JSON.stringify({ p_id: id, p_brand: brand }) });
+}
+
+/** Back-fills branding for active leads that were verified before brand extraction existed. */
+export async function fillBrands(limit = 12) {
+  const rows = await rest<{ id: string; website: string }[]>(
+    `leads?select=id,website&verification_status=eq.verified_active&brand=is.null&status=not.in.(lost,disqualified)&order=score.desc.nullslast&limit=${limit}`
+  );
+  let done = 0;
+  await Promise.all(rows.map(async (r) => {
+    try { const f = await checkWebsiteWithHtml(r.website); await saveBrand(r.id, extractBrand(f.html, f.finalUrl)); done++; } catch { /* next run */ }
+  }));
+  return { candidates: rows.length, done };
 }

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { crmConfigured } from '@/lib/crm';
-import { discover, logRun, selectDaily, verifyAndAnalyse } from '@/lib/lead-engine';
+import { discover, fillBrands, logRun, selectDaily, verifyAndAnalyse } from '@/lib/lead-engine';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -25,6 +25,7 @@ export async function GET(req: Request) {
     report.discovery_error = e instanceof Error ? e.message : 'error';
   }
   try { report.verification = await verifyAndAnalyse(20); } catch (e) { report.verification_error = e instanceof Error ? e.message : 'error'; }
+  try { report.brands = await fillBrands(12); } catch (e) { report.brand_error = e instanceof Error ? e.message : 'error'; }
   try { report.qualified = await selectDaily(5); } catch (e) { report.selection_error = e instanceof Error ? e.message : 'error'; }
   try { await logRun('lead_engine.run', report); } catch { /* best effort */ }
   return NextResponse.json(report);
