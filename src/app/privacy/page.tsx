@@ -58,6 +58,15 @@ export default function Privacy() {
             vinkje ontvang je geen marketing. <strong>Grondslag:</strong> je toestemming (artikel 6 lid 1 sub a AVG). Afmelden kan altijd
             via een e-mail naar <a href={`mailto:${legal.email}`}>{legal.email}</a>.
           </p>
+          <h3>Openbare bedrijfsgegevens</h3>
+          <p>
+            Om bedrijven in de regio te vinden die we kunnen helpen, verzamelen we openbare <strong>bedrijfs</strong>gegevens uit
+            OpenStreetMap: bedrijfsnaam, branche, vestigingsadres en website. We bekijken de openbare voorpagina van die website.
+            We verzamelen hierbij geen persoonlijke telefoonnummers of namen van eigenaren en sturen op basis hiervan geen ongevraagde
+            e-mails, WhatsApp-berichten of verkoopgesprekken. <strong>Grondslag:</strong> gerechtvaardigd belang (artikel 6 lid 1 sub f
+            AVG). Wil je niet dat we jouw bedrijf hierin opnemen? Mail naar <a href={`mailto:${legal.email}`}>{legal.email}</a>; we
+            verwijderen de gegevens en zetten je website op onze blokkeerlijst.
+          </p>
           <h3>Contact via WhatsApp of telefoon</h3>
           <p>
             Neem je zelf contact op via WhatsApp of telefoon, dan gebruiken we je gegevens om je vraag te beantwoorden en, als je klant

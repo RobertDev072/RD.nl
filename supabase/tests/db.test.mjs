@@ -1,10 +1,9 @@
 // Database tests in an in-process Postgres (PGlite) with Supabase-like roles.
 // Run: npx -y -p @electric-sql/pglite@0.3 node supabase/tests/db.test.mjs
-// Database tests in an in-process Postgres (PGlite) with Supabase-like roles.
-// Run: npx -y -p @electric-sql/pglite@0.3 node supabase/tests/db.test.mjs
 import { PGlite } from '@electric-sql/pglite';
+import { pg_trgm } from '@electric-sql/pglite/contrib/pg_trgm';
 import fs from 'fs';
-const db = new PGlite();
+const db = new PGlite({ extensions: { pg_trgm } });
 const sql = fs.readFileSync(new URL('../migrations/20261115000000_crm.sql', import.meta.url), 'utf8');
 await db.exec(`create role anon; create role authenticated; create role service_role bypassrls;
   grant usage on schema public to anon, authenticated, service_role;
@@ -71,3 +70,21 @@ await t('gdpr_withdraw_marketing', `select gdpr_withdraw_marketing('piet@bakker.
 await t('gdpr_erase', `select gdpr_erase('piet@bakker.nl') r`);
 await t('erased + suppressed', `select (select count(*) from leads where contact_email='piet@bakker.nl') leads, (select count(*) from suppression_list where email='piet@bakker.nl') supp`);
 await t('retention logged in audit_log', `select count(*) from audit_log where actor='retention-job'`);
+await db.exec('reset role'); await db.exec(fs.readFileSync(new URL('../migrations/20261115000005_lead_engine.sql', import.meta.url),'utf8'));
+await db.exec('set role service_role');
+const up = (osm, name, dom, pc) => `select upsert_discovered_business('${osm}','${name}','hairdresser',${dom?`'https://${dom}'`:'null'},${dom?`'${dom}'`:'null'},'Laat 1','${pc}','Alkmaar','osm') r`;
+await t('discover new', up('node/1','Kapsalon Anna','kapsalonanna.nl','1811AA'));
+await t('same OSM id → existing', up('node/1','Kapsalon Anna','kapsalonanna.nl','1811AA'));
+await t('same domain, other source → existing', up('way/9','Kapsalon Anna Alkmaar','kapsalonanna.nl','1811AA'));
+await t('similar name, same postcode, no site → existing', up('node/2','Kapsalon Anna B.V.',null,'1811AA'));
+await t('similar name, other postcode → new', up('node/3','Kapsalon Anna',null,'1822ZZ'));
+await t('different business → new', up('node/4','Bakkerij De Molen','demolen.nl','1811AA'));
+await t('lead count = 3', `select count(*) from leads where source='discovery'`);
+await db.exec('reset role'); await db.exec(`insert into suppression_list(domain,reason) values('blocked.nl','x')`); await db.exec('set role service_role');
+await t('suppressed domain skipped', up('node/5','Blocked','blocked.nl','1811AA'));
+await t('verify', `select record_lead_verification((select id from leads where domain='kapsalonanna.nl'),'verified_active',72,'{}'::jsonb,'{"http":200}'::jsonb,'["geen mobiel"]'::jsonb)`);
+await t('verify inactive → disqualified', `select record_lead_verification((select id from leads where domain='demolen.nl'),'appears_inactive',null,null,'{"closed":"definitief gesloten"}'::jsonb,null)`);
+await t('daily selection picks verified only', `select count(*) n, max(business_name) b from select_daily_opportunities(5, 40)`);
+await t('second run selects nothing new', `select count(*) n from select_daily_opportunities(5, 40)`);
+await db.exec('reset role; set role anon');
+await t('anon cannot discover', up('node/6','X','x.nl','1'), true);
