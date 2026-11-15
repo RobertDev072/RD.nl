@@ -27,12 +27,12 @@ const SIMPLE_PLATFORMS = /JouwWeb|Wix|Weebly|Webnode|Mijnwebwinkel|Sitebuilder|J
 type OsmElement = { type: string; id: number; tags?: Record<string, string> };
 
 export async function discover(): Promise<{ found: number; new: number; existing: number; suppressed: number }> {
-  const q = `[out:json][timeout:50];(
-    nwr(around:${RADIUS_M},${CENTER.lat},${CENTER.lon})["shop"]["website"];
-    nwr(around:${RADIUS_M},${CENTER.lat},${CENTER.lon})["craft"]["website"];
-    nwr(around:${RADIUS_M},${CENTER.lat},${CENTER.lon})["amenity"~"^(restaurant|cafe|spa)$"]["website"];
-  );out tags;`;
+  // Bounding box ≈ 15 km around Alkmaar (much faster on Overpass than an "around" radius query).
+  const dLat = RADIUS_M / 111_000, dLon = RADIUS_M / (111_000 * Math.cos((CENTER.lat * Math.PI) / 180));
+  const bb = [CENTER.lat - dLat, CENTER.lon - dLon, CENTER.lat + dLat, CENTER.lon + dLon].map((n) => n.toFixed(4)).join(',');
+  const q = `[out:json][timeout:25];(nwr["shop"]["website"](${bb});nwr["craft"]["website"](${bb});nwr["amenity"~"^(restaurant|cafe|spa)$"]["website"](${bb}););out tags;`;
   let elements: OsmElement[] | null = null;
+  const failures: string[] = [];
   for (const ep of OVERPASS) {
     try {
       const r = await fetch(ep, {
@@ -42,9 +42,10 @@ export async function discover(): Promise<{ found: number; new: number; existing
         signal: AbortSignal.timeout(25_000)
       });
       if (r.ok) { elements = (await r.json()).elements; break; }
-    } catch { /* try next mirror */ }
+      failures.push(`${new URL(ep).host}:${r.status}`);
+    } catch (e) { failures.push(`${new URL(ep).host}:${e instanceof Error ? e.name : 'error'}`); }
   }
-  if (!elements) throw new Error('overpass unavailable');
+  if (!elements) throw new Error(`overpass unavailable (${failures.join(', ')})`);
 
   const stats = { found: 0, new: 0, existing: 0, suppressed: 0 };
   const rows = elements.flatMap((e) => {
