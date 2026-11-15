@@ -73,3 +73,22 @@ export async function saveInboundLead(l: InboundLead): Promise<{ status: 'create
     })
   });
 }
+
+export type ContactRequest = {
+  name: string; email: string; phone?: string; company?: string; website?: string; domain?: string;
+  services: string[]; message: string; noticeText: string; marketingText: string; marketing: boolean;
+  ip: string | null; userAgent: string | null;
+};
+
+// Saves a contact-form request atomically (see save_contact_request()).
+export async function saveContactRequest(c: ContactRequest): Promise<{ status: 'created'; lead_id: string }> {
+  return rest('rpc/save_contact_request', {
+    method: 'POST',
+    body: JSON.stringify({
+      p_name: c.name, p_email: c.email, p_phone: c.phone || '', p_company: c.company || '',
+      p_website: c.website || '', p_domain: c.domain || '', p_services: c.services, p_message: c.message,
+      p_notice_text: c.noticeText, p_marketing_text: c.marketingText, p_marketing: c.marketing,
+      p_ip_hash: hashIp(c.ip), p_user_agent: c.userAgent || ''
+    })
+  });
+}

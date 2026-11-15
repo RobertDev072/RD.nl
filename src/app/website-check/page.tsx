@@ -2,16 +2,13 @@ import type { Metadata } from 'next';
 import PageHero from '@/components/PageHero';
 import WebsiteCheck from '@/components/WebsiteCheck';
 
-// The lead form collects personal data, so it stays off until the privacy page exists.
-// Turn on with LEAD_FORM_ENABLED=1 (server env) once /privacy is live and the CRM is configured.
-const leadFormEnabled = process.env.LEAD_FORM_ENABLED === '1';
+// The lead form is on by default now that /privacy exists. Emergency switch: LEAD_FORM_ENABLED=0.
+const leadFormEnabled = process.env.LEAD_FORM_ENABLED !== '0';
 
 export const metadata: Metadata = {
   title: 'Gratis website-check: hoe scoort jouw website?',
   description: 'Check gratis in 10 seconden of je website snel, veilig en mobielvriendelijk is en of klanten je makkelijk kunnen bereiken. Met concrete verbeterpunten.',
-  alternates: { canonical: '/website-check' },
-  // Not indexed until launch is approved.
-  robots: { index: false, follow: true }
+  alternates: { canonical: '/website-check' }
 };
 
 export default function WebsiteCheckPage() {

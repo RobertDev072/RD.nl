@@ -1,16 +1,13 @@
 import type { Metadata } from 'next';
 import PageHero from '@/components/PageHero';
-import { legal, legalComplete, PRIVACY_UPDATED } from '@/lib/legal';
+import { legal, PRIVACY_UPDATED } from '@/lib/legal';
 
 export const metadata: Metadata = {
   title: 'Privacyverklaring',
   description: 'Hoe Lorvex omgaat met je gegevens: welke gegevens, waarvoor, hoe lang en wat je rechten zijn.',
   alternates: { canonical: '/privacy' },
-  // Indexed only once the KvK-nummer, btw-id and address are filled in.
-  robots: { index: legalComplete, follow: true }
+  robots: { index: true, follow: true }
 };
-
-const missing = (label: string) => <span className="rounded bg-[#fef3c7] px-1.5 text-[#92400e]">[{label}: wordt aangevuld]</span>;
 
 export default function Privacy() {
   const date = new Date(`${PRIVACY_UPDATED}T12:00:00`).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -22,9 +19,9 @@ export default function Privacy() {
           <h2>Wie is verantwoordelijk?</h2>
           <p>
             {legal.tradeName}, eigenaar {legal.owner}<br />
-            Adres: {legal.address ?? missing('adres')}<br />
-            KvK-nummer: {legal.kvk ?? missing('KvK-nummer')}<br />
-            Btw-id: {legal.btw ?? missing('btw-id')}<br />
+            {legal.address && <>Adres: {legal.address}<br /></>}
+            {legal.kvk && <>KvK-nummer: {legal.kvk}<br /></>}
+            {legal.btw && <>Btw-id: {legal.btw}<br /></>}
             E-mail: <a href={`mailto:${legal.email}`}>{legal.email}</a><br />
             Telefoon: {legal.phone}
           </p>
@@ -47,6 +44,19 @@ export default function Privacy() {
           <p>
             We gebruiken deze gegevens alleen om contact met je op te nemen over de check en het voorbeeldontwerp, via de kanalen waarvoor
             je toestemming gaf. <strong>Grondslag:</strong> je toestemming (artikel 6 lid 1 sub a AVG). Je kunt die altijd intrekken.
+          </p>
+          <h3>Contactformulier</h3>
+          <p>
+            Via het contactformulier vragen we je naam, e-mailadres en je vraag; telefoonnummer, bedrijfsnaam, website en gewenste dienst
+            zijn optioneel. We gebruiken deze gegevens alleen om op je aanvraag te reageren en, als je klant wordt, om de opdracht uit te
+            voeren. <strong>Grondslag:</strong> het verzoek dat je zelf doet (artikel 6 lid 1 sub b AVG). We bewaren daarbij welke
+            informatietekst je zag, wanneer, je browsertype en een versleutelde code van je IP-adres.
+          </p>
+          <h3>Tips en aanbiedingen per e-mail (optioneel)</h3>
+          <p>
+            Alleen als je dat apart aanvinkt, sturen we je af en toe tips en aanbiedingen per e-mail. Dat staat los van je aanvraag: zonder
+            vinkje ontvang je geen marketing. <strong>Grondslag:</strong> je toestemming (artikel 6 lid 1 sub a AVG). Afmelden kan altijd
+            via een e-mail naar <a href={`mailto:${legal.email}`}>{legal.email}</a>.
           </p>
           <h3>Contact via WhatsApp of telefoon</h3>
           <p>
@@ -81,7 +91,8 @@ export default function Privacy() {
           <p>
             Je hebt het recht om je gegevens in te zien, te laten corrigeren of verwijderen, de verwerking te laten beperken, bezwaar te
             maken, je gegevens over te laten dragen en je toestemming in te trekken. Stuur daarvoor een e-mail naar{' '}
-            <a href={`mailto:${legal.email}`}>{legal.email}</a>. We reageren binnen een maand.
+            <a href={`mailto:${legal.email}`}>{legal.email}</a>. We controleren eerst of het verzoek echt van jou komt en reageren binnen
+            een maand. Na verwijdering bewaren we alleen je e-mailadres op een blokkeerlijst, zodat we je niet opnieuw benaderen.
           </p>
           <p>
             Ben je het niet eens met hoe we met je gegevens omgaan? Dan kun je een klacht indienen bij de{' '}

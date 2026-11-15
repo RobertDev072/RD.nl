@@ -1,5 +1,7 @@
 // Database tests in an in-process Postgres (PGlite) with Supabase-like roles.
 // Run: npx -y -p @electric-sql/pglite@0.3 node supabase/tests/db.test.mjs
+// Database tests in an in-process Postgres (PGlite) with Supabase-like roles.
+// Run: npx -y -p @electric-sql/pglite@0.3 node supabase/tests/db.test.mjs
 import { PGlite } from '@electric-sql/pglite';
 import fs from 'fs';
 const db = new PGlite();
@@ -49,3 +51,23 @@ await t('suppressed domain stores nothing', call('optout.nl','x@optout.nl'));
 await t('no row for suppressed', `select count(*) from leads where domain='optout.nl'`);
 await db.exec('reset role; set role anon');
 await t('anon cannot call save_inbound_lead', call('evil.nl','x@evil.nl'), true);
+await db.exec('reset role'); await db.exec(fs.readFileSync(new URL('../migrations/20261115000003_contact_retention_rights.sql', import.meta.url),'utf8'));
+await db.exec('set role service_role');
+const cr = (e, m) => `select save_contact_request('Jan','${e}','','Bakkerij','https://bakker.nl','bakker.nl','{Website}','Graag offerte','notice','mkt',${m},null,'ua') r`;
+await t('contact request (no marketing)', cr('jan@bakker.nl', false));
+await t('contact request (with marketing)', cr('piet@bakker.nl', true));
+await t('marketing consent separate', `select purpose, count(*) from consents where purpose in ('contact_request_reply','marketing_updates') group by purpose order by 1`);
+await t('service_role cannot purge', `select purge_expired_data()`, true);
+await t('service_role cannot gdpr_export', `select gdpr_export('jan@bakker.nl')`, true);
+await db.exec('reset role');
+await db.exec(`update leads set status='won' where contact_email='piet@bakker.nl'`);
+await t('purge now: nothing removed', `select purge_expired_data() r`);
+await t('purge in 13 months: old non-customers removed', `select purge_expired_data(now() + interval '13 months') r`);
+await t('customer (won) kept', `select count(*) from leads where status='won'`);
+await t('consent proofs kept (detached)', `select count(*) from consents where lead_id is null`);
+await t('purge in 37 months: detached proofs removed', `select purge_expired_data(now() + interval '37 months') r`);
+await t('gdpr_export', `select jsonb_array_length(gdpr_export('piet@bakker.nl')->'leads') n`);
+await t('gdpr_withdraw_marketing', `select gdpr_withdraw_marketing('piet@bakker.nl') n`);
+await t('gdpr_erase', `select gdpr_erase('piet@bakker.nl') r`);
+await t('erased + suppressed', `select (select count(*) from leads where contact_email='piet@bakker.nl') leads, (select count(*) from suppression_list where email='piet@bakker.nl') supp`);
+await t('retention logged in audit_log', `select count(*) from audit_log where actor='retention-job'`);

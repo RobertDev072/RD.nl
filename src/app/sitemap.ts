@@ -2,7 +2,6 @@ import type { MetadataRoute } from 'next';
 import { projects, services } from '@/lib/content';
 import { getArticles } from '@/lib/kennisbank';
 import { site } from '@/lib/site';
-import { legalComplete } from '@/lib/legal';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -15,7 +14,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ['/automatisering', 0.8, 'monthly'],
     ['/over', 0.7, 'monthly'],
     ['/contact', 0.7, 'yearly'],
-    ...(legalComplete ? [['/privacy', 0.2, 'yearly'] as [string, number, 'yearly']] : [])
+    ['/website-check', 0.8, 'monthly'],
+    ['/privacy', 0.2, 'yearly']
   ];
   return [
     ...routes.map(([r, priority, changeFrequency]) => ({ url: `${site.url}${r}`, lastModified: now, changeFrequency, priority })),
