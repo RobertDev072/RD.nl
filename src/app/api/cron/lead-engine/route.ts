@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { crmConfigured } from '@/lib/crm';
-import { discover, discoveryDue, logRun, selectDaily, verifyAndAnalyse } from '@/lib/lead-engine';
+import { discover, logRun, selectDaily, verifyAndAnalyse } from '@/lib/lead-engine';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -17,10 +17,10 @@ export async function GET(req: Request) {
 
   const report: Record<string, unknown> = { at: new Date().toISOString() };
   try {
-    if (await discoveryDue()) {
-      report.discovery = await discover();
-      await logRun('lead_engine.discovery', report.discovery);
-    }
+    // One small category group per day (rotation), so every group is refreshed every 4 days.
+    const g = Number(new URL(req.url).searchParams.get('group'));
+    report.discovery = await discover(Number.isInteger(g) && g >= 0 && g < 4 && new URL(req.url).searchParams.has('group') ? g : undefined);
+    await logRun('lead_engine.discovery', report.discovery);
   } catch (e) {
     report.discovery_error = e instanceof Error ? e.message : 'error';
   }

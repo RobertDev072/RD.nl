@@ -26,20 +26,29 @@ const SIMPLE_PLATFORMS = /JouwWeb|Wix|Weebly|Webnode|Mijnwebwinkel|Sitebuilder|J
 
 type OsmElement = { type: string; id: number; tags?: Record<string, string> };
 
-export async function discover(): Promise<{ found: number; new: number; existing: number; suppressed: number }> {
+// Small queries rotated per day (the public Overpass servers time out on one big query).
+const GROUPS = [
+  (bb: string) => `nwr["shop"~"^(hairdresser|beauty|cosmetics)$"]["website"](${bb});nwr["amenity"="spa"]["website"](${bb});`,
+  (bb: string) => `nwr["amenity"~"^(restaurant|cafe)$"]["website"](${bb});`,
+  (bb: string) => `nwr["craft"]["website"](${bb});`,
+  (bb: string) => `nwr["shop"]["shop"!~"^(hairdresser|beauty|cosmetics)$"]["website"](${bb});`
+];
+export const groupForToday = () => Math.floor(Date.now() / 86_400_000) % GROUPS.length;
+
+export async function discover(group = groupForToday()): Promise<{ group: number; found: number; new: number; existing: number; suppressed: number }> {
   // Bounding box ≈ 15 km around Alkmaar (much faster on Overpass than an "around" radius query).
   const dLat = RADIUS_M / 111_000, dLon = RADIUS_M / (111_000 * Math.cos((CENTER.lat * Math.PI) / 180));
   const bb = [CENTER.lat - dLat, CENTER.lon - dLon, CENTER.lat + dLat, CENTER.lon + dLon].map((n) => n.toFixed(4)).join(',');
-  const q = `[out:json][timeout:25];(nwr["shop"]["website"](${bb});nwr["craft"]["website"](${bb});nwr["amenity"~"^(restaurant|cafe|spa)$"]["website"](${bb}););out tags;`;
+  const q = `[out:json][timeout:20];(${GROUPS[group](bb)});out tags;`;
   let elements: OsmElement[] | null = null;
   const failures: string[] = [];
-  for (const ep of OVERPASS) {
+  for (const ep of OVERPASS.slice(0, 2)) {
     try {
       const r = await fetch(ep, {
         method: 'POST',
         body: 'data=' + encodeURIComponent(q),
         headers: { 'content-type': 'application/x-www-form-urlencoded', 'user-agent': 'LorvexLeadEngine/1.0 (+https://lorvex.nl)' },
-        signal: AbortSignal.timeout(15_000)
+        signal: AbortSignal.timeout(18_000)
       });
       if (r.ok) { elements = (await r.json()).elements; break; }
       failures.push(`${new URL(ep).host}:${r.status}`);
@@ -47,7 +56,7 @@ export async function discover(): Promise<{ found: number; new: number; existing
   }
   if (!elements) throw new Error(`overpass unavailable (${failures.join(', ')})`);
 
-  const stats = { found: 0, new: 0, existing: 0, suppressed: 0 };
+  const stats = { group, found: 0, new: 0, existing: 0, suppressed: 0 };
   const rows = elements.flatMap((e) => {
     const t = e.tags || {};
     // Skip chains/franchises and anything without a name or website.
@@ -77,7 +86,7 @@ export async function discover(): Promise<{ found: number; new: number; existing
       const row = rows[i++];
       try {
         const r = await rest<{ status: 'new' | 'existing' | 'suppressed' }>('rpc/upsert_discovered_business', { method: 'POST', body: JSON.stringify(row) });
-        stats[r.status] += 1;
+        stats[r.status as 'new' | 'existing' | 'suppressed'] += 1;
       } catch { /* counted as not processed; retried next run */ }
     }
   }));
