@@ -7,7 +7,9 @@ import { createHash } from 'node:crypto';
 
 const URL_ = process.env.SUPABASE_URL?.replace(/\/$/, '');
 // New-format secret key (sb_secret_…) preferred; legacy service_role JWT still accepted.
-const KEY = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+// Preview/development use the separate TEST project key; production never reads it.
+const isProd = process.env.VERCEL_ENV === 'production';
+const KEY = (!isProd && process.env.SUPABASE_SECRET_KEY_TEST) || process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
 // sb_ keys are not JWTs: send them on the apikey header only (Supabase rejects them as Bearer).
 const authHeaders = (): Record<string, string> =>
   KEY && KEY.startsWith('sb_') ? { apikey: KEY } : { apikey: KEY || '', authorization: `Bearer ${KEY}` };
