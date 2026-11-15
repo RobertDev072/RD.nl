@@ -6,7 +6,11 @@ import { createHash } from 'node:crypto';
 // (local development / previews without Supabase).
 
 const URL_ = process.env.SUPABASE_URL?.replace(/\/$/, '');
-const KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+// New-format secret key (sb_secret_…) preferred; legacy service_role JWT still accepted.
+const KEY = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+// sb_ keys are not JWTs: send them on the apikey header only (Supabase rejects them as Bearer).
+const authHeaders = (): Record<string, string> =>
+  KEY && KEY.startsWith('sb_') ? { apikey: KEY } : { apikey: KEY || '', authorization: `Bearer ${KEY}` };
 const memory = new Map<string, number[]>();
 
 function memoryLimited(key: string, max: number, windowMs: number) {
@@ -25,7 +29,7 @@ export async function rateLimited(key: string, max: number, windowMs: number): P
   try {
     const res = await fetch(`${URL_}/rest/v1/rpc/rate_limit_hit`, {
       method: 'POST',
-      headers: { apikey: KEY, authorization: `Bearer ${KEY}`, 'content-type': 'application/json' },
+      headers: { ...authHeaders(), 'content-type': 'application/json' },
       body: JSON.stringify({ p_key: hashed, p_max: max, p_window_seconds: Math.ceil(windowMs / 1000) }),
       cache: 'no-store',
       signal: AbortSignal.timeout(3000)

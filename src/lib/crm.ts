@@ -3,10 +3,14 @@ import { createHash } from 'node:crypto';
 
 // Minimal server-side client for the Supabase REST API (PostgREST). No SDK dependency.
 // Uses the service role key, which must only ever exist as a server env var
-// (SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY) — never NEXT_PUBLIC_*.
+// (SUPABASE_URL, SUPABASE_SECRET_KEY) — never NEXT_PUBLIC_*.
 
 const URL_ = process.env.SUPABASE_URL?.replace(/\/$/, '');
-const KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+// New-format secret key (sb_secret_…) preferred; legacy service_role JWT still accepted.
+const KEY = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+// sb_ keys are not JWTs: send them on the apikey header only (Supabase rejects them as Bearer).
+const authHeaders = (): Record<string, string> =>
+  KEY && KEY.startsWith('sb_') ? { apikey: KEY } : { apikey: KEY || '', authorization: `Bearer ${KEY}` };
 
 export const crmConfigured = () => Boolean(URL_ && KEY);
 
@@ -15,8 +19,7 @@ async function rest<T>(path: string, init: RequestInit & { prefer?: string } = {
   const res = await fetch(`${URL_}/rest/v1/${path}`, {
     ...init,
     headers: {
-      apikey: KEY,
-      authorization: `Bearer ${KEY}`,
+      ...authHeaders(),
       'content-type': 'application/json',
       prefer: init.prefer ?? 'return=representation',
       ...(init.headers || {})
