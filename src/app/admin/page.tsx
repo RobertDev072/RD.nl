@@ -3,6 +3,7 @@ import { ExternalLink, MessageCircle, Phone, Printer } from 'lucide-react';
 import { crmConfigured } from '@/lib/crm';
 import { getCallList, getInbound, getOpportunities, getRanking, getStats, waNumber, whatsappReply, type Lead } from '@/lib/admin-data';
 import { site } from '@/lib/site';
+import { latestGscReport } from '@/lib/gsc-agent';
 
 export const dynamic = 'force-dynamic';
 export const metadata: Metadata = { title: 'Lorvex admin', robots: { index: false, follow: false } };
@@ -39,6 +40,7 @@ function Empty({ text }: { text: string }) {
 export default async function Admin() {
   if (!crmConfigured()) return <main className="wrap pt-32">CRM niet geconfigureerd.</main>;
   const [stats, inbound, opps, calls, ranking] = await Promise.all([getStats(), getInbound(), getOpportunities(), getCallList(), getRanking()]);
+  const gsc = await latestGscReport().catch(() => null);
 
   return (
     <main className="wrap max-w-[1100px] pb-24 pt-[120px]">
@@ -100,6 +102,24 @@ export default async function Admin() {
             </div>
           </div>
         ))}
+      </Section>
+
+      <Section title="SEO: Google Search Console" hint="Wekelijks rapport van de Search Console-agent (maandag). Alleen echte data uit Google.">
+        {!gsc ? <Empty text="Nog geen rapport." /> : (
+          <div className="card p-5">
+            <p className="text-[13px] text-muted">Laatste 28 dagen · {new Date(gsc.at).toLocaleDateString('nl-NL')}</p>
+            <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {([['Kliks', gsc.totals.clicks], ['Vertoningen', gsc.totals.impressions], ['CTR', `${gsc.totals.ctr}%`], ['Gem. positie', gsc.totals.position]] as const).map(([k, v]) => (
+                <div key={k} className="rounded-2xl bg-canvas p-3"><p className="text-[12px] text-muted">{k}</p><p className="text-[22px] font-semibold">{v}</p></div>))}
+            </div>
+            <p className="mt-5 font-semibold">Acties</p>
+            <ul className="mt-2 grid gap-2 text-[14.5px]">{gsc.actions.length === 0 ? <li className="text-muted">Geen acties deze week.</li> : gsc.actions.map((a, i) => (
+              <li key={i} className="rounded-xl border border-line p-3"><b>{a.target}</b> <span className="text-muted">· {a.why}</span><br />{a.todo}</li>))}</ul>
+            <p className="mt-5 font-semibold">Zoekopdrachten</p>
+            <table className="mt-2 w-full text-[14px]"><tbody>{gsc.top_queries.map((q) => (
+              <tr key={q.query} className="border-t border-line"><td className="py-1.5">{q.query}</td><td className="text-right">{q.clicks} kliks</td><td className="text-right">{q.impressions} vert.</td><td className="text-right">pos. {q.position}</td></tr>))}</tbody></table>
+          </div>
+        )}
       </Section>
       <p className="mt-16 text-[13px] text-muted">Alleen zichtbaar voor Robert. {site.url}</p>
     </main>

@@ -9,6 +9,10 @@
     {
       "path": "/api/cron/lead-engine",
       "schedule": "7 6 * * *"
+    },
+    {
+      "path": "/api/cron/gsc",
+      "schedule": "23 5 * * 1"
     }
   ]
 }
