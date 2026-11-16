@@ -262,9 +262,7 @@ export async function buildDailyReport(report: Record<string, unknown>): Promise
       `${esc(l.category ?? 'overig')}${l.city ? ` · ${esc(l.city)}` : ''}${l.legal_form ? ' · B.V./N.V.' : ''}`,
       l.website ? `🌐 ${esc(l.website)}` : null,
       phone ? `📞 ${esc(phone)}${isMobile(l.business_phone) ? ' (06)' : ''}` : '📞 geen nummer gevonden',
-      l.business_email ? `✉️ ${esc(l.business_email)}` : '✉️ geen e-mail gevonden',
-      `\n<b>Onderwerp:</b> ${esc(m.subject)}`,
-      `<b>Bericht</b> (tik om te kopiëren):`,
+      `\n<b>Belscript</b> (gebruik bij het bellen; e-mail/WhatsApp pas na hun ja):`,
       `<pre>${esc(m.body)}</pre>`
     ].filter(Boolean).join('\n');
   });
