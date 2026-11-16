@@ -19,7 +19,7 @@ export const getInbound = () =>
 export const getOpportunities = () =>
   rest<Lead[]>(`leads?select=${cols}&source=eq.discovery&status=in.(qualified,contacted)&order=qualified_at.desc&limit=100`);
 export const getCallList = () =>
-  rest<Lead[]>(`leads?select=${cols}&legal_form=eq.bv%2Fnv&business_phone=not.is.null&verification_status=eq.verified_active&status=in.(new,qualified,contacted)&order=score.desc.nullslast&limit=50`);
+  rest<Lead[]>(`leads?select=${cols}&business_phone=not.is.null&verification_status=eq.verified_active&status=in.(new,qualified,contacted)&order=score.desc.nullslast&limit=50`);
 export const getLettersToDeliver = () =>
   rest<Lead[]>(`leads?select=${cols}&source=eq.discovery&status=eq.qualified&letter_delivered_at=is.null&order=postcode.asc.nullslast,address.asc&limit=60`);
 
@@ -56,6 +56,7 @@ export function whatsappReply(l: Lead) {
 export type LeadDetail = Lead & {
   audit: (Lead['audit'] & { finalUrl?: string; loadMs?: number; pageKb?: number; platform?: string;
     findings?: { id: string; ok: boolean; title: string; detail: string; weight: number }[] }) | null;
+  business_email: string | null;
   evidence: Record<string, unknown> | null; verified_at: string | null; brand: { logo?: string | null; images?: string[]; colors?: string[] } | null;
 };
 
@@ -65,7 +66,7 @@ export const getRanking = () =>
 
 export async function getLead(id: string) {
   if (!/^[0-9a-f-]{36}$/.test(id)) return null;
-  const r = await rest<LeadDetail[]>(`leads?select=${cols},evidence,verified_at,brand&id=eq.${id}`);
+  const r = await rest<LeadDetail[]>(`leads?select=${cols},business_email,evidence,verified_at,brand&id=eq.${id}`);
   return r[0] ?? null;
 }
 
@@ -87,4 +88,20 @@ Ik heb een gratis voorbeeld gemaakt van hoe uw website eruit kan zien: modern, s
 Met vriendelijke groet,
 Robert Rocha – Lorvex
 lorvex.nl · 06 41227451`;
+}
+
+/** Mail to send yourself AFTER a phone call in which the business showed interest (not a cold mail). */
+export function followUpMail(l: LeadDetail) {
+  const subject = `Voorbeeld nieuwe website ${l.business_name ?? ''}`.trim();
+  const body = `Beste ${l.business_name ?? ''},
+
+Bedankt voor het prettige telefoongesprek van vandaag. Zoals beloofd stuur ik u het gratis voorbeeld van een nieuwe website, gemaakt met uw eigen logo, foto’s en teksten:
+${l.slug ? `https://lorvex.nl/voor/${l.slug}` : '[link naar voorbeeld]'}
+
+Het is helemaal vrijblijvend. Laat gerust weten wat u ervan vindt, dan bespreken we graag de mogelijkheden.
+
+Met vriendelijke groet,
+Robert Rocha – Lorvex
+lorvex.nl · 06 41227451`;
+  return { subject, body };
 }

@@ -86,12 +86,12 @@ export default async function Admin() {
         {inbound.length === 0 ? <Empty text="Nog geen aanvragen." /> : inbound.map((l) => <InboundCard key={l.id} l={l} />)}
       </Section>
 
-      <Section title="2. Kansen (door de agents gevonden)" hint="Geverifieerde bedrijven met de hoogste score. Contact alleen telefonisch, en alleen bij B.V./N.V.">
+      <Section title="2. Kansen (door de agents gevonden)" hint="Geverifieerde bedrijven met de hoogste score. Contact telefonisch; mail pas na een gesprek.">
         {opps.length === 0 ? <Empty text="Nog geen kansen. De lead engine draait elke ochtend." /> : opps.map((l) => <OppCard key={l.id} l={l} />)}
       </Section>
 
-      <Section title="3. Bellijst (alleen B.V./N.V.)" hint="Rechtspersonen mogen gebeld worden. Script: stel je voor, noem 1 concreet verbeterpunt van hun site, bied het gratis voorbeeld aan. Wil iemand niet gebeld worden? Klik 'Niet meer benaderen'.">
-        {calls.length === 0 ? <Empty text="Nog geen B.V./N.V. met telefoonnummer gevonden." /> : calls.map((l) => (
+      <Section title="3. Bellijst" hint="Zakelijke nummers van OpenStreetMap of de eigen website. Script: stel je voor, noem 1 concreet verbeterpunt van hun site, bied het gratis voorbeeld aan. Wil iemand niet gebeld worden? Klik 'Niet meer benaderen'.">
+        {calls.length === 0 ? <Empty text="Nog geen bedrijven met telefoonnummer gevonden." /> : calls.map((l) => (
           <div key={l.id} className="card flex flex-wrap items-center justify-between gap-4 p-5">
             <div><p className="font-semibold">{l.business_name}</p><p className="text-[14px] text-muted">{l.category} · {l.city} · score {l.score ?? '–'}</p>
               {l.score_reasons && <p className="mt-1 text-[13px] text-muted">Verbeterpunten: {l.score_reasons.slice(0, 3).join(', ')}</p>}</div>

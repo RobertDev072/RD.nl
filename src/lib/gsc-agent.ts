@@ -87,3 +87,30 @@ export async function latestGscReport() {
   const r = await rest<{ payload: GscReport }[]>('events?select=payload&type=eq.seo.gsc_report&order=created_at.desc&limit=1');
   return r[0]?.payload ?? null;
 }
+
+/** Telegram text for the weekly Search Console report, compared with the previous report. */
+export function gscTelegram(r: GscReport, prev: GscReport | null): string {
+  const e = (s: unknown) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const delta = (now: number, before?: number) => (before === undefined ? '' : now > before ? ` (▲ ${Math.round((now - before) * 10) / 10})` : now < before ? ` (▼ ${Math.round((before - now) * 10) / 10})` : ' (=)');
+  const path = (u: string) => { try { return new URL(u).pathname || '/'; } catch { return u; } };
+  const t = r.totals, p = prev?.totals;
+  const lines = [
+    `<b>Lorvex in Google</b> · laatste ${r.period_days} dagen`,
+    `👀 Bezoekers via Google (klikken): <b>${t.clicks}</b>${delta(t.clicks, p?.clicks)}`,
+    `🔎 Keer gezien in Google: <b>${t.impressions}</b>${delta(t.impressions, p?.impressions)}`,
+    `📍 Gemiddelde positie: <b>${t.position}</b>${p ? (t.position < p.position ? ' (beter ▲)' : t.position > p.position ? ' (lager ▼)' : ' (=)') : ''}`,
+    '',
+    '<b>Beste pagina\'s</b>',
+    ...r.top_pages.slice(0, 5).map((x, i) => `${i + 1}. ${e(path(x.page))} · ${x.clicks} klikken · positie ${x.position}`),
+    '',
+    '<b>Waarop je gevonden wordt</b>',
+    ...r.top_queries.slice(0, 5).map((x) => `• "${e(x.query)}" · positie ${x.position} · ${x.impressions}× gezien`),
+    ...(r.actions.length ? ['', '<b>Wat nu te doen</b>', ...r.actions.slice(0, 3).map((a) => `• ${e(a.todo)}`)] : [])
+  ];
+  return lines.join('\n');
+}
+
+export async function previousGscReport(): Promise<GscReport | null> {
+  const r = await rest<{ payload: GscReport }[]>('events?select=payload&type=eq.seo.gsc_report&order=created_at.desc&limit=1');
+  return r[0]?.payload ?? null;
+}

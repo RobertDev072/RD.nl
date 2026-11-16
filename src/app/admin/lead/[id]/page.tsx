@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, Check, ExternalLink, Phone, X } from 'lucide-react';
-import { getActivities, getLead, pitchMessage } from '@/lib/admin-data';
+import { followUpMail, getActivities, getLead, pitchMessage } from '@/lib/admin-data';
+import { formatPhone } from '@/lib/contact-extract';
 import CopyButton from '@/components/CopyButton';
 
 export const dynamic = 'force-dynamic';
@@ -30,6 +31,7 @@ export default async function LeadPage({ params }: { params: Promise<{ id: strin
   const a = l.audit;
   const findings = [...(a?.findings ?? [])].sort((x, y) => Number(x.ok) - Number(y.ok) || y.weight - x.weight);
   const msg = pitchMessage(l);
+  const mail = followUpMail(l);
 
   return (
     <main className="wrap max-w-[1000px] pb-24 pt-28">
@@ -82,14 +84,29 @@ export default async function LeadPage({ params }: { params: Promise<{ id: strin
 
       <section className="card mt-6 p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-[22px] font-semibold">Tekst voor telefoon of brief</h2>
+          <h2 className="text-[22px] font-semibold">Belscript</h2>
           <CopyButton text={msg} />
         </div>
         <pre className="mt-4 whitespace-pre-wrap rounded-2xl bg-[#f7f7f5] p-5 font-sans text-[15px] leading-relaxed">{msg}</pre>
         <p className="mt-3 text-[13px] text-muted">
-          {l.business_phone ? <><Phone size={13} className="inline" /> Bellen: <b>{l.business_phone}</b> (B.V./N.V.). </> : 'Geen telefoonnummer opgeslagen (geen B.V./N.V.): gebruik een brief. '}
-          E-mail of WhatsApp alleen naar wie zelf om contact heeft gevraagd.
+          {l.business_phone
+            ? <><Phone size={13} className="inline" /> Bellen: <a href={`tel:${l.business_phone}`} className="font-semibold underline">{formatPhone(l.business_phone)}</a>{l.legal_form ? ' (B.V./N.V.)' : ''}. </>
+            : 'Geen telefoonnummer gevonden op OpenStreetMap of de website. '}
+          Mail alleen na een gesprek waarin ze interesse toonden.
         </p>
+      </section>
+
+      <section className="card mt-6 p-6">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h2 className="text-[22px] font-semibold">Mail na het gesprek</h2>
+          <CopyButton text={`${mail.subject}\n\n${mail.body}`} />
+        </div>
+        <p className="mt-1 text-[14px] text-muted">
+          {l.business_email
+            ? <>Aan: <a href={`mailto:${l.business_email}?subject=${encodeURIComponent(mail.subject)}&body=${encodeURIComponent(mail.body)}`} className="font-semibold underline">{l.business_email}</a> (opent je mailprogramma met dit concept)</>
+            : 'Geen e-mailadres gevonden op de website; vraag het tijdens het gesprek.'}
+        </p>
+        <pre className="mt-4 whitespace-pre-wrap rounded-2xl bg-[#f7f7f5] p-5 font-sans text-[15px] leading-relaxed">Onderwerp: {mail.subject}{'\n\n'}{mail.body}</pre>
       </section>
 
       {l.slug && (
