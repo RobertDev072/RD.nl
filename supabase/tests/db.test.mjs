@@ -111,3 +111,17 @@ await db.exec('reset role; set role service_role');
 await t('BV keeps business phone', `select upsert_discovered_business('node/70','Installatie Jansen B.V.','installatie/bouw','https://jansen.nl','jansen.nl','Weg 1','1811AA','Alkmaar','osm','072-5112233') r`);
 await t('eenmanszaak phone NOT stored', `select upsert_discovered_business('node/71','Kapper Piet','kapper','https://kapperpiet.nl','kapperpiet.nl','Weg 2','1811AA','Alkmaar','osm','0612345678') r`);
 await t('phones stored only for bv', `select business_name, legal_form, business_phone from leads where osm_id in ('node/70','node/71') order by osm_id`);
+
+// 20261116000000_business_contacts: phone for all businesses + website contact details
+await db.exec('reset role'); await db.exec(fs.readFileSync(new URL('../migrations/20261116000000_business_contacts.sql', import.meta.url),'utf8'));
+await db.exec('set role service_role');
+await t('eenmanszaak phone now stored', `select upsert_discovered_business('node/72','Kapper Kees','kapper','https://kapperkees.nl','kapperkees.nl','Weg 3','1811AA','Alkmaar','osm','06 12345678') r`);
+{ const r = (await db.query(`select business_phone, legal_form from leads where osm_id='node/72'`)).rows[0];
+  console.log(r?.business_phone === '06 12345678' && r.legal_form === null ? 'ok phone stored for eenmanszaak' : 'FAIL phone eenmanszaak ' + JSON.stringify(r)); }
+{ const id = (await db.query(`select id from leads where osm_id='node/72'`)).rows[0].id;
+  await db.query(`select set_lead_contact($1, '0699999999', 'Info@KapperKees.nl')`, [id]);
+  const r = (await db.query(`select business_phone, business_email, contact_checked_at is not null c from leads where id=$1`, [id])).rows[0];
+  console.log(r.business_phone === '06 12345678' && r.business_email === 'info@kapperkees.nl' && r.c ? 'ok set_lead_contact keeps phone, stores email' : 'FAIL set_lead_contact ' + JSON.stringify(r)); }
+await db.exec('reset role; set role anon');
+await t('anon cannot set contact', `select set_lead_contact(gen_random_uuid(), '1', 'a@b.nl')`, true);
+await db.exec('reset role');

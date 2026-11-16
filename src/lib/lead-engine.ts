@@ -2,6 +2,9 @@ import 'server-only';
 import { checkWebsiteWithHtml, CheckError, type CheckResult } from './website-check';
 import { rest } from './crm';
 import { extractBrand } from './brand';
+import { extractContacts, formatPhone, isMobile } from './contact-extract';
+import { esc } from './telegram';
+import { warmMessage, type MessageLead } from './outreach-message';
 
 // Lead engine v1 — fully deterministic, no paid AI.
 // discover (OpenStreetMap, Alkmaar ±15 km) → dedup (database) → verify + analyse (website-check
@@ -153,6 +156,7 @@ export async function verifyAndAnalyse(limit = 20) {
         audit = check;
         if (!check.inactiveSignal) {
           await saveBrand(lead.id, extractBrand(fetched.html, fetched.finalUrl)).catch(() => undefined);
+          await saveContact(lead.id, fetched.html, String(fetched.finalUrl)).catch(() => undefined);
         }
         if (check.inactiveSignal) {
           status = 'appears_inactive';
@@ -213,4 +217,54 @@ export async function fillBrands(limit = 12) {
     try { const f = await checkWebsiteWithHtml(r.website); await saveBrand(r.id, extractBrand(f.html, f.finalUrl)); done++; } catch { /* next run */ }
   }));
   return { candidates: rows.length, done };
+}
+
+async function saveContact(id: string, html: string, url: string) {
+  const c = extractContacts(html, url);
+  await rest('rpc/set_lead_contact', { method: 'POST', prefer: 'return=minimal', body: JSON.stringify({ p_id: id, p_phone: c.phone, p_email: c.email }) });
+}
+
+/** Back-fills phone + e-mail from the website for active leads not checked yet. */
+export async function fillContacts(limit = 12) {
+  const rows = await rest<{ id: string; website: string }[]>(
+    `leads?select=id,website&source=eq.discovery&verification_status=eq.verified_active&contact_checked_at=is.null&status=not.in.(lost,disqualified)&order=score.desc.nullslast&limit=${limit}`
+  );
+  let done = 0;
+  await Promise.all(rows.map(async (r) => {
+    try { const f = await checkWebsiteWithHtml(r.website); await saveContact(r.id, f.html, String(f.finalUrl)); done++; } catch { /* next run */ }
+  }));
+  return { candidates: rows.length, done };
+}
+
+type ReportLead = MessageLead & { id: string; website: string | null;
+  business_phone: string | null; business_email?: string | null; score: number | null; legal_form: string | null };
+
+/** Telegram messages for the daily run: a summary, then one message per lead with phone, e-mail and a ready-to-send text. */
+export async function buildDailyReport(report: Record<string, unknown>): Promise<string[]> {
+  const picked = (report.qualified as { id: string }[] | undefined) ?? [];
+  let leads: ReportLead[] = [];
+  if (picked.length) {
+    leads = await rest<ReportLead[]>(`leads?select=*&id=in.(${picked.map((p) => p.id).join(',')})&order=score.desc.nullslast`);
+  }
+  const d = report.discovery as { found?: number; new?: number } | undefined;
+  const v = report.verification as { checked?: number; active?: number } | undefined;
+  const head = [
+    `<b>Lorvex dagrapport</b> ${esc(new Date().toLocaleDateString('nl-NL', { timeZone: 'Europe/Amsterdam' }))}`,
+    `Ontdekt: ${d ? `${d.new ?? 0} nieuw (${d.found ?? 0} gevonden)` : 'mislukt'} · gecontroleerd: ${v?.checked ?? 0} (${v?.active ?? 0} actief)`,
+    ...['discovery_error', 'verification_error', 'selection_error'].filter((k) => report[k]).map((k) => `⚠️ ${k}: ${esc(String(report[k]).slice(0, 150))}`)
+  ].join('\n');
+  if (!leads.length) return [head + '\n\nVandaag geen nieuwe kansen.'];
+  const blocks = leads.map((l, i) => {
+    const phone = formatPhone(l.business_phone);
+    const m = warmMessage(l);
+    return [
+      `<b>${i + 1}/${leads.length} · ${esc(l.business_name)}</b> · kansscore ${l.score ?? '–'}`,
+      `${esc(l.category ?? 'overig')}${l.city ? ` · ${esc(l.city)}` : ''}${l.legal_form ? ' · B.V./N.V.' : ''}`,
+      l.website ? `🌐 ${esc(l.website)}` : null,
+      phone ? `📞 ${esc(phone)}${isMobile(l.business_phone) ? ' (06)' : ''}` : '📞 geen nummer gevonden',
+      `\n<b>Belscript</b> (gebruik bij het bellen; e-mail/WhatsApp pas na hun ja):`,
+      `<pre>${esc(m.body)}</pre>`
+    ].filter(Boolean).join('\n');
+  });
+  return [`${head}\n\nHieronder de ${leads.length} beste kansen van vandaag 👇`, ...blocks];
 }

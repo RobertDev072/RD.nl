@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { runGscAgent } from '@/lib/gsc-agent';
+import { gscTelegram, previousGscReport, runGscAgent } from '@/lib/gsc-agent';
+import { sendTelegram, telegramConfigured } from '@/lib/telegram';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -10,7 +11,9 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
   }
   try {
+    const prev = await previousGscReport().catch(() => null);
     const r = await runGscAgent();
+    if (telegramConfigured()) await sendTelegram(gscTelegram(r, prev)).catch(() => false);
     return NextResponse.json({ ok: true, totals: r.totals, actions: r.actions.length });
   } catch (e) {
     return NextResponse.json({ ok: false, error: e instanceof Error ? e.message : 'error' }, { status: 500 });

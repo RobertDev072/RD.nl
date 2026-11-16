@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { crmConfigured } from '@/lib/crm';
-import { discover, fillBrands, logRun, selectDaily, verifyAndAnalyse } from '@/lib/lead-engine';
+import { buildDailyReport, discover, fillBrands, fillContacts, logRun, selectDaily, verifyAndAnalyse } from '@/lib/lead-engine';
+import { sendTelegram, telegramConfigured } from '@/lib/telegram';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -27,6 +28,14 @@ export async function GET(req: Request) {
   try { report.verification = await verifyAndAnalyse(20); } catch (e) { report.verification_error = e instanceof Error ? e.message : 'error'; }
   try { report.brands = await fillBrands(12); } catch (e) { report.brand_error = e instanceof Error ? e.message : 'error'; }
   try { report.qualified = await selectDaily(5); } catch (e) { report.selection_error = e instanceof Error ? e.message : 'error'; }
+  if (telegramConfigured()) {
+    try {
+      let ok = true;
+      for (const msg of await buildDailyReport(report)) ok = (await sendTelegram(msg)) && ok;
+      report.telegram = ok;
+    } catch { report.telegram = false; }
+  }
+  try { report.contacts = await fillContacts(8); } catch (e) { report.contact_error = e instanceof Error ? e.message : 'error'; }
   try { await logRun('lead_engine.run', report); } catch { /* best effort */ }
   return NextResponse.json(report);
 }
