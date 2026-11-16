@@ -22,7 +22,7 @@ export async function GET(req: Request) {
 
   const [agents, events, discovered, active, uncertain, inactive, qualified, interested, lost, won, inboundOpen] = await Promise.all([
     rest<{ id: string; name: string; enabled: boolean }[]>('agents?select=id,name,enabled'),
-    rest<Ev[]>(`events?select=created_at,type,source_agent,payload&type=in.(lead_engine.run,lead_engine.discovery,seo.gsc_report)&created_at=gte.${since}&order=created_at.desc&limit=60`),
+    rest<Ev[]>(`events?select=created_at,type,source_agent,payload&type=in.(lead_engine.run,lead_engine.discovery,lead_engine.ingest,seo.gsc_report)&created_at=gte.${since}&order=created_at.desc&limit=60`),
     count('source=eq.discovery'), count('verification_status=eq.verified_active'), count('verification_status=eq.uncertain'),
     count('verification_status=eq.appears_inactive'), count('qualified_at=not.is.null'), count('status=eq.responded'),
     count('status=eq.lost'), count('status=eq.won'), count('contact_email=not.is.null&status=in.(new,responded)')
@@ -41,7 +41,7 @@ export async function GET(req: Request) {
   return NextResponse.json({
     at: new Date().toISOString(),
     agents,
-    last_runs: { lead_engine: run, discovery: lastOf('lead_engine.discovery'), gsc: gsc ? { created_at: gsc.created_at, totals: gsc.payload?.totals, actions: gsc.payload?.actions } : null },
+    last_runs: { lead_engine: run, discovery: lastOf('lead_engine.discovery'), ingest: lastOf('lead_engine.ingest'), gsc: gsc ? { created_at: gsc.created_at, totals: gsc.payload?.totals, actions: gsc.payload?.actions } : null },
     pipeline: { discovered, verified_active: active, uncertain, appears_inactive: inactive, qualified, interested, lost, won, inbound_open: inboundOpen },
     problems,
     budget: { ai_monthly_cap_eur: 29, ai_spent_eur: 0, note: 'Huidige agents gebruiken geen betaalde AI.' }

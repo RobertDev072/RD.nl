@@ -25,7 +25,7 @@ const CATEGORIES: { match: (t: Record<string, string>) => boolean; label: string
 
 const SIMPLE_PLATFORMS = /JouwWeb|Wix|Weebly|Webnode|Mijnwebwinkel|Sitebuilder|Joomla/;
 
-type OsmElement = { type: string; id: number; tags?: Record<string, string> };
+export type OsmElement = { type: string; id: number; tags?: Record<string, string> };
 
 // Small queries rotated per day (the public Overpass servers time out on one big query).
 const GROUPS = [
@@ -36,7 +36,7 @@ const GROUPS = [
 ];
 export const groupForToday = () => Math.floor(Date.now() / 86_400_000) % GROUPS.length;
 
-export async function discover(group = groupForToday()): Promise<{ group: number; found: number; new: number; existing: number; suppressed: number }> {
+export async function discover(group = groupForToday()): Promise<{ group: number; found: number; new: number; existing: number; suppressed: number; failed: number }> {
   // Bounding box ≈ 15 km around Alkmaar (much faster on Overpass than an "around" radius query).
   const dLat = RADIUS_M / 111_000, dLon = RADIUS_M / (111_000 * Math.cos((CENTER.lat * Math.PI) / 180));
   const bb = [CENTER.lat - dLat, CENTER.lon - dLon, CENTER.lat + dLat, CENTER.lon + dLon].map((n) => n.toFixed(4)).join(',');
@@ -57,30 +57,49 @@ export async function discover(group = groupForToday()): Promise<{ group: number
   }
   if (!elements) throw new Error(`overpass unavailable (${failures.join(', ')})`);
 
-  const stats = { group, found: 0, new: 0, existing: 0, suppressed: 0 };
-  const rows = elements.flatMap((e) => {
+  return { group, ...(await ingestOsmElements(elements, 'osm')) };
+}
+
+export type DiscoveredRow = {
+  p_osm_id: string; p_name: string; p_category: string; p_website: string; p_domain: string;
+  p_address: string | null; p_postcode: string | null; p_city: string | null; p_source: string; p_phone: string | null;
+};
+
+// Raw Overpass elements → validated rows. Skips chains, entries without name/website and social-only links.
+export function osmElementsToRows(elements: OsmElement[], source = 'osm'): DiscoveredRow[] {
+  const seen = new Set<string>();
+  return elements.flatMap((e) => {
+    if (!e || typeof e.type !== 'string' || !Number.isFinite(e.id) || !['node', 'way', 'relation'].includes(e.type)) return [];
     const t = e.tags || {};
-    // Skip chains/franchises and anything without a name or website.
     if (!t.name || t.brand || t['brand:wikidata']) return [];
     const raw = t.website || t['contact:website'];
+    if (!raw) return [];
     let url: URL;
     try { url = new URL(/^https?:\/\//i.test(raw) ? raw : `https://${raw}`); } catch { return []; }
+    if (!/^https?:$/.test(url.protocol)) return [];
     const domain = url.hostname.replace(/^www\./, '').toLowerCase();
-    if (/facebook|instagram|linktr|google\.|business\.site/.test(domain)) return [];
+    if (!domain.includes('.') || /facebook|instagram|linktr|google\.|business\.site/.test(domain)) return [];
+    const osmId = `${e.type}/${e.id}`;
+    if (seen.has(osmId)) return [];
+    seen.add(osmId);
     const cat = CATEGORIES.find((c) => c.match(t));
+    const clip = (v: string | undefined | null, n = 200) => (v ? String(v).slice(0, n) : null);
     return [{
-      p_osm_id: `${e.type}/${e.id}`, p_name: t.name, p_category: cat?.label ?? 'overig',
+      p_osm_id: osmId, p_name: clip(t.name)!, p_category: cat?.label ?? 'overig',
       p_website: url.origin + '/', p_domain: domain,
-      p_address: [t['addr:street'], t['addr:housenumber']].filter(Boolean).join(' ') || null,
-      p_postcode: t['addr:postcode']?.replace(/\s/g, '').toUpperCase() || null,
-      p_city: t['addr:city'] || null, p_source: 'osm',
+      p_address: clip([t['addr:street'], t['addr:housenumber']].filter(Boolean).join(' ')) || null,
+      p_postcode: t['addr:postcode']?.replace(/\s/g, '').toUpperCase().slice(0, 10) || null,
+      p_city: clip(t['addr:city'], 100), p_source: source,
       // Stored by the database only for B.V./N.V. (legal persons may be called); ignored otherwise.
-      p_phone: t.phone || t['contact:phone'] || null
+      p_phone: clip(t.phone || t['contact:phone'], 40)
     }];
   });
-  stats.found = rows.length;
+}
 
-  // Bounded concurrency; the database decides new / existing / suppressed.
+// Rows → database. Bounded concurrency; the database decides new / existing / suppressed.
+export async function ingestOsmElements(elements: OsmElement[], source = 'osm') {
+  const rows = osmElementsToRows(elements, source);
+  const stats = { found: rows.length, new: 0, existing: 0, suppressed: 0, failed: 0 };
   let i = 0;
   await Promise.all(Array.from({ length: 8 }, async () => {
     while (i < rows.length) {
@@ -88,7 +107,7 @@ export async function discover(group = groupForToday()): Promise<{ group: number
       try {
         const r = await rest<{ status: 'new' | 'existing' | 'suppressed' }>('rpc/upsert_discovered_business', { method: 'POST', body: JSON.stringify(row) });
         stats[r.status as 'new' | 'existing' | 'suppressed'] += 1;
-      } catch { /* counted as not processed; retried next run */ }
+      } catch { stats.failed += 1; /* retried next run */ }
     }
   }));
   return stats;
