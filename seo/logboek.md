@@ -2,6 +2,23 @@
 
 Nieuwste bovenaan. De SEO-agent voegt hier elke week een entry toe.
 
+## 2026-11-18 · Week 2
+
+- Gezondheid: productiedeploy van `main` (commit 843a636) staat op READY in Vercel. `/sitemap.xml` en `/robots.txt` op de Vercel-URL
+  geven 200; de sitemap bevat alle 5 kennisbankartikelen. lorvex.nl zelf en de DNS-check (dns.google) waren vanuit de agentomgeving
+  niet bereikbaar (netwerkbeperking), dus niet opnieuw gecontroleerd.
+- PageSpeed: niet gemeten. De PageSpeed-API is vanuit de agentomgeving geblokkeerd. Handmatig meten via pagespeed.web.dev.
+- Posities (indicatie via webzoeken, niet Google NL): lorvex.nl niet gevonden in de eerste resultaten voor website laten maken alkmaar,
+  webdesign alkmaar, website maker alkmaar, ai automatisering, ai development en ai oplossingen mkb. Lokaal staan nog steeds Trustoo,
+  Sortlist en Semrush Agencies bovenaan.
+- Toegevoegd (via PR): [Chatbot voor je website: wanneer is het slim en waar let je op?](/kennisbank/chatbot-voor-je-website).
+- Verbeterd: interne link vanuit het artikel over AI-automatisering voor het mkb naar het nieuwe chatbot-artikel.
+- IndexNow: niet nodig deze week (de sinds vorige run gemergde SEO-agent-PR #2 bevatte geen artikelen). Na merge van deze PR pingen.
+- Adviezen voor Robert:
+  1. Deze PR controleren in de Vercel-preview en mergen als het goed is.
+  2. Google Search Console koppelen voor lorvex.nl en de sitemap indienen, zodat we echte posities zien.
+  3. Lorvex aanmelden op Trustoo en Sortlist en klanten om een Google-review vragen.
+
 ## 2026-11-11 · Week 1
 
 - Gezondheid: homepage, `/sitemap.xml` en `/robots.txt` op de Vercel-URL geven 200; sitemap bevat alle kennisbankartikelen.

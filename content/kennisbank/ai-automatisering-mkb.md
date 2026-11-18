@@ -11,7 +11,7 @@ AI klinkt voor veel ondernemers als iets voor grote bedrijven met een eigen IT-a
 
 ## 1. Klantvragen beantwoorden
 
-Hoe laat zijn jullie open? Wat kost een knipbeurt? Kunnen jullie ook in Heiloo komen? Veel vragen komen steeds terug. Een AI-assistent beantwoordt ze via WhatsApp, mail of een chat op je website, in jouw toon en op basis van jouw informatie. Lastige vragen worden aan jou doorgezet.
+Hoe laat zijn jullie open? Wat kost een knipbeurt? Kunnen jullie ook in Heiloo komen? Veel vragen komen steeds terug. Een AI-assistent beantwoordt ze via WhatsApp, mail of een chat op je website, in jouw toon en op basis van jouw informatie. Lastige vragen worden aan jou doorgezet. Lees ook waar je op let bij [een chatbot voor je website](/kennisbank/chatbot-voor-je-website).
 
 ## 2. Afspraken plannen
 
